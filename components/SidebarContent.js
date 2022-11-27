@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import { HomeIcon, RectangleGroupIcon, UserCircleIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
 import { HomeIcon as HomeSolid, RectangleGroupIcon as RGSolid, UserCircleIcon as UCSolid, Cog6ToothIcon as C6Solid } from '@heroicons/react/24/solid'
 import { useDispatch, useSelector } from 'react-redux'

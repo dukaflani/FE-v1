@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import ShowMoreText from "react-show-more-text";
 // import { CheckIcon } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';

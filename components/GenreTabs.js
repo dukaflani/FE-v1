@@ -16,7 +16,7 @@ const GenreTabs = () => {
           ))}
         </div>
     </div>
-  )
+  );
 }
 
 export default GenreTabs

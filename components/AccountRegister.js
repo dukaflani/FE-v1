@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import logoLight from '../branding/dukaflani-white-logo-medium.png'

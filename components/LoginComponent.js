@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import logoLight from '../branding/dukaflani-logo-blue-medium.png'
 import Poster from '../media/g-like-that.png'
 import { useLoginMutation } from '../redux/features/auth/authApiSlice'

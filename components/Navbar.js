@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserProfile } from '../redux/features/auth/authSlice'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'

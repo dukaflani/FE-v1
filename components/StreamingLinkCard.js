@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import { useSelector } from 'react-redux'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { useFetchStreamingLinksQuery } from '../redux/features/videos/videosApiSlice'

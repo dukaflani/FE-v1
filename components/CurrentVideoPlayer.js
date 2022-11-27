@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
 import ShowMoreText from "react-show-more-text";

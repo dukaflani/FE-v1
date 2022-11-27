@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import Linkify from 'react-linkify';
 import ShowMoreText from "react-show-more-text";
 import { formatDistanceStrict } from 'date-fns';

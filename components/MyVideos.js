@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid'
 import thumbnail from '../media/thumbnail.jpg'
 

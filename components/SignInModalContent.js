@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import { useDispatch } from 'react-redux'
 import { useLoginMutation } from '../redux/features/auth/authApiSlice'
 import { toggleSignInModalOpen } from '../redux/features/navigation/navigationSlice'

@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import { useSelector, useDispatch } from 'react-redux'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
 import logoLight from '../branding/dukaflani-blue-black-logo-large.png'
