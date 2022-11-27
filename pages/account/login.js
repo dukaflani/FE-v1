@@ -4,7 +4,7 @@ import logoLight from '../../branding/dukaflani-logo-blue-medium.png'
 import Button from '../../components/reuseable-components/Button'
 import InputFieldPassword from '../../components/reuseable-components/InputFieldPassword'
 import InputField from '../../components/reuseable-components/InputField'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import LoginComponent from '../../components/LoginComponent'
 import Head from 'next/head'
 

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import avatar from '../../media/g-like-that.png'
 import SidebarNav from '../../components/SidebarNav'
 import Navigation from '../../components/Navigation'
-import Image from 'next/image'
+import Image from "next/legacy/image";
 import FanbaseButton from '../../components/FanbaseButton'
 import ProfilePageComponent from '../../components/ProfilePageComponent'
 
