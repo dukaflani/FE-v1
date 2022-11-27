@@ -63,7 +63,7 @@ const VideoCard = ({ video }) => {
                     </div>
                 </div>
                 <div className='w-10/12'>
-                    <Link href={`/watch/[videoid]?videoid=${video?.id}`}>
+                    <Link legacyBehavior href={`/watch/[videoid]?videoid=${video?.id}`}>
                         <a title={video?.title}>
                             <div className='h-3/5 font-semibold leading-4 text-gray-700 tracking-tight cursor-pointer'>{video?.title}</div>
                         </a>

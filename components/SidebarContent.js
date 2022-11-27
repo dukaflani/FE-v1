@@ -47,7 +47,6 @@ const SidebarContent = () => {
                     </svg>
                 </div>
                 <Link href='/'>
-                    <a>
                         <div className='w-32 relative cursor-pointer'>
                         <Image src={logoLight} 
                             alt="Dukaflani Logo" 
@@ -55,7 +54,6 @@ const SidebarContent = () => {
                             objectFit='contain'
                             />
                         </div>
-                    </a>
                 </Link>
             </div>
         </div>

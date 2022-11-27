@@ -39,7 +39,6 @@ const Navbar = ({ myAvatar }) => {
       </svg>
     </div>
     <Link href='/'>
-      <a>
         <div className='w-32 relative cursor-pointer'>
           <Image src={logoLight} 
             alt="Dukaflani Logo" 
@@ -47,7 +46,6 @@ const Navbar = ({ myAvatar }) => {
             objectFit='contain'
             />
         </div>
-      </a>
     </Link>
   </div>
   <div className="flex flex-1 border-gray-300 max-w-lg">
