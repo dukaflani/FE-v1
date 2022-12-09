@@ -1,29 +1,13 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import slugify from 'slugify'
+import { albumActions, albumTypes } from '../data/musicCollection'
 import { useFetchAccessTokenQuery, useFetchCreatedAlbumTracksListMutation, useFetchUserVideosQuery } from '../redux/features/videos/videosApiSlice'
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
 import SelectInputFieldWithKeys from './reuseable-components/SelectInputFieldWithKeys'
 
 const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
-    const albumActions = ['Stream On:', 'Buy From:']
-    const albumTypes = ['Album', 'Sophomore Album', 'Studio Album', 'Freshman Album', 'Debut Album', 'Live Album', 'Christmas Album', 'Remix Album', 'E.P', 
-                        'Mixtape', 'Cover Album', 'Compilation Album', 'B Side Compilation', 'Split Album']
-    const videoOptions = [
-        {
-            title: 'Video Title One',
-            value: 1,
-        },
-        {
-            title: 'Video Title Two',
-            value: 2,
-        },
-        {
-            title: 'Video Title Three',
-            value: 3,
-        },
-    ]
 
     const { user } = useSelector((state) => state.auth)
     const currentUser = user?.info?.id

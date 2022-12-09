@@ -2,6 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useFetchCommentsQuery } from '../redux/features/videos/videosApiSlice'
 import RegularComment from './RegularComment'
+import PinnedComments from './PinnedComments'
 
 const VideoComments = () => {
   const router = useRouter()
@@ -14,11 +15,18 @@ const VideoComments = () => {
   const { data: comments } = useFetchCommentsQuery(queryParams)
 
   return (
+    <>
+    <div>
+        {comments?.data?.map((comment, i) => (
+                <PinnedComments comment={comment} key={i}/>
+              ))}
+    </div>
     <div>
         {comments?.data?.map((comment, i) => (
                 <RegularComment comment={comment} key={i}/>
               ))}
     </div>
+    </>
   )
 }
 

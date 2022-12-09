@@ -1,12 +1,42 @@
 import { apiSlice } from "../../app/apiSlice";
 
-export const videosApiSlice = apiSlice.injectEndpoints({
+const apiWithTag = apiSlice.enhanceEndpoints({addTagTypes: ['Fanbase', 'Comment', 
+'Auth', 'video', 'events', 'product', 'streamingLinks', 'lyrics', 'skiza', 'albumTrack', 'album']})
+
+export const videosApiSlice = apiWithTag.injectEndpoints({
     endpoints: builder => ({
         getProfile: builder.query({
             query: () => 'api/profile',
-            // providesTags: ['Auth']
+            providesTags: ['Auth']
 
         }),
+
+        fetchUserProfile: builder.query({
+            query: (args) => ({
+                url: "/api/getuserprofile/",
+                params: {...args},
+            }),
+            providesTags: ['Auth']
+        }),
+
+        accountRegister: builder.mutation({
+            query: newAccountInfo => ({
+                url: "/api/register/",
+                method: "POST",
+                body: newAccountInfo
+            }),
+            invalidatesTags: ['Auth']
+        }),
+
+        editUser: builder.mutation({
+            query: editUserInfo => ({
+                url: "/api/edituser/",
+                method: "POST",
+                body: editUserInfo
+            }),
+            invalidatesTags: ['Auth']
+        }),
+
 
         fanbase: builder.query({
             query: (args) => ({
@@ -43,7 +73,8 @@ export const videosApiSlice = apiSlice.injectEndpoints({
         }),
 
         fetchVideos: builder.query({
-            query: () => 'api/videos'
+            query: () => 'api/videos',
+            providesTags: ['video']
         }),
 
         currentVideo: builder.query({
@@ -51,7 +82,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 url: `/api/currentvideo/`,
                 params: {...args}
             }),
-            // providesTags: ['Fanbase']
+            providesTags: ['video']
         }),
 
         fetchUserVideos: builder.query({
@@ -59,7 +90,16 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 url: "/api/getuservideos/",
                 params: {...args},
             }),
-            // providesTags: ['Fanbase']
+            providesTags: ['video']
+        }),
+
+        deleteVideo: builder.mutation({
+            query: deleteVideoInfo => ({
+                url: "/api/deletevideo/",
+                method: "POST",
+                body: deleteVideoInfo
+            }),
+            invalidatesTags: ['video']
         }),
 
         addView: builder.mutation({
@@ -76,7 +116,59 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 url: `/api/comments/`,
                 params: {...args}
             }),
-            // providesTags: ['Fanbase']
+            providesTags: ['Comment']
+        }),
+
+        addComment: builder.mutation({
+            query: newComment => ({
+                url: "/api/addcomment/",
+                method: "POST",
+                body: newComment
+            }),
+            invalidatesTags: ['Comment']
+        }),
+        
+        editComment: builder.mutation({
+            query: newCommentInfo => ({
+                url: "/api/editcomment/",
+                method: "POST",
+                body: newCommentInfo
+            }),
+            invalidatesTags: ['Comment']
+        }),
+
+        deleteComment: builder.mutation({
+            query: deleteCommentInfo => ({
+                url: "/api/deletecomment/",
+                method: "POST",
+                body: deleteCommentInfo
+            }),
+            invalidatesTags: ['Comment']
+        }),
+
+        fetchEvents: builder.query({
+            query: (args) => ({
+                url: `/api/events/`,
+                params: {...args}
+            }),
+            providesTags: ['events']
+        }), 
+
+        fetchEditEvent: builder.query({
+            query: (args) => ({
+                url: `/api/fetchevent/`,
+                params: {...args}
+            }),
+            // providesTags: ['events']
+        }),
+
+        deleteEvent: builder.mutation({
+            query: deleteEventInfo => ({
+                url: "/api/deleteevent/",
+                method: "POST",
+                body: deleteEventInfo
+            }),
+            invalidatesTags: ['events']
         }),
 
         fetchStreamingLinks: builder.query({
@@ -84,64 +176,8 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 url: `/api/streaminglinks/`,
                 params: {...args}
             }),
-            // providesTags: ['Fanbase']
-        }), 
-
-        fetchProduct: builder.query({
-            query: (args) => ({
-                url: `/api/product/`,
-                params: {...args}
-            }),
-            // providesTags: ['Fanbase']
-        }), 
-
-        fetchLyrics: builder.query({
-            query: (args) => ({
-                url: `/api/lyrics/`,
-                params: {...args}
-            }),
-            // providesTags: ['Fanbase']
-        }),
-
-        fetchSkizaTunes: builder.query({
-            query: (args) => ({
-                url: `/api/skizatune/`,
-                params: {...args}
-            }),
-            // providesTags: ['Fanbase']
-        }), 
-
-        fetchAlbum: builder.query({
-            query: (args) => ({
-                url: `/api/album/`,
-                params: {...args}
-            }),
-            // providesTags: ['Fanbase']
-        }),
-
-        fetchAlbumTracks: builder.query({
-            query: (args) => ({
-                url: `/api/albumtrack/`,
-                params: {...args}
-            }),
-            // providesTags: ['Fanbase']
-        }), 
-
-        fetchEvents: builder.query({
-            query: (args) => ({
-                url: `/api/events/`,
-                params: {...args}
-            }),
-            // providesTags: ['Fanbase']
-        }), 
-
-        fetchLyricsVerse: builder.query({
-            query: (args) => ({
-                url: `/api/lyricsverse/`,
-                params: {...args}
-            }),
-            // providesTags: ['Fanbase']
-        }), 
+            providesTags: ['streamingLinks']
+        }),  
 
         addStreamingLinksHolder: builder.mutation({
             query: newStreamingLinksHolder => ({
@@ -149,7 +185,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: newStreamingLinksHolder
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['streamingLinks']
         }),
 
         addStreamingLinks: builder.mutation({
@@ -158,7 +194,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: newStreamingLinks
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['streamingLinks']
         }),
 
         fetchCreatedLinkHolder: builder.mutation({
@@ -167,7 +203,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: linkHolderTitle
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['streamingLinks']
         }),
 
         fetchCreatedStreamingLinks: builder.mutation({
@@ -176,7 +212,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: createdStreamingLinksHolderId
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['streamingLinks']
         }),
 
         fetchMyStreamingLinks: builder.query({
@@ -187,12 +223,38 @@ export const videosApiSlice = apiSlice.injectEndpoints({
             // providesTags: ['Fanbase']
         }), 
 
+        fetchOneStreamingLink: builder.query({
+            query: (args) => ({
+                url: `/api/streaminglink/`,
+                params: {...args}
+            }),
+            providesTags: ['streamingLinks']
+        }),
+
+        editStreamingLink: builder.mutation({
+            query: editedStreamingLink => ({
+                url: "/api/editlinks/",
+                method: "POST",
+                body: editedStreamingLink
+            }),
+            invalidatesTags: ['streamingLinks']
+        }),
+
         fetchUserLinkHolders: builder.query({
             query: (args) => ({
                 url: "/api/getuserlinkholders/",
                 params: {...args},
             }),
-            // providesTags: ['Fanbase']
+            providesTags: ['streamingLinks']
+        }),
+
+        deleteStreamingLink: builder.mutation({
+            query: deleteStreamingLinkInfo => ({
+                url: "/api/deletestreaminglink/",
+                method: "POST",
+                body: deleteStreamingLinkInfo
+            }),
+            invalidatesTags: ['streamingLinks']
         }),
 
         addProduct: builder.mutation({
@@ -202,7 +264,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 headers: {'content-type': 'multipart/form-data',},
                 body: productDetails
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['product']
         }),
 
         fetchUserProducts: builder.query({
@@ -210,11 +272,44 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 url: "/api/getuserproducts/",
                 params: {...args},
             }),
-            // providesTags: ['Fanbase']
+            providesTags: ['product']
+        }),
+
+        fetchProduct: builder.query({
+            query: (args) => ({
+                url: `/api/product/`,
+                params: {...args}
+            }),
+            providesTags: ['product']
+        }),
+
+        deleteProduct: builder.mutation({
+            query: deleteProductInfo => ({
+                url: "/api/deleteproduct/",
+                method: "POST",
+                body: deleteProductInfo
+            }),
+            invalidatesTags: ['product']
         }),
 
         fetchAccessToken: builder.query({
             query: () => 'api/getaccesstoken'
+        }),
+
+        fetchLyricsVerse: builder.query({
+            query: (args) => ({
+                url: `/api/lyricsverse/`,
+                params: {...args}
+            }),
+            providesTags: ['lyrics']
+        }), 
+
+        fetchLyrics: builder.query({
+            query: (args) => ({
+                url: `/api/lyrics/`,
+                params: {...args}
+            }),
+            providesTags: ['lyrics']
         }),
 
         addLyrics: builder.mutation({
@@ -223,7 +318,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: newLyrics
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['lyrics']
         }),
 
         addLyricsVerse: builder.mutation({
@@ -232,7 +327,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: newLyricsVerse
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['lyrics']
         }),
 
         fetchCreatedLyricsVerses: builder.mutation({
@@ -241,7 +336,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: createdLyricsId
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['lyrics']
         }),
 
         fetchUserLyricss: builder.query({
@@ -249,7 +344,25 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 url: "/api/getuserlyrics/",
                 params: {...args},
             }),
-            // providesTags: ['Fanbase']
+            providesTags: ['lyrics']
+        }),
+
+        editLyrics: builder.mutation({
+            query: editedLyrics => ({
+                url: "/api/editlyrics/",
+                method: "POST",
+                body: editedLyrics
+            }),
+            invalidatesTags: ['lyrics']
+        }),
+
+        deleteLyrics: builder.mutation({
+            query: deleteLyricsInfo => ({
+                url: "/api/deletelyrics/",
+                method: "POST",
+                body: deleteLyricsInfo
+            }),
+            invalidatesTags: ['lyrics']
         }),
 
         addSkizaTune: builder.mutation({
@@ -258,7 +371,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: newSkizaTune
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['skiza']
         }),
 
         addSkizaTuneInfo: builder.mutation({
@@ -267,7 +380,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: newSkizaTuneInfo
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['skiza']
         }),
 
         fetchCreatedSkizaTuneList: builder.mutation({
@@ -276,7 +389,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: createdSkizaTuneId
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['skiza']
         }),
 
         fetchUserSkizaTunes: builder.query({
@@ -284,7 +397,49 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 url: "/api/getuserskizatunes/",
                 params: {...args},
             }),
-            // providesTags: ['Fanbase']
+            providesTags: ['skiza']
+        }),
+
+        fetchSkizaTuneLinks: builder.query({
+            query: (args) => ({
+                url: "/api/fetchskizatune/",
+                params: {...args},
+            }),
+            providesTags: ['skiza']
+        }),
+
+        fetchOneSkizaTune: builder.query({
+            query: (args) => ({
+                url: `/api/oneskizatune/`,
+                params: {...args}
+            }),
+            providesTags: ['skiza']
+        }),
+
+        fetchSkizaTunes: builder.query({
+            query: (args) => ({
+                url: `/api/skizatune/`,
+                params: {...args}
+            }),
+            providesTags: ['skiza']
+        }), 
+
+        editSkizaTune: builder.mutation({
+            query: editedSkizaTune => ({
+                url: "/api/editskiza/",
+                method: "POST",
+                body: editedSkizaTune
+            }),
+            invalidatesTags: ['skiza']
+        }),
+
+        deleteSkizaTune: builder.mutation({
+            query: deleteSkizaTuneInfo => ({
+                url: "/api/deleteskizatune/",
+                method: "POST",
+                body: deleteSkizaTuneInfo
+            }),
+            invalidatesTags: ['skiza']
         }),
 
         addAlbumTrack: builder.mutation({
@@ -293,7 +448,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: newAlbumTrack
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['albumTrack']
         }),
 
         fetchCreatedAlbumTracksList: builder.mutation({
@@ -302,7 +457,7 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: createdAlbumId
             }),
-            // invalidatesTags: ['Fanbase']
+            invalidatesTags: ['albumTrack']
         }),
 
         fetchUserAlbums: builder.query({
@@ -310,7 +465,41 @@ export const videosApiSlice = apiSlice.injectEndpoints({
                 url: "/api/getuseralbums/",
                 params: {...args},
             }),
-            // providesTags: ['Fanbase']
+            providesTags: ['album']
+        }),
+
+        fetchAlbum: builder.query({
+            query: (args) => ({
+                url: `/api/album/`,
+                params: {...args}
+            }),
+            providesTags: ['album']
+        }),
+
+        fetchAlbumTracks: builder.query({
+            query: (args) => ({
+                url: `/api/albumtrack/`,
+                params: {...args}
+            }),
+            providesTags: ['albumTrack']
+        }), 
+
+        editAlbumTrack: builder.mutation({
+            query: editedAlbumTrack => ({
+                url: "/api/editalbumtrack/",
+                method: "POST",
+                body: editedAlbumTrack
+            }),
+            invalidatesTags: ['albumTrack']
+        }),
+
+        deleteAlbum: builder.mutation({
+            query: deleteAlbumInfo => ({
+                url: "/api/deletealbum/",
+                method: "POST",
+                body: deleteAlbumInfo
+            }),
+            invalidatesTags: ['album']
         }),
 
         addGenre: builder.mutation({
@@ -327,24 +516,8 @@ export const videosApiSlice = apiSlice.injectEndpoints({
             // providesTags: ['Fanbase']
         }),
 
-        fetchUserProfile: builder.query({
-            query: (args) => ({
-                url: "/api/getuserprofile/",
-                params: {...args},
-            }),
-            // providesTags: ['Auth']
         }),
-
-        accountRegister: builder.mutation({
-            query: newAccountInfo => ({
-                url: "/api/register/",
-                method: "POST",
-                body: newAccountInfo
-            }),
-            // invalidatesTags: ['Fanbase']
-        }),
-
-        })
+        overrideExisting: true
     })
 
 
@@ -355,5 +528,8 @@ export const { useGetProfileQuery, useFanbaseQuery, useFanbaseCountQuery, useJoi
                 useAddLyricsMutation, useAddLyricsVerseMutation, useFetchCreatedLyricsVersesMutation, useAddSkizaTuneMutation, useAddSkizaTuneInfoMutation,
                 useFetchCreatedSkizaTuneListMutation, useAddAlbumTrackMutation, useFetchCreatedAlbumTracksListMutation, useAddGenreMutation, useFetchUserLinkHoldersQuery,
                 useFetchUserProductsQuery, useFetchUserLyricssQuery, useFetchUserSkizaTunesQuery, useFetchUserAlbumsQuery, useFetchAllGenresQuery,
-                useFetchUserVideosQuery, useFetchUserProfileQuery, useAccountRegisterMutation
+                useFetchUserVideosQuery, useFetchUserProfileQuery, useAccountRegisterMutation, useAddCommentMutation, useEditCommentMutation, useDeleteCommentMutation,
+                useDeleteVideoMutation, useFetchEditEventQuery, useDeleteEventMutation, useDeleteProductMutation, useFetchOneStreamingLinkQuery, useFetchOneSkizaTuneQuery,
+                useFetchSkizaTuneLinksQuery, useEditAlbumTrackMutation, useEditLyricsMutation, useEditSkizaTuneMutation, useEditStreamingLinkMutation, useDeleteAlbumMutation,
+                useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation
              } = videosApiSlice

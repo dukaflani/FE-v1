@@ -26,7 +26,7 @@ const LyricsMapPage = () => {
   return (
     <div className='px-5'>
     <div className='text-sm uppercase tracking-tighter text-gray-800 font-semibold'>Lyrics</div>
-    <div className='text-sm mb-5 tracking-tighter text-gray-700'>Learn the lyrics to {video?.details?.title} straight from {video?.details?.stage_name}</div>
+    <div className='text-sm mb-5 tracking-tighter text-gray-700'>Learn the lyrics to {video?.details?.song_title} straight from {video?.details?.stage_name}</div>
     <div className='bg-white p-3 shadow-sm border-b'>
         <div className='flex flex-col items-start justify-center space-y-2'>
             <div>

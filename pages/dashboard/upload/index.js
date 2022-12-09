@@ -4,9 +4,11 @@ import Head from 'next/head'
 import SidebarNav from '../../../components/SidebarNav'
 import Navigation from '../../../components/Navigation'
 import UploadVideo from '../../../components/UploadVideo'
-import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
+import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
 
-const video = () => {
+
+
+const uploadPage = () => {
     const router = useRouter()
     const [videoTitle, setVideoTitle] = useState('')
     const [currentInput, setCurrentInput] = useState(0)
@@ -26,23 +28,23 @@ const video = () => {
             <ul className='space-y-10'>
                 <li onClick={() => router.push("/dashboard")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
-                    <TvIcon className="w-6 h-6" />
+                    <RectangleGroupIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>My Videos</div>
+                  <div className='text-sm'>Dashboard</div>
                 </li>
-                <li className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push("/dashboard/products")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <BuildingStorefrontIcon className="w-6 h-6" />
                   </div>
                   <div className='text-sm'>My Products</div>
                 </li>
-                <li className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push("/dashboard/events")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <TicketIcon className="w-6 h-6" />
                   </div>
                   <div className='text-sm'>My Events</div>
                 </li>
-                <li className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push("/dashboard/more-items")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <ChevronDoubleRightIcon className="w-6 h-6" />
                   </div>
@@ -61,12 +63,13 @@ const video = () => {
                 </div>
                 {
                   {
-                    0:<div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Videos</div>,
-                    1:<div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Smart Links</div>,
+                    0:<div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Dashboard</div>,
+                    1:<div onClick={() => router.push("/dashboard/more-items")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Smart Links</div>,
                     2:<div onClick={() => router.push("/dashboard/products")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Products</div>,
-                    3:<div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Lyrics</div>,
-                    4:<div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Skiza Tunes</div>,
-                    5:<div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Albums</div>,
+                    3:<div onClick={() => router.push("/dashboard/more-items")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Lyrics</div>,
+                    4:<div onClick={() => router.push("/dashboard/more-items")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Skiza Tunes</div>,
+                    5:<div onClick={() => router.push("/dashboard/more-items")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Albums</div>,
+                    6:<div onClick={() => router.push("/dashboard/events")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Events</div>,
                   }[currentInput]
                 }
             </div>
@@ -78,4 +81,4 @@ const video = () => {
   )
 }
 
-export default video
+export default uploadPage

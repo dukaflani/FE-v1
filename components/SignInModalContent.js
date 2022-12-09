@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Image from "next/legacy/image";
+import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux'
 import { useLoginMutation } from '../redux/features/auth/authApiSlice'
 import { toggleSignInModalOpen } from '../redux/features/navigation/navigationSlice'
-import logoLight from '../branding/dukaflani-logo-blue-medium.png'
+import logoLight from '../public/branding/dukaflani-logo-blue-medium.png'
 import Button from './reuseable-components/Button'
 import InputField from './reuseable-components/InputField'
 import InputFieldPassword from './reuseable-components/InputFieldPassword'
-import Poster from '../media/g-like-that.png'
+import Poster from '../public/media/g-like-that.png'
 
 const SignInModalContent = () => {
     const dispatch = useDispatch() 
+    const router = useRouter()
     const errorRef = useRef()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -117,7 +119,7 @@ const SignInModalContent = () => {
                     />
                 </div>
                 <div className='mt-5 flex items-center justify-center'>
-                    <span className='text-xs text-gray-800 cursor-pointer py-1 border-r border-r-gray-400 pr-4'>Register an Account</span>
+                    <span onClick={() => router.push("/account/register")} className='text-xs text-gray-800 cursor-pointer py-1 border-r border-r-gray-400 pr-4'>Register an Account</span>
                     <span className='text-xs text-gray-800 cursor-pointer py-1 pl-4'>Reset your Password</span>
                 </div>
                 </div>

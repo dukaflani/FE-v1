@@ -6,11 +6,6 @@ export default async (req, res) => {
         const cookies = cookie.parse(req.headers.cookie ?? ' ');
         const access = cookies.access ?? false
 
-        console.log("type from api", req.body.type)
-        console.log("artist from api", req.body.artist)
-        console.log("body from api", req.body.body)
-        console.log("lyrics from api", req.body.lyrics)
-
         const lyricsVerseInfo = new FormData()
         lyricsVerseInfo.append("type", req.body.type)
         lyricsVerseInfo.append("artist", req.body.artist)

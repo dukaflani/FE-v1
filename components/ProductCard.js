@@ -3,6 +3,7 @@ import Image from "next/legacy/image";
 import ShowMoreText from "react-show-more-text";
 // import { CheckIcon } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
+import poster from '../public/media/dukaflani-poster-default.png'
 import { useFetchProductQuery } from '../redux/features/videos/videosApiSlice';
 import numeral from 'numeral';
 
@@ -25,25 +26,22 @@ const ProductCard = () => {
     let formattedLocalPrice = numeral(localPrice).format('0,0')
 
 
-    console.log("video object product page:", video?.details?.product);
-    console.log("product details:", product?.data);
-
   return (
     <div className='px-5'>
         <div className='text-sm uppercase tracking-tighter text-gray-800 font-semibold'>Products & Merchandise</div>
-        <div className='text-sm mb-5 tracking-tighter text-gray-700'>Buy directly from sellers approved by {video?.details?.stage_name}</div>
+        <div className='text-sm mb-5 tracking-tighter text-gray-700'>Buy directly from seller partners of {video?.details?.stage_name}</div>
         <div className='bg-white shadow-lg'>
             <div>
                 <div className='relative h-[21rem] w-full'>
                     <Image
-                        src={product?.data?.image}
+                        src={!product?.data?.image ? poster : product?.data?.image}
                         layout="fill"
                         objectFit='cover'
                         />
                 </div>
             </div>
-            <div className='text-xs py-1 px-2 uppercase tracking-wide bg-gray-300 text-gray-900 font-semibold'>
-                <div className='line-clamp-1'>Order now to save 20% </div>
+            <div className='text-xs py-1 px-2 uppercase tracking-wide bg-gray-800 text-white font-semibold'>
+                <div className='line-clamp-1'>{!product?.data?.id ? "No product found" : "Buy now!"} </div>
             </div>
             <div>
                 <div className='flex flex-col space-y-2 mt-3'>
@@ -83,7 +81,7 @@ const ProductCard = () => {
             </div>
             <div style={{backgroundColor:'#25D366'}} className='flex items-center justify-center p-2 cursor-pointer mt-3 text-white uppercase text-xs tracking-wider font-semibold'>order on whatsapp</div>
         </div>
-        <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>Sold by {product?.data?.sold_by}</footer>
+        <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>{product?.data?.sold_by && "Sold by"} {product?.data?.sold_by}</footer>
     </div>
   )
 }

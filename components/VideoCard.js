@@ -3,7 +3,9 @@ import Image from "next/legacy/image";
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 import numeral from 'numeral';
-import noAvatar from '../media/noimage.webp'
+// import ReactTooltip from 'react-tooltip';
+import noAvatar from '../public/media/noimage.webp'
+import thumbnail from '../public/media/dukaflani-thumbnail-default.png'
 import { useAddViewMutation } from '../redux/features/videos/videosApiSlice';
 import { formatDistanceStrict } from 'date-fns';
 import { useSelector } from 'react-redux';
@@ -43,12 +45,14 @@ const VideoCard = ({ video }) => {
 
 
   return (
+    <>
         <article onClick={() => handleCurrentVideo(video?.id)} className='h-64 cursor-pointer'>
-            <div className='h-4/6 relative rounded-md'>
+            <div className='h-4/6 relative rounded-md bg-gray-100'>
                 <Image 
-                    src={video?.thumbnail}
+                    src={!video?.thumbnail ? thumbnail : video?.thumbnail}
                     layout="fill"
                     objectFit='cover'
+                    alt={video?.title}
                   />
             </div>
             <div className='h-2/6 flex space-x-1 pt-2'>
@@ -65,7 +69,7 @@ const VideoCard = ({ video }) => {
                 <div className='w-10/12'>
                     <Link legacyBehavior href={`/watch/[videoid]?videoid=${video?.id}`}>
                         <a title={video?.title}>
-                            <div className='h-3/5 font-semibold leading-4 text-gray-700 tracking-tight cursor-pointer'>{video?.title}</div>
+                            <div className='h-3/5 font-semibold leading-4 text-gray-700 tracking-tight cursor-pointer text-sm'>{video?.title}</div>
                         </a>
                     </Link>
                     <div className='h-2/5'>
@@ -83,7 +87,13 @@ const VideoCard = ({ video }) => {
                     </div>
                 </div>
             </div>
+        {/* <div>
+            <ReactTooltip />
+        </div> */}
         </article>
+
+    </>
+
   )
 }
 

@@ -1,12 +1,12 @@
+import Head from 'next/head'
 import React from 'react'
-import Poster from '../../media/g-like-that.png'
-import logoLight from '../../branding/dukaflani-logo-blue-medium.png'
+import Poster from '../../public/media/g-like-that.png'
+import logoLight from '../../public/branding/dukaflani-logo-blue-medium.png'
 import Button from '../../components/reuseable-components/Button'
 import InputFieldPassword from '../../components/reuseable-components/InputFieldPassword'
 import InputField from '../../components/reuseable-components/InputField'
 import Image from "next/legacy/image";
 import LoginComponent from '../../components/LoginComponent'
-import Head from 'next/head'
 
 
 

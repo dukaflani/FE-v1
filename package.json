@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.12",
     "@reduxjs/toolkit": "^1.8.5",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -23,6 +24,7 @@
     "react-redux": "^8.0.4",
     "react-show-more-text": "^1.6.1",
     "react-sidebar": "^3.0.2",
+    "react-tooltip": "^4.5.1",
     "slugify": "^1.6.5"
   },
   "devDependencies": {

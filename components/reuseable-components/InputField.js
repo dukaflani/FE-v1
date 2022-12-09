@@ -6,7 +6,7 @@ const InputField = ({ primaryState, setPrimaryState, placeholderText, title, hel
     <>
     <div className="text-sm font-medium tracking-tight text-gray-800 px-1">{title}{mandatory && " *"}</div>
      <input 
-        value={primaryState} 
+        value={!primaryState ? ' ' : primaryState } 
         onChange={(e) => setPrimaryState(e.target.value)}
         ref={ref} 
         className='w-full bg-gray-100 border-none focus:ring-transparent focus:border-none' 

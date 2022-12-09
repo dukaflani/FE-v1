@@ -2,8 +2,8 @@ import React from 'react'
 import { useFetchVideosQuery } from '../redux/features/videos/videosApiSlice'
 import VideoCard from './VideoCard'
 
-const VideoCardMapPage = () => {
-  const { data: videos } = useFetchVideosQuery()
+const VideoCardMapPage = ({ videos }) => {
+  // const { data: videos } = useFetchVideosQuery()
 
   return (
     <>

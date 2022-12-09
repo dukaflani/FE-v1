@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useAddLyricsMutation, useAddLyricsVerseMutation, useFetchCreatedLyricsVersesMutation } from '../redux/features/videos/videosApiSlice'
 import slugify from 'slugify'
+import { verseChoices } from '../data/verses'
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
 import TextAreaField from './reuseable-components/TextAreaField'
 
 const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
-    const verseChoices = ['Intro', 'Pre-chorous', 'Chorous', 'Verse', 'Bridge', 'Outro']
     const [lyricsTitle, setLyricsTitle] = useState('')
     const [mainVocals, setMainVocals] = useState('')
     const [bgVocals, setBgVocals] = useState('')

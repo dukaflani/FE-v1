@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import AlbumInfoInput from './AlbumInfoInput'
+import EventInfoInput from './EventInfoInput'
 import GenreInfoInput from './GenreInfoInput'
 import LyricsInfoInput from './LyricsInfoInput'
 import ProductInfoInput from './ProductInfoInput'
@@ -30,7 +31,8 @@ const UploadVideo = ({ videoTitle, setVideoTitle, currentInput, setCurrentInput 
             <div className={currentInput == 3 ? activeStyles : regularStyles} onClick={() => setCurrentInput(3)}>Lyrics</div>
             <div className={currentInput == 4 ? activeStyles : regularStyles} onClick={() => setCurrentInput(4)}>Skiza</div>
             <div className={currentInput == 5 ? activeStyles : regularStyles} onClick={() => setCurrentInput(5)}>Album</div>
-            <div className={currentInput == 6 ? activeStyles : regularStyles} onClick={() => setCurrentInput(6)}>Genre</div>
+            <div className={currentInput == 6 ? activeStyles : regularStyles} onClick={() => setCurrentInput(6)}>Event</div>
+            <div className={currentInput == 67 ? activeStyles : regularStyles} onClick={() => setCurrentInput(7)}>Genre</div>
         </div>
         <div className='w-9/12'>
             {
@@ -66,7 +68,8 @@ const UploadVideo = ({ videoTitle, setVideoTitle, currentInput, setCurrentInput 
                     3: <LyricsInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
                     4: <SkizaInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
                     5: <AlbumInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
-                    6: <GenreInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                    6: <EventInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                    7: <GenreInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
                 }[currentInput]
             }
         </div>

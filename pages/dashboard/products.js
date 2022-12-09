@@ -1,14 +1,26 @@
 import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
+import { useSelector } from 'react-redux'
+import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
 import { TvIcon as TvSolid, BuildingStorefrontIcon as StoreSolid, TicketIcon as TicketSolid } from '@heroicons/react/24/solid'
 import SidebarNav from '../../components/SidebarNav'
 import MyProducts from '../../components/MyProducts'
 import Navigation from '../../components/Navigation'
+import { useFetchUserProductsQuery } from '../../redux/features/videos/videosApiSlice'
 
 const products = () => {
     const router = useRouter()
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
+
+    const queryParams = {
+      user: currentUser,
+    }
+
+    const { data: userProducts, isLoading } = useFetchUserProductsQuery(queryParams)
+    const numOfProducts = userProducts?.data?.length
+
 
   return (
     <SidebarNav>
@@ -25,9 +37,9 @@ const products = () => {
               <ul className='space-y-10'>
                 <li onClick={() => router.push("/dashboard")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
-                    <TvIcon className="w-6 h-6" />
+                    <RectangleGroupIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>My Videos</div>
+                  <div className='text-sm'>Dashboard</div>
                 </li>
                 <li onClick={() => router.push("/dashboard/products")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
@@ -41,7 +53,7 @@ const products = () => {
                   </div>
                   <div className='text-sm'>My Events</div>
                 </li>
-                <li onClick={() => router.push("/dashboard/view")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push("/dashboard/more-items")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <ChevronDoubleRightIcon className="w-6 h-6" />
                   </div>
@@ -56,16 +68,20 @@ const products = () => {
             <div className='mb-2 uppercase font-semibold flex items-center justify-between pr-10'>
                 <div>
                     <div>My Products</div>
-                    <div className='text-xs text-gray-600 font-normal'>6 products</div>
+                    <div className='text-xs text-gray-600 font-normal'>{!numOfProducts ? '0' : numOfProducts} {numOfProducts == 1 ? "product" : "products"}</div>
                 </div>
                 <div onClick={() => router.push("/dashboard/upload")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Page</div>
             </div>
-            {true ? 
+            {!isLoading && numOfProducts != 0 ? 
             (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>
-                {[...Array(5).keys()].map((myItem, i) => (
-                    <MyProducts key={i}/>
+                {[...Array(numOfProducts).keys()].map((myItem, i) => (
+                    <MyProducts product={userProducts?.data[i]} key={i}/>
                 ))}
-            </div>) : (<div>You do not have any products yet...</div>)
+            </div>) : (
+            <>
+              {isLoading ? <div>Loading your <strong>products</strong>. Please wait...</div> : <div>You do not have any <strong>products</strong> yet...</div>}
+            </>
+              )
             }   
           </div>
         </section>

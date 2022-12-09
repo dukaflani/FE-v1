@@ -5,6 +5,7 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import AlbumTrack from './AlbumTrack'
 import { useSelector } from 'react-redux'
 import { useFetchAlbumQuery, useFetchAlbumTracksQuery } from '../redux/features/videos/videosApiSlice'
+import cover from '../public/media/dukaflani-cover-default.png'
 
 const AlbumTracksPage = () => {
     const { video } = useSelector((state) => state.videos)
@@ -29,16 +30,16 @@ const AlbumTracksPage = () => {
     <div className='px-5'>
     <div className='text-sm uppercase tracking-tighter text-gray-800 font-semibold'>More from the {album?.data?.album_type}</div>
     <div className='text-sm mb-5 tracking-tighter text-gray-700'>Explore {album?.data?.title} the {album?.data?.album_type} from {video?.details?.stage_name}</div>
-        <div className='p-2 bg-white border-b shadow-sm'>
+        {album?.data?.id && <div className='p-2 bg-white border-b shadow-sm'>
          <div className='mb-5'>
             <div className='flex mb-5'>
                 <div className='w-1/3'>
-                <div className='relative h-24 w-full'>
-                        <Image
-                            src={album?.data?.cover}
+                    <div className='relative h-24 w-full'>
+                        {album?.data?.cover && <Image
+                            src={!album?.data?.cover ? cover : album?.data?.cover}
                             layout="fill"
                             objectFit='cover'
-                            />
+                            />}
                     </div>
                 </div>
                 <div className='w-2/3 flex flex-col justify-end pl-2'>
@@ -60,7 +61,8 @@ const AlbumTracksPage = () => {
         {[...Array(albumTracks?.data?.length).keys()].map((albumTrack, i) => (
             <AlbumTrack track={albumTracks?.data[i]} key={i}/>
         ))}
-        </div>
+        </div>}
+        {!album?.data?.id && <div className='text-sm tracking-tight leading-4 text-gray-800'>No music collection found...</div>}
     <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} {video?.details?.stage_name}</footer>
     </div>
   )

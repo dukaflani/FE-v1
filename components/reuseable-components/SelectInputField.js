@@ -4,7 +4,7 @@ const SelectInputField = ({ primaryState, setPrimaryState, name, data, selectTit
   onHelperTextLinkClick, helperTextLink, mandatory }) => {
   return <>
   <div className="text-sm font-medium tracking-tight text-gray-800 px-1">{fieldTitle}{mandatory && " *"}</div>
-      <select value={primaryState} onChange={(e) => setPrimaryState(e.target.value)} className='w-full bg-gray-100 border-gray-100 focus:ring-transparent focus:border-gray-100 cursor-pointer bg-gray-100' name={name} id={name}>
+      <select value={primaryState} onChange={(e) => setPrimaryState(e.target.value)} className='w-full bg-gray-100 border-gray-100 focus:ring-transparent focus:border-gray-100 cursor-pointer' name={name} id={name}>
           <option value="">{selectTitle}</option>
           {data?.map((dataItem, i) => (
               <option className='cursor-pointer' key={i} value={dataItem}>{dataItem?.replace(/-/g, " ")}</option>

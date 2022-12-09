@@ -4,9 +4,9 @@ import Image from "next/legacy/image";
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserProfile } from '../redux/features/auth/authSlice'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
-import logoLight from '../branding/dukaflani-blue-black-logo-large.png'
+import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
 import { useFetchUserProfileQuery } from '../redux/features/videos/videosApiSlice'
-import noAvatar from '../media/noimage.webp'
+import noAvatar from '../public/media/noimage.webp'
 
 const Navbar = ({ myAvatar }) => {
   const dispatch = useDispatch()

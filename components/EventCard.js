@@ -1,20 +1,39 @@
-import React from 'react'
-import { MapPinIcon } from '@heroicons/react/24/outline'
-import { getYear, getMonth, getDay, getHours, getMinutes } from 'date-fns'
+import React, { useState } from 'react'
+import { MapPinIcon, CalendarIcon } from '@heroicons/react/24/outline'
 import ShowMoreText from "react-show-more-text";
+import Modal from 'react-modal'
+import { months } from '../data/month';
+import EventModalContent from './EventModalContent';
 
-const EventCard = ({ event }) => {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+Modal.setAppElement("#__next")
+
+
+const EventCard = ({ event, isFirst }) => {
+    const [modalOpen, setModalOpen] = useState(false)
+
+
     const date = event?.date
-    const year = getYear(new Date(event?.date))
-    const month = getMonth(new Date(event?.date))
-    const monthFormatted = months[month - 1]
-    const day = getDay(new Date(event?.date))
-    const hours = getHours(new Date(event?.date))
-    const minutes = getMinutes(new Date(event?.date))
+    const time = event?.time
+    const dateArray = date?.split("-").map(Number);
+    const timeArray = time?.split(":").map(Number);
+    const year = event?.date ? dateArray[0] : null
+    const month = event?.date ? dateArray[1] : null
+    const monthWithoutLeadingZero = parseInt(month,10)
+    const monthFormatted =  months[monthWithoutLeadingZero - 1]
+    const day = event?.date ? dateArray[2] : null
+    const hours = event?.time ? timeArray[0] : null
+    const minutes = event?.time ? timeArray[1] : null
+
 
 
   return (
+    <>
+    { isFirst == 0 && <div className='flex justify-end' >
+        <div className='w-5/12 bg-gray-500 text-white flex items-center justify-end px-1 uppercase space-x-2 animate-pulse'>
+            <p className='text-xs'>Latest Event</p>
+            <CalendarIcon className='h-5 w-5'/>
+        </div>
+    </div>}
     <div className='p-2 bg-white shadow-sm border-b mb-5 space-y-2'>
         <div className='flex'>
             <div className='w-2/12 bg-blue-600 flex items-center justify-center'>
@@ -37,8 +56,8 @@ const EventCard = ({ event }) => {
                     {event?.description}
         </ShowMoreText>
         <br/>
-        <a href={event?.ticket_link ? event?.ticket_link : '#' } target={event?.ticket_link && "_blank"} rel="noopener">
-            <div className='p-1 border flex items-center justify-center cursor-pointer'>
+        {/* <a href={event?.ticket_link ? event?.ticket_link : '#' } target={event?.ticket_link && "_blank"} rel="noopener"> */}
+            <div className='p-1 border flex items-center justify-center'>
                 <div className='w-2/12 flex flex-col items-center justify-center border-r-2 border-gray-700'>
                     <div className='text-sm flex items-center justify-center tracking-tight font-extrabold text-gray-600 uppercase'>{monthFormatted}</div>
                     <div className='text-sm flex items-center justify-center tracking-tight text-gray-800 -mt-1'>{day < 10 ? `0${day}` : day}</div>
@@ -48,11 +67,23 @@ const EventCard = ({ event }) => {
                     <div className='text-xs tracking-tight line-clamp-1 -mt-0.5 text-gray-500'>{day < 10 ? `0${day}` : day} {monthFormatted} {year} &bull; {hours < 10 ? `0${hours}` : hours}:{minutes < 10 ? `0${minutes}` : minutes}hrs</div>
                     <div className='text-xs tracking-tight line-clamp-1 -mt-0.5 text-blue-600'>{event?.venue}</div>
                 </div>
-                <div className='w-2/12 flex items-center justify-center uppercase text-blue-600 text-xs tracking-tight cursor-pointer'>{event?.ticket_link && "Tickets"}</div>
+                <div onClick={() => setModalOpen(true)} className='w-2/12 flex items-center justify-center uppercase text-blue-600 text-xs tracking-tight cursor-pointer'>{event?.ticket_link ? "Tickets" : "Details"}</div>
             </div>
-        </a>
+        {/* </a> */}
         <div className='text-xs text-blue-500 uppercase tracking-tight'>{event?.event_type}</div>
     </div>
+
+
+    <Modal 
+          isOpen={modalOpen}
+          style={{content:{backgroundColor:'transparent', border:'none', display:'flex', alignItems:'center', justifyContent:'center'}, 
+                  overlay:{backgroundColor: "rgba(0, 0, 0, 0.3)", zIndex:'99999'}}}
+          >
+          <div className='bg-white shadow w-7/12 h-5/6'>
+            <EventModalContent setModalOpen={setModalOpen} event={event} />
+          </div>
+        </Modal>
+    </>
   )
 }
 

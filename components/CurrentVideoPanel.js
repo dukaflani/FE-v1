@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router'
+// import ReactTooltip from 'react-tooltip';
 import { useSelector } from 'react-redux';
 import numeral from 'numeral'
-import noAvatar from '../media/noimage.webp'
-import poster from '../media/MED.png'
+import noAvatar from '../public/media/noimage.webp'
+import poster from '../public/media/MED.png'
 import { LinkIcon, ShoppingBagIcon, MicrophoneIcon, DevicePhoneMobileIcon, MusicalNoteIcon, CalendarDaysIcon } from '@heroicons/react/24/outline'
 import StreamingLinks from './streamingLinks'
 import ProductCard from './ProductCard'
@@ -38,8 +39,8 @@ const CurrentVideoPanel = () => {
 
 
     const fanbase2 = fancount?.data?.length
-          let fanbase3 = ''
-          fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
+    let fanbase3 = ''
+    fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
 
       
 
@@ -79,7 +80,7 @@ const CurrentVideoPanel = () => {
             <div className='w-2/12 flex items-center justify-center'>
                 <div className='relative h-12 w-12'>
                     <Image
-                        src={currentvideo?.data?.avatar ? currentvideo?.data?.avatar : noAvatar}
+                        src={currentvideo?.data?.profile_avatar ? currentvideo?.data?.profile_avatar : noAvatar}
                         layout="fill"
                         objectFit='cover'
                         className='rounded-full'
@@ -88,7 +89,7 @@ const CurrentVideoPanel = () => {
             </div>
             <div className='w-8/12 flex flex-col items-start justify-center'>
                 <div className='flex space-x-1'>
-                    <div className='text-base tracking-tighter font-medium text-gray-900 line-clamp-2'>{currentvideo?.data?.stage_name ? currentvideo?.data?.stage_name : `${currentvideo?.data?.first_name} ${currentvideo?.data?.last_name}`}</div>
+                    <div className='text-base tracking-tighter font-medium text-gray-900 line-clamp-2'>{currentvideo?.data?.stage_name ? currentvideo?.data?.stage_name : ''}</div>
                     {currentvideo?.data?.verified && 
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-blue-600">
@@ -111,6 +112,7 @@ const CurrentVideoPanel = () => {
                         src={poster}
                         layout="fill"
                         objectFit='contain'
+                        priority
                         />
                 </div>
             </div>
@@ -152,10 +154,11 @@ const CurrentVideoPanel = () => {
                 2 : <LyricsPage/>,
                 3 : <SkizaTunesPage/>,
                 4 : <AlbumPage/>,
-                5 : <EventsPage/>,
+                5 : <EventsPage />,
             }[activeTab]
            }
         </div>
+        {/* <ReactTooltip /> */}
     </div>
   )
 }

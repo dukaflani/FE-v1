@@ -1,41 +1,50 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Image from "next/legacy/image";
-import { HomeIcon, RectangleGroupIcon, UserCircleIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
-import { HomeIcon as HomeSolid, RectangleGroupIcon as RGSolid, UserCircleIcon as UCSolid, Cog6ToothIcon as C6Solid } from '@heroicons/react/24/solid'
+import { HomeIcon, RectangleGroupIcon, UserCircleIcon, Cog6ToothIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline'
+import { HomeIcon as HomeSolid, RectangleGroupIcon as RGSolid, UserCircleIcon as UCSolid, Cog6ToothIcon as C6Solid, 
+    CloudArrowUpIcon as CloudArrowUpIconSolid } from '@heroicons/react/24/solid'
 import { useDispatch, useSelector } from 'react-redux'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
-import logoLight from '../branding/dukaflani-blue-black-logo-large.png'
+import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
 
 
 const SidebarContent = () => {
     // const { sideNavOpen } = useSelector((state) => state.navigation)
+    const router = useRouter()
+    const destination = router.pathname
     const [activeLink, setActiveLink] = useState("Home")
     const navLinkItems = [
         {
             title: "Home",
+            link:'/',
             iconOutline: <HomeIcon className="w-6 h-6" />,
             iconSolid: <HomeSolid className="w-6 h-6" />,
         },
         {
             title: "Dashboard",
+            link:'/dashboard',
             iconOutline: <RectangleGroupIcon className="w-6 h-6" />,
             iconSolid: <RGSolid className="w-6 h-6" />,
         },
         {
             title: "Profile",
+            link:'/profile',
             iconOutline: <UserCircleIcon className="w-6 h-6" />,
             iconSolid: <UCSolid className="w-6 h-6" />,
         },
         {
-            title: "Settings",
-            iconOutline: <Cog6ToothIcon className="w-6 h-6" />,
-            iconSolid: <C6Solid className="w-6 h-6" />,
+            title: "Upload",
+            link:'/dashboard/upload',
+            iconOutline: <CloudArrowUpIcon className="w-6 h-6" />,
+            iconSolid: <CloudArrowUpIconSolid className="w-6 h-6" />,
         },
     ]
     const dispatch = useDispatch()
     const regularLinkStyles = "flex items-center justify-start gap-4 pl-3 py-3 hover:bg-gray-100 cursor-pointer"
     const activeLinkStyles = "flex items-center justify-start gap-4 pl-3 py-3 bg-gray-200 font-medium hover:bg-gray-100 cursor-pointer"
+
 
   return (
     <aside className='flex flex-col h-screen' onClick={() => dispatch(togglesideNavOpen())}>
@@ -61,12 +70,12 @@ const SidebarContent = () => {
             <nav className='flex pt-20 w-full border-b pb-5'>
                 <ul className="w-full">
                     {navLinkItems.map((navLinkItem, i) => (
-                        <li key={i} onClick={() => setActiveLink(navLinkItem.title)} className={activeLink == navLinkItem.title ? activeLinkStyles : regularLinkStyles}>
-                            <div>
-                                {activeLink == navLinkItem.title ? navLinkItem.iconSolid : navLinkItem.iconOutline}
-                            </div>
-                            <div>{navLinkItem.title}</div>
-                        </li>
+                        <li key={i} onClick={() => router.push(navLinkItem.link)} className={destination == navLinkItem.link ? activeLinkStyles : regularLinkStyles}>
+                                    <div>
+                                        {destination == navLinkItem.link ? navLinkItem.iconSolid : navLinkItem.iconOutline}
+                                    </div>
+                                    <div>{navLinkItem.title}</div>
+                            </li>
                     ))}
                 </ul>
             </nav>

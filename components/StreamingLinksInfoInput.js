@@ -3,13 +3,12 @@ import { TrashIcon,  } from '@heroicons/react/24/outline'
 import { useAddStreamingLinksHolderMutation, useAddStreamingLinksMutation,
     useFetchCreatedStreamingLinksMutation,
  } from '../redux/features/videos/videosApiSlice'
+import { platforms } from '../data/streamingPlatforms'
 import { useSelector } from 'react-redux'
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
 
 const StreamingLinksInfoInput = ({ setCurrentInput, currentInput }) => {
-    const platforms = ["Select one", "YouTube", "Spotify", "Boomplay", "Amazon-Music", "Apple-Music", "iTunes", "Audiomack", 
-    "Google-Play", "Soundcloud", "YouTube-Music", "Deezer", "Napster", "Tik-Tok", "Tidal", "Qobuz", "Pandora", ]
     const [title, setTitle] = useState('')
     const [createdLink, setCreatedLink] = useState(null)
     const [streamingService, setStreamingService] = useState("")
@@ -36,7 +35,7 @@ const StreamingLinksInfoInput = ({ setCurrentInput, currentInput }) => {
         "streaming_links": linkHolderId,
         "streaming_service": platformName,
         "link": streamingLink,
-        "logo": `${process.env.NEXT_PUBLIC_BASE_URL}/media/streaming_service/logos/${streamingService}.png`,
+        "logo": `${process.env.NEXT_PUBLIC_BASE_URL}../public/media/streaming_service/logos/${streamingService}.png`,
     }
     
     const createdStreamingLinksHolderId = {

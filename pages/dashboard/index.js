@@ -1,14 +1,27 @@
 import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
-import { TvIcon as TvSolid } from '@heroicons/react/24/solid'
+import { useSelector } from 'react-redux'
+import { useFetchUserVideosQuery } from '../../redux/features/videos/videosApiSlice'
+import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
+import { TvIcon as TvSolid, RectangleGroupIcon as RGSolid } from '@heroicons/react/24/solid'
 import SidebarNav from '../../components/SidebarNav'
 import MyVideos from '../../components/MyVideos'
 import Navigation from '../../components/Navigation'
 
 const dashboard = () => {
   const router = useRouter()
+  const { user } = useSelector((state) => state.auth)
+  const currentUser = user?.info?.id
+
+  const queryParams = {
+    user: currentUser
+  }
+
+const { data: myVideos } = useFetchUserVideosQuery(queryParams)
+
+const numOfVideos = !myVideos?.data ? ' ' : myVideos?.data?.length
+
 
   return (
     <SidebarNav>
@@ -25,9 +38,9 @@ const dashboard = () => {
               <ul className='space-y-10'>
                 <li className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
-                    <TvSolid className="w-6 h-6" />
+                    <RGSolid className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>My Videos</div>
+                  <div className='text-sm'>Dashboard</div>
                 </li>
                 <li onClick={() => router.push("/dashboard/products")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
@@ -41,7 +54,7 @@ const dashboard = () => {
                   </div>
                   <div className='text-sm'>My Events</div>
                 </li>
-                <li onClick={() => router.push("/dashboard/view")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push("/dashboard/more-items")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <ChevronDoubleRightIcon className="w-6 h-6" />
                   </div>
@@ -56,16 +69,16 @@ const dashboard = () => {
             <div className='mb-2 uppercase font-semibold flex items-center justify-between pr-10'>
                 <div>
                     <div>My Videos</div>
-                    <div className='text-xs text-gray-600 font-normal'>10 videos</div>
+                    <div className='text-xs text-gray-600 font-normal'>{numOfVideos} {numOfVideos == 1 ? "video" : 'videos'}</div>
                 </div>
                 <div onClick={() => router.push("/dashboard/upload")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Page</div>
             </div>
             {true ? 
             (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>
-                {[...Array(5).keys()].map((myItem, i) => (
-                    <MyVideos key={i}/>
+                {[...Array(numOfVideos).keys()].map((myItem, i) => (
+                    <MyVideos video={myVideos?.data[i]} key={i}/>
                 ))}
-            </div>) : (<div>You do not have any videos yet...</div>)
+            </div>) : (<div>You do not have any <strong>videos</strong> yet...</div>)
             }   
           </div>
         </section>

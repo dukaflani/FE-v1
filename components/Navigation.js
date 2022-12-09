@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from 'react-modal'
 import { setCredentials } from '../redux/features/auth/authSlice'
-import { useGetProfileQuery } from '../redux/features/videos/videosApiSlice'
+import { useFetchAccessTokenQuery, useGetProfileQuery } from '../redux/features/videos/videosApiSlice'
 import Navbar from './Navbar'
 import SignInRequestBottomBar from './SignInRequestBottomBar'
 import SignInModalContent from './SignInModalContent'
@@ -11,8 +11,11 @@ Modal.setAppElement("#__next")
 
 const Navigation = () => {
 const dispatch = useDispatch()  
+const [openBottomLoginRequestBar, setOpenBottomLoginRequestBar] = useState(false)
 const { signInModalOpen } = useSelector((state) => state.navigation)
 const { data: profile } = useGetProfileQuery()
+const { data: accessToken, isLoading } = useFetchAccessTokenQuery()
+
 
 
 useEffect(() => {
@@ -22,14 +25,16 @@ useEffect(() => {
 }, [profile?.data])
 
 
+
 const { userProfile } = useSelector((state) => state.auth)
 const userAvatar = userProfile?.info ? userProfile?.info[0]?.profile_avatar : null
+
 
 
   return (
     <>
         <Navbar myAvatar={userAvatar}/>
-        {!profile && <SignInRequestBottomBar/>}
+        {!isLoading && !accessToken && <SignInRequestBottomBar/>}
         <Modal 
           isOpen={signInModalOpen}
           style={{content:{backgroundColor:'transparent', border:'none', display:'flex', alignItems:'center', justifyContent:'center'}, 

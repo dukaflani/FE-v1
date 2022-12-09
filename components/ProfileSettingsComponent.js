@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import FormData from 'form-data'
+import { countriesChoices } from '../data/countries'
 import InputField from './reuseable-components/InputField'
 import TextAreaField from './reuseable-components/TextAreaField'
+import SelectInputFieldWithKeysLocal2 from './reuseable-components/SelectInputFieldWithKeysLocal2'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 import { useFetchAccessTokenQuery,  useFetchUserProfileQuery } from '../redux/features/videos/videosApiSlice'
 
@@ -21,6 +23,7 @@ const ProfileSettingsComponent = () => {
 
 
   const [profileImage, setProfileImage] = useState('')
+  const [country, setCountry] = useState('')
   const [management, setManagement] = useState('')
   const [bookingEmail, setBookingEmail] = useState('')
   const [bookingContact, setBookingContact] = useState('')
@@ -38,6 +41,7 @@ const ProfileSettingsComponent = () => {
 
   useEffect(() => {
     setManagement(userProfile?.management)
+    setCountry(userProfile?.nationality)
     setBookingEmail(userProfile?.booking_email)
     setBookingContact(userProfile?.booking_contact)
     setAbout(userProfile?.about)
@@ -51,6 +55,7 @@ const ProfileSettingsComponent = () => {
   }, [profile])
 
 
+
   const refreshToken = `JWT ${accessToken?.access}`
 
     const myHeaders = new Headers();
@@ -58,6 +63,7 @@ const ProfileSettingsComponent = () => {
 
       const profileUpdateInfo = new FormData();
       profileUpdateInfo.append("management", management);
+      profileUpdateInfo.append("nationality", country);
       profileUpdateInfo.append("profile_avatar", profileImage);
       profileUpdateInfo.append("booking_email", bookingEmail);
       profileUpdateInfo.append("booking_contact", bookingContact);
@@ -95,6 +101,20 @@ const ProfileSettingsComponent = () => {
     <div className='pt-20 w-full'>
       <div className='w-5/12 mx-auto bg-white shadow p-5 space-y-4'>
         <div className='text-gray-800 font-bold tracking-tight uppercase'>Profile Settings</div>
+        <div>
+            <SelectInputFieldWithKeysLocal2
+                primaryState={country} 
+                setPrimaryState={setCountry} 
+                mandatory={true}
+                name='countries-choices'
+                data={countriesChoices}
+                selectTitle='Your country of origin...'
+                fieldTitle="Nationality"
+                // helperText="helper"
+                // onHelperTextLinkClick={}
+                // helperTextLink="here"
+            />
+        </div>
         <div>
           <InputField
             primaryState={management}

@@ -1,16 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import Image from "next/legacy/image";
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
 import ShowMoreText from "react-show-more-text";
-import noAvatar from '../media/noimage.webp'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
+import noAvatar from '../public/media/noimage.webp'
+import thumbnail from '../public/media/dukaflani-player-default.png'
 import VideoComments from './VideoComments';
+import { useAddCommentMutation } from '../redux/features/videos/videosApiSlice';
 
 const CurrentVideoPlayer = () => {
+    const [commentBody, setCommentBody] = useState('')
+    const [createdComment, setCreatedComment] = useState(null)
+    const [commentErrors, setCommentErrors] = useState(null)
+    const [fieldError, setFieldError] = useState('')
+
+    const [ addComment, { isLoading } ] = useAddCommentMutation()
+
     const { video } = useSelector((state) => state.videos)
     const { user } = useSelector((state) => state.auth)
     const fullName = `${user?.info?.first_name} ${user?.info?.last_name}`
+
+    const { userProfile } = useSelector((state) => state.auth)
+    const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
 
     const desc = video?.details?.description
     const hashTags = desc?.split(' ')
@@ -22,11 +35,44 @@ const CurrentVideoPlayer = () => {
     const view2 = video?.details?.views_count
           let view3 = numeral(view2).format('0,0')
 
+
+          const newComment = {
+            "body": commentBody,
+            "video": video?.details?.id,
+            "customuserprofile": userProfileId,
+        }
+    
+        const handleAddComment = async () => {
+            if (commentBody && video?.details?.id && userProfileId) {
+                try {
+                    setCreatedComment(await addComment(newComment))
+                    setCommentBody('')
+                } catch (error) {
+                    setCommentErrors(error)
+                    setTimeout(() => {
+                        setCommentErrors(null)
+                    }, 5000);
+                }
+                
+            } else {
+                setFieldError('Please fill in all the fields')
+            }
+        }
+
+
+
   return (
     <article>
         <div>
             <div className='w-full h-[425px]'>
-            <iframe width="100%" height="100%" src={`https://www.youtube.commmm/embed/${video?.details?.youtube_id}?autoplay=1&loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            {!video?.details?.youtube_id ? 
+            <div className='relative w-full h-full'>
+                <Image 
+                    src={thumbnail}
+                    layout="fill"
+                    objectFit='cover'
+                  />
+            </div> : <iframe width="100%" height="100%" src={`https://www.youtube.commmm/embed/${video?.details?.youtube_id}?autoplay=1&loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>}
             </div>
             <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.details?.genre_title}</div>
             <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.details?.title}</h1>
@@ -70,30 +116,40 @@ const CurrentVideoPlayer = () => {
                 </Linkify>
             </div>
             <div className='w-full text-sm mt-4'>{video?.details?.comment_count}  {video?.details?.comment_count == 1 ? 'Comment' : 'Comments'}</div>
-            <hr className='my-1'/>
+            <hr className='mt-2 mb-10'/>
             <div className='w-full flex items-center justify-center mt-3 space-x-3 mb-5'>
                 <div className='w-1/12 flex items-center justify-center'>
                     <div className='relative h-12 w-12'>
                         <Image
-                            src={user?.info?.avatar ? user?.info?.avatar : noAvatar}
+                            src={video?.details?.profile_avatar ? video?.details?.profile_avatar : noAvatar}
                             layout="fill"
                             objectFit='cover'
                             className='rounded-full'
                             />
                     </div>
                 </div>
-                <div className='w-9/12 flex items-center justify-center border-b hover:border-b-black'>
+                <div className='w-9/12 flex items-center justify-center'>
                     <input 
-                        placeholder={user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name}` : `Comment as ${fullName}` : "Login to comment"} 
-                        className='w-full bg-transparent focus:outline-none py-1' 
+                        placeholder={user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} 
+                        className='w-full bg-transparent border-transparent border-2 border-b-gray-400 hover:border-b-gray-500 focus:border-b-gray-700 focus:border-x-transparent focus:border-t-transparent focus:outline-none ring-transparent focus:ring-transparent py-1' 
                         type="text" 
+                        value={commentBody}
+                        onChange={(e) => setCommentBody(e.target.value)}
                     />
                 </div>
                 <div className='w-2/12 flex items-center justify-center'>
-                    <button className='bg-gray-800 text-white uppercase text-sm p-2 font-semibold tracking-wider'>Comment</button>
+                    <ApiButtonWithSpinner
+                        loading={isLoading}
+                        title="COMMENT"
+                        onClick={handleAddComment}
+                        bgColor="bg-gray-800"
+                        hoverColor="hover:bg-gray-700"
+                        textColor="text-white"
+                    />
+                    {/* <button onClick={handleAddComment} className='bg-gray-800 text-white uppercase text-sm p-2 font-semibold tracking-wider'>Comment</button> */}
                 </div>
             </div>
-            <div className='mt-10'>
+            <div className='mt-10 mb-36'>
                 <VideoComments/>
             </div>
         </div>

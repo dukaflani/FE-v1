@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from "next/legacy/image";
 import { useSelector, useDispatch } from 'react-redux'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
-import logoLight from '../branding/dukaflani-blue-black-logo-large.png'
+import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
 
 const Sidenav = () => {
     const { sideNavOpen } = useSelector((state) => state.navigation)

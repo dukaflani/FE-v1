@@ -21,7 +21,7 @@ const CurrentVideo = () => {
     video_id: videoid,
 }
 
-  const { data: currentVideo } = useCurrentVideoQuery(queryParams)
+  const { data: currentVideo, isLoading } = useCurrentVideoQuery(queryParams)
 
   
   useEffect(() => {
@@ -42,10 +42,10 @@ const CurrentVideo = () => {
       <main className='pt-20'>
         <div className='flex max-w-6xl mx-auto space-x-5'>
             <section className='w-8/12'>
-              {true ? <CurrentVideoPlayer video={currentVideo} /> : <CurrentVideoPlayerSkeleton/>}
+              {!isLoading ? <CurrentVideoPlayer video={currentVideo} /> : <CurrentVideoPlayerSkeleton/>}
             </section>
             <section className='w-4/12'>
-              {true ? <CurrentVideoPanel video={currentVideo} /> : <CurrrentVideoPanelSkeleton/>}
+              {!isLoading ? <CurrentVideoPanel video={currentVideo} /> : <CurrrentVideoPanelSkeleton/>}
             </section>
         </div>
       </main>

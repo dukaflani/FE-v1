@@ -3,7 +3,7 @@ import EventsMapPage from './EventsMapPage'
 
 const EventsPage = () => {
   return (
-    <div><EventsMapPage/></div>
+    <div><EventsMapPage /></div>
   )
 }
 

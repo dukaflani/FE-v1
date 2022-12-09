@@ -3,7 +3,7 @@ import { useLeaveFanbaseMutation } from '../redux/features/videos/videosApiSlice
 
 const LeaveButton = ({ data }) => {
 
-  const deleteItem = null
+let deleteItem = null
 
 const [ leaveFanbase ] = useLeaveFanbaseMutation()
 
