@@ -40,7 +40,7 @@ const VideoCard = ({ video }) => {
 
     const handleCurrentVideo = async (id) => {
         await addView(newView);
-        router.push(`/watch/${id}`);
+        router.push(`/watch/${id}?tab=links`);
     }
 
 
