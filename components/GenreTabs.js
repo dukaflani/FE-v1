@@ -33,7 +33,7 @@ const GenreTabs = () => {
               >
                 <ChevronLeftIcon className='h-5 w-5'/>
           </button>
-            <div ref={genrePanel} className='text-gray-800 flex items-center justify-start flex-1 gap-3 py-3 whitespace-nowrap overflow-x-hidden'>
+            <div ref={genrePanel} className='text-gray-800 flex items-center justify-start flex-1 gap-3 pt-3 pb-2 whitespace-nowrap overflow-x-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent '>
               {data?.genres.map((genre, i) => (
                 <div key={i} onClick={() => setActiveTab(i)}  className={activeTab === i ? activeSyles : regularSyles}>{genre}</div>
                 ))}
