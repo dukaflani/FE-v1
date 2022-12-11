@@ -72,7 +72,7 @@ const events = () => {
                     <div>My Events</div>
                     <div className='text-xs text-gray-600 font-normal'>{!numOfEvents ? '0' : numOfEvents} {numOfEvents == 1 ? "event" : "events"}</div>
                 </div>
-                <div onClick={() => router.push("/dashboard/upload")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Page</div>
+                <div onClick={() => router.push("/dashboard/upload?item=event")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Event</div>
             </div>
             {!isLoading && numOfEvents != 0 ? 
             (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>

@@ -10,6 +10,7 @@ import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, Rec
 
 const uploadPage = () => {
     const router = useRouter()
+    const { item } = router.query
     const [videoTitle, setVideoTitle] = useState('')
     const [currentInput, setCurrentInput] = useState(0)
 
@@ -63,14 +64,14 @@ const uploadPage = () => {
                 </div>
                 {
                   {
-                    0:<div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Dashboard</div>,
-                    1:<div onClick={() => router.push("/dashboard/more-items")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Smart Links</div>,
-                    2:<div onClick={() => router.push("/dashboard/products")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Products</div>,
-                    3:<div onClick={() => router.push("/dashboard/more-items")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Lyrics</div>,
-                    4:<div onClick={() => router.push("/dashboard/more-items")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Skiza Tunes</div>,
-                    5:<div onClick={() => router.push("/dashboard/more-items")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Albums</div>,
-                    6:<div onClick={() => router.push("/dashboard/events")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Events</div>,
-                  }[currentInput]
+                    "video" :<div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Videos</div>,
+                    "smart-links" :<div onClick={() => router.push("/dashboard/more-items?view=smart-links")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Smart Links</div>,
+                    "product" :<div onClick={() => router.push("/dashboard/products?view=products")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Products</div>,
+                    "lyrics" :<div onClick={() => router.push("/dashboard/more-items?view=lyrics")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Lyrics</div>,
+                    "skiza-tunes" :<div onClick={() => router.push("/dashboard/more-items?view=skiza-tune")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Skiza Tunes</div>,
+                    "music-collection" :<div onClick={() => router.push("/dashboard/more-items?view=music-collection")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Albums</div>,
+                    "event" :<div onClick={() => router.push("/dashboard/events")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>My Events</div>,
+                  }[item]
                 }
             </div>
                 <UploadVideo currentInput={currentInput} setCurrentInput={setCurrentInput} videoTitle={videoTitle} setVideoTitle={setVideoTitle} />  

@@ -10,6 +10,7 @@ import MoreItemsWrapper from '../../../components/MoreItemsWrapper'
 
 const moreItems = () => {
     const router = useRouter()
+    const { view } = router.query
     const [videoTitle, setVideoTitle] = useState('')
     const [currentInput, setCurrentInput] = useState(0)
 
@@ -60,7 +61,14 @@ const moreItems = () => {
                 <div className='w-10/12'>
                     <div className='uppercase '>More Items</div>
                 </div>
-                <div onClick={() => router.push("/dashboard")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Dashboard</div>
+                {
+                  {
+                    "smart-links": <div onClick={() => router.push("/dashboard/upload?item=smart-links")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Smart Links</div>,
+                    "lyrics": <div onClick={() => router.push("/dashboard/upload?item=lyrics")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Lyrics</div>,
+                    "skiza-tune": <div onClick={() => router.push("/dashboard/upload?item=skiza-tunes")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Skiza Tune</div>,
+                    "music-collection": <div onClick={() => router.push("/dashboard/upload?item=music-collection")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Album</div>,
+                  }[view]
+                }
             </div>
                 <MoreItemsWrapper currentInput={currentInput} setCurrentInput={setCurrentInput} videoTitle={videoTitle} setVideoTitle={setVideoTitle} />  
           </div>

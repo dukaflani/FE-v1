@@ -71,7 +71,7 @@ const numOfVideos = !myVideos?.data ? ' ' : myVideos?.data?.length
                     <div>My Videos</div>
                     <div className='text-xs text-gray-600 font-normal'>{numOfVideos} {numOfVideos == 1 ? "video" : 'videos'}</div>
                 </div>
-                <div onClick={() => router.push("/dashboard/upload")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Page</div>
+                <div onClick={() => router.push("/dashboard/upload?item=video")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Video</div>
             </div>
             {currentUser ? 
             (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>

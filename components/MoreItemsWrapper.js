@@ -56,7 +56,6 @@ const MoreItemsWrapper = () => {
                     "skiza-tune" : <MySKizaTunes/>,
                     "music-collection" : <MyAlbums/>,
                 }[view]
-                // }[currentInput]
             }
         </div>
     </div>

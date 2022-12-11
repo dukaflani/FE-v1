@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import AlbumInfoInput from './AlbumInfoInput'
 import EventInfoInput from './EventInfoInput'
 import GenreInfoInput from './GenreInfoInput'
@@ -7,8 +8,11 @@ import ProductInfoInput from './ProductInfoInput'
 import SkizaInfoInput from './SkizaInfoInput'
 import StreamingLinksInfoInput from './StreamingLinksInfoInput'
 import VideoInfoInput from './VideoInfoInput'
+import Link from 'next/link'
 
 const UploadVideo = ({ videoTitle, setVideoTitle, currentInput, setCurrentInput }) => {
+    const router = useRouter()
+    const { item } = router.query
     const [songTitle, setSongTitle] = useState('')
     const [songGenre, setSongGenre] = useState('')
     const [youtubeVideoId, setYoutubeVideoId] = useState('')
@@ -25,19 +29,59 @@ const UploadVideo = ({ videoTitle, setVideoTitle, currentInput, setCurrentInput 
   return (
     <div className='flex space-x-4'>
         <div className='w-3/12 flex flex-col items-center justify-start uppercase text-sm font-medium tracking-tighter'>
-            <div className={currentInput == 0 ? activeStyles : regularStyles} onClick={() => setCurrentInput(0)}>Video Info</div>
-            <div className={currentInput == 1 ? activeStyles : regularStyles} onClick={() => setCurrentInput(1)}>Smart Links</div>
-            <div className={currentInput == 2 ? activeStyles : regularStyles} onClick={() => setCurrentInput(2)}>Product</div>
-            <div className={currentInput == 3 ? activeStyles : regularStyles} onClick={() => setCurrentInput(3)}>Lyrics</div>
-            <div className={currentInput == 4 ? activeStyles : regularStyles} onClick={() => setCurrentInput(4)}>Skiza</div>
-            <div className={currentInput == 5 ? activeStyles : regularStyles} onClick={() => setCurrentInput(5)}>Album</div>
-            <div className={currentInput == 6 ? activeStyles : regularStyles} onClick={() => setCurrentInput(6)}>Event</div>
-            <div className={currentInput == 67 ? activeStyles : regularStyles} onClick={() => setCurrentInput(7)}>Genre</div>
+            <Link
+                href={{
+                    pathname: `/dashboard/upload/`,
+                    query: { item: "video" },
+                }}
+                className={item == "video" ? activeStyles : regularStyles} >Video Info</Link>
+            <Link
+                href={{
+                    pathname: `/dashboard/upload/`,
+                    query: { item: "smart-links" },
+                }}
+                className={item == "smart-links" ? activeStyles : regularStyles} >Smart Links</Link>
+            <Link
+                href={{
+                    pathname: `/dashboard/upload/`,
+                    query: { item: "product" },
+                }}
+                className={item == "product" ? activeStyles : regularStyles} >Product</Link>
+            <Link
+                href={{
+                    pathname: `/dashboard/upload/`,
+                    query: { item: "lyrics" },
+                }}
+                className={item == "lyrics" ? activeStyles : regularStyles} >Lyrics</Link>
+            <Link
+                href={{
+                    pathname: `/dashboard/upload/`,
+                    query: { item: "skiza-tunes" },
+                }}
+                className={item == "skiza-tunes" ? activeStyles : regularStyles} >Skiza</Link>
+            <Link
+                href={{
+                    pathname: `/dashboard/upload/`,
+                    query: { item: "music-collection" },
+                }}
+                className={item == "music-collection" ? activeStyles : regularStyles} >Album</Link>
+            <Link
+                href={{
+                    pathname: `/dashboard/upload/`,
+                    query: { item: "event" },
+                }}
+                 className={item == "event" ? activeStyles : regularStyles} >Event</Link>
+            <Link
+                href={{
+                    pathname: `/dashboard/upload/`,
+                    query: { item: "genre" },
+                }}
+                 className={item == "genre" ? activeStyles : regularStyles} >Genre</Link>
         </div>
         <div className='w-9/12'>
             {
                 {
-                    0: <VideoInfoInput 
+                    "video" : <VideoInfoInput 
                             videoTitle={videoTitle} 
                             setVideoTitle={setVideoTitle} 
                             currentInput={currentInput} 
@@ -63,14 +107,14 @@ const UploadVideo = ({ videoTitle, setVideoTitle, currentInput, setCurrentInput 
                             videoAlbum={videoAlbum}
                             setVideoAlbum={setVideoAlbum}
                         />,
-                    1: <StreamingLinksInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
-                    2: <ProductInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
-                    3: <LyricsInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
-                    4: <SkizaInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
-                    5: <AlbumInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
-                    6: <EventInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
-                    7: <GenreInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
-                }[currentInput]
+                    "smart-links" : <StreamingLinksInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                    "product" : <ProductInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                    "lyrics" : <LyricsInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                    "skiza-tunes" : <SkizaInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                    "music-collection" : <AlbumInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                    "event" : <EventInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                    "genre" : <GenreInfoInput currentInput={currentInput} setCurrentInput={setCurrentInput} />,
+                }[item]
             }
         </div>
     </div>
