@@ -47,14 +47,13 @@ const Combobox = ({ setPrimaryState, placeholderText, data, title, helperText, h
                 </div>
             </div>
             <div className="px-2 text-xs text-gray-400 mt-1">{helperText}<span onClick={onHelperTextLinkClick} className='text-blue-700 font-medium cursor-pointer'>{` ${helperTextLink}`}</span></div>
-            {filteredData.length != 0 && 
+            {filteredData?.length != 0 && 
             <div className='mt-2 bg-white h-64 absolute w-64 overflow-hidden overflow-y-auto border scrollbar-thin scrollbar-track-white scrollbar-thumb-white'>
                 {filteredData?.slice(0, 15)?.map((item, i) => (
                     <div 
                         className='px-2 py-1 text-sm hover:bg-gray-100 cursor-pointer text-gray-700' 
                         key={i} 
                         onClick={() => {
-                            console.log("clicked genre value:", item.id);
                             setSearchPhrase(item.title);
                             setPrimaryState(item.id)
                             setFilteredData([]);

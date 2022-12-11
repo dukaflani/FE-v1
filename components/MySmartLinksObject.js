@@ -112,7 +112,7 @@ const MySmartLinksObject = ({ streaminglink, numOfStreamingLinks }) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                        You're about to delete <strong>Kamnyweso streaming links</strong>. This action
+                        You're about to delete <strong>{streaminglink?.title}</strong>. This action
                         is irreversible and you won't be able to see them again.
                     </p>
                   </div>

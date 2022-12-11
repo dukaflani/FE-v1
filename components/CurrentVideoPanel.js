@@ -191,7 +191,7 @@ const CurrentVideoPanel = () => {
                   overlay:{backgroundColor: "rgba(0, 0, 0, 0.3)", zIndex:'99999'}}}
           >
           <div className='bg-white shadow w-7/12 h-5/6'>
-            <ProfileModalContent setModalOpen={setModalOpen} info={currentvideo?.data} />
+            <ProfileModalContent setModalOpen={setModalOpen} info={currentvideo?.data} fanbase={fanbase2} />
           </div>
         </Modal>
     </>

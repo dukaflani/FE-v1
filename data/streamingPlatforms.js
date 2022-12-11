@@ -1,2 +1,2 @@
-export  const platforms = ["Select one", "YouTube", "Spotify", "Boomplay", "Amazon-Music", "Apple-Music", "iTunes", "Audiomack", 
+export  const platforms = ["YouTube", "Spotify", "Boomplay", "Amazon-Music", "Apple-Music", "iTunes", "Audiomack", 
 "Google-Play", "Soundcloud", "YouTube-Music", "Deezer", "Napster", "Tik-Tok", "Tidal", "Qobuz", "Pandora", ]

@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
+import { useSelector } from 'react-redux'
 import slugify from 'slugify'
 import { currSymbols } from '../data/currencies'
 import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
@@ -23,6 +24,9 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
     const [errorMessage, setErrorMessage] = useState("")
     const prodSlug = slugify(productTitle, {lower: true})
 
+    const { userProfile } = useSelector((state) => state.auth)
+    const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
+
 
     function closeModal() {
         setIsOpen(false)
@@ -32,7 +36,6 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
         setIsOpen(true)
     }
 
-    
     
     const refreshToken = `JWT ${accessToken?.access}`
 
@@ -49,6 +52,7 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
       productInfo.append("whatsapp", whatsapp);
       productInfo.append("sold_by", vendor);
       productInfo.append("slug", prodSlug);
+      productInfo.append("customuserprofile", userProfileId);
 
       const handleAddProduct = () => {
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/products/`,

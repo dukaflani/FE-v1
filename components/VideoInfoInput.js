@@ -1,5 +1,6 @@
 import FormData from 'form-data'
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import slugify from 'slugify'
 import { useFetchAccessTokenQuery, useFetchAllGenresQuery, useFetchUserAlbumsQuery, useFetchUserLinkHoldersQuery, useFetchUserLyricssQuery, 
@@ -13,6 +14,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
     videoSmartLinks, setVideoSmartLinks, videoProduct, setVideoProduct, videoLyrics, setVideoLyrics, videoSkizaTune, setVideoSkizaTune,
     videoAlbum, setVideoAlbum
  }) => {
+    const router = useRouter()
    
     const { user } = useSelector((state) => state.auth)
     const currentUser = user?.info?.id
@@ -121,7 +123,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Genre"
                     helperText="Didn't find your genre? Create it"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => setCurrentInput(6)}
+                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=genre")}
                 />
             </div>
         </div>
@@ -176,7 +178,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Smart Links"
                     helperText="Can't find your smart links? Create new ones"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => setCurrentInput(1)}
+                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=smart-links")}
                 />
             </div>
             <div className='w-full'>
@@ -187,7 +189,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Product"
                     helperText="Can't find a product? Create one"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => setCurrentInput(2)}
+                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=product")}
                 />
             </div>
             <div className='w-full'>
@@ -198,7 +200,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Lyrics"
                     helperText="Can't find your lyrics? Add them"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => setCurrentInput(3)}
+                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=lyrics")}
                 />
             </div>
             <div className='w-full'>
@@ -209,7 +211,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Skiza Tunes"
                     helperText="Can't find your skiza tunes? Add them"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => setCurrentInput(4)}
+                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=skiza-tunes")}
                 />
             </div>
             <div className='w-full'>
@@ -220,7 +222,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Album"
                     helperText="Can't find your album? Create one"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => setCurrentInput(5)}
+                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=music-collection")}
                 />
             </div>
         </div>

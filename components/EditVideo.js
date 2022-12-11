@@ -78,16 +78,18 @@ const EditVideo = () => {
         setLyricsPlaceholder(currentVideo?.data?.lyrics_title)
         setSongTitle(currentVideo?.data?.song_title)
         setVideoTitle(currentVideo?.data?.title)
-        setSongGenre(currentVideo?.data?.genre)
         setGenrePlaceholder(currentVideo?.data?.genre_title)
-        setYoutubeVideoId(currentVideo?.data?.youtube_id)
         setVideoDescription(currentVideo?.data?.description)
-        setVideoSmartLinks(currentVideo?.data?.links)
-        setVideoProduct(currentVideo?.data?.product)
-        setVideoLyrics(currentVideo?.data?.lyrics)
-        setVideoSkizaTune(currentVideo?.data?.skiza)
-        setVideoAlbum(currentVideo?.data?.album)
+        setYoutubeVideoId(currentVideo?.data?.youtube_id)
+
+        setSongGenre(!currentVideo?.data?.genre ? ' ' : currentVideo?.data?.genre)
+        setVideoSmartLinks(!currentVideo?.data?.links ? ' ' : currentVideo?.data?.links)
+        setVideoProduct(!currentVideo?.data?.product ? ' ' : currentVideo?.data?.product)
+        setVideoLyrics(!currentVideo?.data?.lyrics ? ' ' : currentVideo?.data?.lyrics)
+        setVideoSkizaTune(!currentVideo?.data?.skiza ? ' ' : currentVideo?.data?.skiza)
+        setVideoAlbum(!currentVideo?.data?.album ? ' ' : currentVideo?.data?.album)
     }, [currentVideo?.data])
+
 
 
     const refreshToken = `JWT ${accessToken?.access}`
