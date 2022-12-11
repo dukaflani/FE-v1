@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from 'react-modal'
 import { setCredentials } from '../redux/features/auth/authSlice'
-import { useFetchAccessTokenQuery, useGetProfileQuery } from '../redux/features/videos/videosApiSlice'
+import { useFetchAccessTokenQuery, useFetchUserVideosQuery, useGetProfileQuery } from '../redux/features/videos/videosApiSlice'
 import Navbar from './Navbar'
 import SignInRequestBottomBar from './SignInRequestBottomBar'
 import SignInModalContent from './SignInModalContent'
@@ -10,11 +10,22 @@ import SignInModalContent from './SignInModalContent'
 Modal.setAppElement("#__next")
 
 const Navigation = () => {
-const dispatch = useDispatch()  
-const [openBottomLoginRequestBar, setOpenBottomLoginRequestBar] = useState(false)
+const dispatch = useDispatch()
+const { user } = useSelector((state) => state.auth)
+const currentUser = user?.info?.id  
+
 const { signInModalOpen } = useSelector((state) => state.navigation)
 const { data: profile } = useGetProfileQuery()
 const { data: accessToken, isLoading } = useFetchAccessTokenQuery()
+
+const queryParams = {
+  user: currentUser
+}
+
+
+const { data: myVideos } = useFetchUserVideosQuery(queryParams)
+const errorCode = myVideos?.data?.code
+
 
 
 
@@ -34,7 +45,8 @@ const userAvatar = userProfile?.info ? userProfile?.info[0]?.profile_avatar : nu
   return (
     <>
         <Navbar myAvatar={userAvatar}/>
-        {!isLoading && !accessToken && <SignInRequestBottomBar/>}
+        {!isLoading && !accessToken  && <SignInRequestBottomBar/>}
+        {!isLoading && errorCode == "token_not_valid"  && <SignInRequestBottomBar/>}
         <Modal 
           isOpen={signInModalOpen}
           style={{content:{backgroundColor:'transparent', border:'none', display:'flex', alignItems:'center', justifyContent:'center'}, 

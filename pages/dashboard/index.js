@@ -73,7 +73,7 @@ const numOfVideos = !myVideos?.data ? ' ' : myVideos?.data?.length
                 </div>
                 <div onClick={() => router.push("/dashboard/upload")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Page</div>
             </div>
-            {true ? 
+            {currentUser ? 
             (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>
                 {[...Array(numOfVideos).keys()].map((myItem, i) => (
                     <MyVideos video={myVideos?.data[i]} key={i}/>
