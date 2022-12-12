@@ -9,7 +9,7 @@ import SignInModalContent from './SignInModalContent'
 
 Modal.setAppElement("#__next")
 
-const Navigation = () => {
+const Navigation = ({ setSearchTerm, searchTerm }) => {
 const dispatch = useDispatch()
 const { user } = useSelector((state) => state.auth)
 const currentUser = user?.info?.id  
@@ -44,7 +44,7 @@ const userAvatar = userProfile?.info ? userProfile?.info[0]?.profile_avatar : nu
 
   return (
     <>
-        <Navbar myAvatar={userAvatar}/>
+        <Navbar myAvatar={userAvatar} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
         {!isLoading && !accessToken  && <SignInRequestBottomBar/>}
         {!isLoading && errorCode == "token_not_valid"  && <SignInRequestBottomBar/>}
         <Modal 

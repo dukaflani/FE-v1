@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from "next/legacy/image";
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserProfile } from '../redux/features/auth/authSlice'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
@@ -8,7 +9,9 @@ import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
 import { useFetchUserProfileQuery } from '../redux/features/videos/videosApiSlice'
 import noAvatar from '../public/media/noimage.webp'
 
-const Navbar = ({ myAvatar }) => {
+const Navbar = ({ myAvatar, searchTerm }) => {
+  const [navSearchTerm, setNavSearchTerm] = useState(searchTerm)
+  const router = useRouter()
   const dispatch = useDispatch()
   
   const { user } = useSelector((state) => state.auth)
@@ -25,7 +28,19 @@ const Navbar = ({ myAvatar }) => {
     }
   }, [userProfile?.data])
 
-  
+
+  const formattedSearchTerm = navSearchTerm?.replace(/ /g, "+")
+
+
+  const handleSearch = (e) => {
+    if (e.key === 'Enter') {
+      router.push(`/results?search_query=${formattedSearchTerm}`)
+    }
+  }
+
+  const handleSearchByClick = (e) => {
+      router.push(`/results?search_query=${formattedSearchTerm}`)
+  }
 
 
 
@@ -50,8 +65,15 @@ const Navbar = ({ myAvatar }) => {
   </div>
   <div className="flex flex-1 border-gray-300 max-w-lg">
     {/* focus:outline-none focus:ring-0  border-r border-gray-300 */}
-    <input placeholder="Search..." className="py-2 px-2 w-11/12 placeholder-gray-400 focus:ring-transparent focus:border-gray-300 border-gray-300" type="text"/>
-    <div className="flex items-center justify-center bg-gray-100 w-1/12 border-r border-t border-b border-r-gray-300 border-t-gray-300 border-b-gray-300">
+    <input 
+        placeholder="Search..." 
+        className="py-2 px-2 w-11/12 placeholder-gray-400 focus:ring-transparent focus:border-gray-300 border-gray-300" 
+        type="text"
+        value={navSearchTerm}
+        onChange={(e) => setNavSearchTerm(e.target.value)}
+        onKeyDown={handleSearch}
+      />
+    <div onClick={handleSearchByClick} className="flex items-center justify-center bg-gray-100 w-1/12 border-r border-t border-b border-r-gray-300 border-t-gray-300 border-b-gray-300">
       <div className='cursor-pointer'>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-gray-600">
           <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />

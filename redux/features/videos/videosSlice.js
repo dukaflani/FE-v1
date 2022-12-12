@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
    video: {},
    is_fan: {},
+   videoSearchResults: [],
   }
 
 export const videosSlice = createSlice({
@@ -14,6 +15,9 @@ export const videosSlice = createSlice({
         },
         loadFanStatus: (state, action) => {
             state.is_fan = action.payload
+        },
+        loadVideoSearchResults: (state, action) => {
+            state.videoSearchResults = action.payload
         },
     },
 })

@@ -110,6 +110,14 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             providesTags: ['video']
         }),
 
+        searchForVideo: builder.query({
+            query: (args) => ({
+                url: `/api/searchvideo/`,
+                params: {...args}
+            }),
+            providesTags: ['video']
+        }),
+
         addView: builder.mutation({
             query: newView => ({
                 url: "/api/addview/",
@@ -539,5 +547,5 @@ export const { useGetProfileQuery, useFanbaseQuery, useFanbaseCountQuery, useJoi
                 useFetchUserVideosQuery, useFetchUserProfileQuery, useAccountRegisterMutation, useAddCommentMutation, useEditCommentMutation, useDeleteCommentMutation,
                 useDeleteVideoMutation, useFetchEditEventQuery, useDeleteEventMutation, useDeleteProductMutation, useFetchOneStreamingLinkQuery, useFetchOneSkizaTuneQuery,
                 useFetchSkizaTuneLinksQuery, useEditAlbumTrackMutation, useEditLyricsMutation, useEditSkizaTuneMutation, useEditStreamingLinkMutation, useDeleteAlbumMutation,
-                useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery
+                useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery, useSearchForVideoQuery
              } = videosApiSlice
