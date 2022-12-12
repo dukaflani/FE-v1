@@ -1,11 +1,16 @@
 import React, { useState, useRef } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/dist/client/router'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
-import data from '../data/genres.json'
+// import data from '../data/genres.json'
+import { genres } from '../data/genres'
  
 
 const GenreTabs = () => {
+  const router = useRouter()
+  const { genre } = router.query
   const genrePanel = useRef(null)
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState('')
   const activeSyles = 'py-1 px-2 bg-gray-600 text-white rounded-full cursor-pointer tracking-tighter flex flex-nowrap'
   const regularSyles = 'py-1 px-2 bg-gray-200 rounded-full cursor-pointer tracking-tighter flex flex-nowrap'
 
@@ -33,11 +38,34 @@ const GenreTabs = () => {
               >
                 <ChevronLeftIcon className='h-5 w-5'/>
           </button>
-            <div ref={genrePanel} className='text-gray-800 flex items-center justify-start flex-1 gap-3 pt-3 pb-2 whitespace-nowrap overflow-x-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent '>
-              {data?.genres.map((genre, i) => (
-                <div key={i} onClick={() => setActiveTab(i)}  className={activeTab === i ? activeSyles : regularSyles}>{genre}</div>
+            {!genre && <div ref={genrePanel} className='text-gray-800 flex items-center justify-start flex-1 gap-3 pt-3 pb-2 whitespace-nowrap overflow-x-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent '>
+            <div onClick={() => router.push("/")}  className={activeTab == ''  ? activeSyles : regularSyles}>All Songs</div>
+              {genres?.map((genreItem, i) => (
+                <Link 
+                    key={i}
+                    href={{
+                      pathname: `/filter`,
+                      query: { genre: genreItem?.querySlug, gid: genreItem?.id },
+                    }}
+                >
+                  <div  onClick={() => setActiveTab(genreItem.querySlug)}  className={activeTab == genreItem.querySlug  ? activeSyles : regularSyles}>{genreItem?.title}</div>
+                </Link>
                 ))}
-            </div>
+            </div>}
+            {genre && <div ref={genrePanel} className='text-gray-800 flex items-center justify-start flex-1 gap-3 pt-3 pb-2 whitespace-nowrap overflow-x-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent '>
+            <div onClick={() => router.push("/")}  className={genre == ''  ? activeSyles : regularSyles}>All Songs</div>
+              {genres?.map((genreItem, i) => (
+                <Link 
+                  key={i}
+                  href={{
+                    pathname: `/filter`,
+                    query: { genre: genreItem?.querySlug, gid: genreItem?.id },
+                  }}
+                >
+                  <div onClick={() => setActiveTab(genreItem.querySlug)}  className={genre == genreItem.querySlug  ? activeSyles : regularSyles}>{genreItem?.title}</div>
+                </Link>
+                ))}
+            </div>}
           <button 
             className='cursor-pointe mx-2'
             onClick={() => {

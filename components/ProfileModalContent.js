@@ -33,7 +33,6 @@ const ProfileModalContent = ({ setModalOpen, info, fanbase }) => {
   const [youtubeLink, setYoutubeLink] = useState('')
 
   const { userProfile } = useSelector((state) => state.auth)
-  console.log("profile object @ profile module:", userProfile?.info[0]);
 
   useEffect(() => {
     setAbout(userProfile?.info[0]?.about)

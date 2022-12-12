@@ -42,10 +42,14 @@ const VideoCard = ({ video }) => {
         await addView(newView);
         router.push(`/watch/${id}?tab=links`);
     }
+    // const handleCurrentVideo = async () => {
+    //     await addView(newView);
+    // }
 
+    {/* <article onClick={handleCurrentVideo} className='h-64 cursor-pointer'> */}
 
   return (
-    <>
+        <>
         <article onClick={() => handleCurrentVideo(video?.id)} className='h-64 cursor-pointer'>
             <div className='h-4/6 relative rounded-md bg-gray-100'>
                 <Image 
@@ -91,8 +95,7 @@ const VideoCard = ({ video }) => {
             <ReactTooltip />
         </div> */}
         </article>
-
-    </>
+        </>
 
   )
 }
