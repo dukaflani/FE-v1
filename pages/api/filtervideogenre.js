@@ -2,16 +2,16 @@ import cookie from 'cookie';
 
 export default async (req, res) => {
     if (req.method === 'GET') {
-        const cookies = cookie.parse(req.headers.cookie ?? ' ');
-        const access = cookies.access ?? false
+        // const cookies = cookie.parse(req.headers.cookie ?? ' ');
+        // const access = cookies.access ?? false
         const genreId = req.query.genre_id
 
-        if (access === false) {
-            return res.status(401).json({
-                error: 'User unauthorized to make this request'
-            });
+        // if (access === false) {
+        //     return res.status(401).json({
+        //         error: 'User unauthorized to make this request'
+        //     });
 
-        }
+        // }
 
         try {
             const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/videos/?genre=${genreId}`, {
