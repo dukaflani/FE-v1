@@ -1,6 +1,6 @@
 import { apiSlice } from "../../app/apiSlice";
 
-const apiWithTag = apiSlice.enhanceEndpoints({addTagTypes: ['Fanbase', 'Comment', 
+const apiWithTag = apiSlice.enhanceEndpoints({addTagTypes: ['Fanbase', 'Comment', 'Likes',
 'Auth', 'video', 'events', 'product', 'streamingLinks', 'lyrics', 'skiza', 'albumTrack', 'album']})
 
 export const videosApiSlice = apiWithTag.injectEndpoints({
@@ -532,6 +532,58 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             // providesTags: ['Fanbase']
         }),
 
+        videoLiked: builder.query({
+            query: (args) => ({
+                    url: `/api/liked/`,
+                    params: {...args}
+                }),
+                providesTags: ['Likes']
+            }),   
+
+        addLike: builder.mutation({
+            query: videoInfo => ({
+                url: "/api/addlike/",
+                method: "POST",
+                body: videoInfo
+            }),
+            invalidatesTags: ['Likes']
+        }),
+
+        deleteLike: builder.mutation({
+            query: ( deletelike ) => ({
+                url: `/api/deletelike/`,
+                method: 'POST',
+                body: deletelike
+            }),
+            invalidatesTags: ['Likes']
+        }),
+
+        videoUnliked: builder.query({
+            query: (args) => ({
+                    url: `/api/unliked/`,
+                    params: {...args}
+                }),
+                providesTags: ['Likes']
+            }),   
+
+        addUnlike: builder.mutation({
+            query: videoInfo => ({
+                url: "/api/addunlike/",
+                method: "POST",
+                body: videoInfo
+            }),
+            invalidatesTags: ['Likes']
+        }),
+
+        deleteUnlike: builder.mutation({
+            query: ( deleteUnlike ) => ({
+                url: `/api/deleteunlike/`,
+                method: 'POST',
+                body: deleteUnlike
+            }),
+            invalidatesTags: ['Likes']
+        }),
+
         }),
         overrideExisting: true
     })
@@ -547,5 +599,6 @@ export const { useGetProfileQuery, useFanbaseQuery, useFanbaseCountQuery, useJoi
                 useFetchUserVideosQuery, useFetchUserProfileQuery, useAccountRegisterMutation, useAddCommentMutation, useEditCommentMutation, useDeleteCommentMutation,
                 useDeleteVideoMutation, useFetchEditEventQuery, useDeleteEventMutation, useDeleteProductMutation, useFetchOneStreamingLinkQuery, useFetchOneSkizaTuneQuery,
                 useFetchSkizaTuneLinksQuery, useEditAlbumTrackMutation, useEditLyricsMutation, useEditSkizaTuneMutation, useEditStreamingLinkMutation, useDeleteAlbumMutation,
-                useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery, useSearchForVideoQuery
+                useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery, useSearchForVideoQuery,
+                useAddLikeMutation, useAddUnlikeMutation, useDeleteLikeMutation, useDeleteUnlikeMutation, useVideoLikedQuery, useVideoUnlikedQuery,
              } = videosApiSlice
