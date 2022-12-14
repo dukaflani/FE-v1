@@ -40,7 +40,7 @@ const numOfVideos = !videoResults?.data ? ' ' : videoResults?.data?.length
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>
             <nav>
               <ul className='space-y-10'>
-                <li className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push("/dashboard")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <RectangleGroupIcon className="w-6 h-6" />
                   </div>

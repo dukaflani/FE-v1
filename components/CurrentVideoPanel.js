@@ -52,6 +52,7 @@ const CurrentVideoPanel = () => {
     const fanbase2 = fancount?.data?.length
     let fanbase3 = ''
     fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
+    const numOfFanbase = fanbase3 == 0 ? 0 : fanbase3
 
       
     const tabButtons = [
@@ -112,7 +113,7 @@ const CurrentVideoPanel = () => {
                         </span>
                         }
                     </div>
-                    <div className='mx-1 text-sm tracking-tight text-gray-600'>Fanbase {fanbase3}</div>
+                    <div className='mx-1 text-sm tracking-tight text-gray-600'>Fanbase {numOfFanbase}</div>
                 </div>
                 <div className='w-2/12 flex items-center justify-center'>
                     <FanbaseButton/>

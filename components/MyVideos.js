@@ -16,6 +16,12 @@ const MyVideos = ({ video }) => {
     const videoUploadTime = new Date(video?.date).toDateString()
     const view2 = video?.views_count
     let view3 = numeral(view2).format('0,0')
+
+    const likeCountRaw = video?.like_count
+    let likeCount = numeral(likeCountRaw).format('0,0')
+
+    const unlikeCountRaw = video?.unlike_count
+    let unlikeCount = numeral(unlikeCountRaw).format('0,0')
     const videoId = video?.id
 
 
@@ -118,8 +124,8 @@ const MyVideos = ({ video }) => {
         <div className='px-2 flex flex-col items-start justify-center'>
             <div className='text-xs text-gray-800'>Added {videoUploadTime}</div>
             <div className='text-xs text-gray-800'>{view3} {view3 == 1 ? 'view' : 'views'}</div>
-            <div className='text-xs text-gray-800'>43,476 Likes</div>
-            <div className='text-xs text-gray-800'>308 Dislikes</div>
+            <div className='text-xs text-gray-800'>{likeCount} {likeCount == 1 ? 'like' : 'likes'}</div>
+            <div className='text-xs text-gray-800'>{unlikeCount} {unlikeCount == 1 ? 'dislike' : 'dislikes'}</div>
         </div>
 
 

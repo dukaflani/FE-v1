@@ -85,6 +85,14 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             providesTags: ['video']
         }),
 
+        currentVideoObjectsCount: builder.query({
+            query: (args) => ({
+                url: `/api/currentvideoobjectcount/`,
+                params: {...args}
+            }),
+            providesTags: ['video', 'Likes', 'Comment']
+        }),
+
         fetchUserVideos: builder.query({
             query: (args) => ({
                 url: "/api/getuservideos/",
@@ -541,19 +549,19 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             }),   
 
         addLike: builder.mutation({
-            query: videoInfo => ({
+            query: likeVideoInfo => ({
                 url: "/api/addlike/",
                 method: "POST",
-                body: videoInfo
+                body: likeVideoInfo
             }),
             invalidatesTags: ['Likes']
         }),
 
         deleteLike: builder.mutation({
-            query: ( deletelike ) => ({
+            query: ( deletelikeInfo ) => ({
                 url: `/api/deletelike/`,
                 method: 'POST',
-                body: deletelike
+                body: deletelikeInfo
             }),
             invalidatesTags: ['Likes']
         }),
@@ -567,19 +575,19 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             }),   
 
         addUnlike: builder.mutation({
-            query: videoInfo => ({
+            query: unlikeVideoInfo => ({
                 url: "/api/addunlike/",
                 method: "POST",
-                body: videoInfo
+                body: unlikeVideoInfo
             }),
             invalidatesTags: ['Likes']
         }),
 
         deleteUnlike: builder.mutation({
-            query: ( deleteUnlike ) => ({
+            query: ( deleteUnlikeInfo ) => ({
                 url: `/api/deleteunlike/`,
                 method: 'POST',
-                body: deleteUnlike
+                body: deleteUnlikeInfo
             }),
             invalidatesTags: ['Likes']
         }),
@@ -600,5 +608,5 @@ export const { useGetProfileQuery, useFanbaseQuery, useFanbaseCountQuery, useJoi
                 useDeleteVideoMutation, useFetchEditEventQuery, useDeleteEventMutation, useDeleteProductMutation, useFetchOneStreamingLinkQuery, useFetchOneSkizaTuneQuery,
                 useFetchSkizaTuneLinksQuery, useEditAlbumTrackMutation, useEditLyricsMutation, useEditSkizaTuneMutation, useEditStreamingLinkMutation, useDeleteAlbumMutation,
                 useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery, useSearchForVideoQuery,
-                useAddLikeMutation, useAddUnlikeMutation, useDeleteLikeMutation, useDeleteUnlikeMutation, useVideoLikedQuery, useVideoUnlikedQuery,
+                useAddLikeMutation, useAddUnlikeMutation, useDeleteLikeMutation, useDeleteUnlikeMutation, useVideoLikedQuery, useVideoUnlikedQuery, useCurrentVideoObjectsCountQuery
              } = videosApiSlice
