@@ -19,6 +19,22 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             providesTags: ['Auth']
         }),
 
+        fetchCurrentVideoProfile: builder.query({
+            query: (args) => ({
+                url: "/api/currentvideoprofile/",
+                params: {...args},
+            }),
+            providesTags: ['Fanbase']
+        }),
+
+        profileLiked: builder.query({
+            query: (args) => ({
+                    url: `/api/isafanbase/`,
+                    params: {...args}
+                }),
+                providesTags: ['Fanbase']
+            }),  
+
         accountRegister: builder.mutation({
             query: newAccountInfo => ({
                 url: "/api/register/",
@@ -44,17 +60,9 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                     params: {...args}
                 }),
                 providesTags: ['Fanbase']
-            }),
+            }),   
 
-        fanbaseCount: builder.query({
-            query: (args) => ({
-                url: `/api/fanbasecount/`,
-                params: {...args}
-            }),
-            providesTags: ['Fanbase']
-        }),    
-
-        joinFanbase: builder.mutation({
+            joinFanbase: builder.mutation({
             query: fan => ({
                 url: "/api/joinfanbase/",
                 method: "POST",
@@ -597,7 +605,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
     })
 
 
-export const { useGetProfileQuery, useFanbaseQuery, useFanbaseCountQuery, useJoinFanbaseMutation, useLeaveFanbaseMutation, useFetchVideosQuery, useAddViewMutation, useCurrentVideoQuery,
+export const { useGetProfileQuery, useFanbaseQuery, useJoinFanbaseMutation, useLeaveFanbaseMutation, useFetchVideosQuery, useAddViewMutation, useCurrentVideoQuery,
                 useFetchCommentsQuery, useFetchStreamingLinksQuery, useFetchProductQuery, useFetchLyricsQuery, useFetchSkizaTunesQuery, useFetchAlbumQuery,
                 useFetchAlbumTracksQuery, useFetchEventsQuery, useFetchLyricsVerseQuery, useAddStreamingLinksHolderMutation, useFetchCreatedLinkHolderMutation,
                 useAddStreamingLinksMutation, useFetchMyStreamingLinksQuery, useFetchCreatedStreamingLinksMutation, useAddProductMutation, useFetchAccessTokenQuery,
@@ -608,5 +616,6 @@ export const { useGetProfileQuery, useFanbaseQuery, useFanbaseCountQuery, useJoi
                 useDeleteVideoMutation, useFetchEditEventQuery, useDeleteEventMutation, useDeleteProductMutation, useFetchOneStreamingLinkQuery, useFetchOneSkizaTuneQuery,
                 useFetchSkizaTuneLinksQuery, useEditAlbumTrackMutation, useEditLyricsMutation, useEditSkizaTuneMutation, useEditStreamingLinkMutation, useDeleteAlbumMutation,
                 useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery, useSearchForVideoQuery,
-                useAddLikeMutation, useAddUnlikeMutation, useDeleteLikeMutation, useDeleteUnlikeMutation, useVideoLikedQuery, useVideoUnlikedQuery, useCurrentVideoObjectsCountQuery
+                useAddLikeMutation, useAddUnlikeMutation, useDeleteLikeMutation, useDeleteUnlikeMutation, useVideoLikedQuery, useVideoUnlikedQuery, useCurrentVideoObjectsCountQuery,
+                useFetchCurrentVideoProfileQuery, useProfileLikedQuery
              } = videosApiSlice

@@ -51,7 +51,6 @@ const CurrentVideoPlayer = () => {
     const [ addLike ] = useAddLikeMutation()  
     const [ addUnlike ] = useAddUnlikeMutation()
 
-    console.log("objects count:", currentVideoObjectsCount?.data);
 
     const is_liked = !!isLiked?.data[0]?.id
     const is_unliked = !!isUnliked?.data[0]?.id

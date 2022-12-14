@@ -4,9 +4,9 @@ export default async (req, res) => {
     if (req.method === 'POST') {
         const cookies = cookie.parse(req.headers.cookie ?? ' ');
         const access = cookies.access ?? false
+        
         const joinDetails = {
-            "user": [req.body.user],
-            "fan_of": [req.body.fan_of]
+            "customuserprofile": req.body.customuserprofile_id
         }
 
         if (access === false) {
@@ -20,7 +20,6 @@ export default async (req, res) => {
             const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/fanbase/`, {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Authorization': `JWT ${access}`
                 },

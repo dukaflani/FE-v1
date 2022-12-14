@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router'
 // import ReactTooltip from 'react-tooltip';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import numeral from 'numeral'
 import Modal from 'react-modal'
 import noAvatar from '../public/media/noimage.webp'
@@ -16,8 +16,9 @@ import LyricsPage from './LyricsPage'
 import SkizaTunesPage from './SkizaTunesPage'
 import AlbumPage from './AlbumPage'
 import EventsPage from './EventsPage'
-import FanbaseButton from './FanbaseButton';
-import { useCurrentVideoQuery, useFanbaseCountQuery } from '../redux/features/videos/videosApiSlice';
+import { toggleSignInModalOpen } from '../redux/features/navigation/navigationSlice'
+import { useCurrentVideoQuery, useFetchCurrentVideoProfileQuery, useProfileLikedQuery, 
+    useJoinFanbaseMutation, useLeaveFanbaseMutation } from '../redux/features/videos/videosApiSlice';
 import Link from 'next/link';
 import ProfileModalContent from './ProfileModalContent';
 
@@ -28,28 +29,31 @@ Modal.setAppElement("#__next")
 
 const CurrentVideoPanel = () => {
     const router = useRouter()
+    const dispatch = useDispatch()
     const { videoid, tab } = router.query
-    const { video } = useSelector((state) => state.videos)
     const { user } = useSelector((state) => state.auth)
     const [modalOpen, setModalOpen] = useState(false)
+    const [fanbaseErrors, setFanbaseErrors] = useState(null)
 
-    const is_loggedin = user?.info
-
-
-    const queryParams = {
-        fan_of: video?.details?.user,
-      }
-
-    const { data: fancount } = useFanbaseCountQuery(queryParams)
-
+    
     const videoQueryParams = {
         video_id: videoid,
-      }
-
+    }
+    
     const {data: currentvideo} = useCurrentVideoQuery(videoQueryParams)
+    const currentVideoProfileId = currentvideo?.data?.customuserprofile
+    
+    const videoProfileQueryParams = {
+        profile_id: currentVideoProfileId,
+    }
+    
+    
+    const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
+    const {data: videoProfileLiked } = useProfileLikedQuery(videoProfileQueryParams)
+    const is_loggedin = !!user?.info?.id
+    const is_a_fan = !!videoProfileLiked?.data[0]?.id
 
-
-    const fanbase2 = fancount?.data?.length
+    const fanbase2 = videoProfile?.data?.fanbase_count
     let fanbase3 = ''
     fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
     const numOfFanbase = fanbase3 == 0 ? 0 : fanbase3
@@ -90,6 +94,38 @@ const CurrentVideoPanel = () => {
     const activeStyles = "w-2/12 flex flex-col items-center justify-center text-xs cursor-pointer uppercase tracking-tight leading-4 py-2 border-b-2 border-black"
     const regularStyles = "w-2/12 flex flex-col items-center justify-center text-xs cursor-pointer uppercase tracking-tight leading-4 py-2 border-b-2 border-transparent hover:border-gray-200"
 
+    const [ joinFanbase ] = useJoinFanbaseMutation() 
+    const [ leaveFanbase ] = useLeaveFanbaseMutation()
+
+
+    const joinDetails = {
+        "customuserprofile_id": currentvideo?.data?.customuserprofile
+    }
+
+    const leaveDetails = {
+        "fanbase_id": videoProfileLiked?.data[0]?.id
+    }
+
+
+
+    const handleJoin = async () => {
+        try {
+            await joinFanbase(joinDetails)
+        } catch (error) {
+            setFanbaseErrors(error)
+        }
+
+    }
+
+    const handleLeave = async () => {
+        try {
+            await leaveFanbase(leaveDetails)
+        } catch (error) {
+            setFanbaseErrors(error)
+        }
+    }
+
+
   return (
     <>
         <div className='border'>
@@ -97,7 +133,7 @@ const CurrentVideoPanel = () => {
                 <div className='w-2/12 flex items-center justify-center'>
                     <div className='relative h-12 w-12'>
                         <Image
-                            src={currentvideo?.data?.profile_avatar ? currentvideo?.data?.profile_avatar : noAvatar}
+                            src={videoProfile?.data?.profile_avatar ? videoProfile?.data?.profile_avatar : noAvatar}
                             layout="fill"
                             objectFit='cover'
                             className='rounded-full'
@@ -106,8 +142,8 @@ const CurrentVideoPanel = () => {
                 </div>
                 <div className='w-8/12 flex flex-col items-start justify-center'>
                     <div className='flex space-x-1'>
-                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{currentvideo?.data?.stage_name ? currentvideo?.data?.stage_name : ''}</div>
-                        {currentvideo?.data?.verified && 
+                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.data?.stage_name ? currentvideo?.data?.stage_name : ''}</div>
+                        {videoProfile?.data?.is_verified && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
                         </span>
@@ -115,10 +151,14 @@ const CurrentVideoPanel = () => {
                     </div>
                     <div className='mx-1 text-sm tracking-tight text-gray-600'>Fanbase {numOfFanbase}</div>
                 </div>
-                <div className='w-2/12 flex items-center justify-center'>
-                    <FanbaseButton/>
-                    {!is_loggedin && <button onClick={() => router.push("/account/login")} className='uppercase p-1 bg-gray-800 text-white font-semibold tracking-wider text-xs'>Join</button>}
-                </div>
+                {is_loggedin && <div className='w-2/12 flex items-center justify-center'>
+                    {is_a_fan ? <button onClick={handleLeave} className='uppercase p-1 border border-gray-700 text-gray-800 font-semibold tracking-wider text-xs'>Leave</button> 
+                    : 
+                    <button onClick={handleJoin} className='uppercase p-1 bg-gray-800 text-white font-semibold tracking-wider text-xs'>Join</button>}
+                 </div>}
+                {!is_loggedin && <div className='w-2/12 flex items-center justify-center'>
+                    <button onClick={() => dispatch(toggleSignInModalOpen(true))} className='uppercase p-1 bg-gray-800 text-white font-semibold tracking-wider text-xs'>Join</button>
+                </div>}
             </div>
             <div className='mx-2 my-5 flex'>
                 <div className='w-4/12'>

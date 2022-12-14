@@ -4,21 +4,21 @@ export default async (req, res) => {
     if (req.method === 'GET') {
         const cookies = cookie.parse(req.headers.cookie ?? ' ');
         const access = cookies.access ?? false
-        const fanOf = req.query.fan_of
+        const ProfileId = req.query.profile_id
 
-        // if (access === false) {
-        //     return res.status(401).json({
-        //         error: 'User unauthorized to make this request'
-        //     });
+        if (access === false) {
+            return res.status(401).json({
+                error: 'User unauthorized to make this request'
+            });
 
-        // }
+        }
 
         try {
-            const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/fanbase/?fan_of=${fanOf}`, {
+            const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/user-profile/${ProfileId}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
-                    // 'Authorization': `JWT ${access}`
+                    'Authorization': `JWT ${access}`
                 }
             });
             const data = await apiResponse.json();

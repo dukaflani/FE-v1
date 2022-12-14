@@ -1,10 +1,10 @@
 import cookie from 'cookie';
 
 export default async (req, res) => {
-    if (req.method === 'POST') {
+    if (req.method === 'GET') {
         const cookies = cookie.parse(req.headers.cookie ?? ' ');
         const access = cookies.access ?? false
-        const itemId = req.body.fanbase_id
+        const profileId = req.query.profile_id
 
         if (access === false) {
             return res.status(401).json({
@@ -14,15 +14,14 @@ export default async (req, res) => {
         }
 
         try {
-            const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/fanbase/${itemId}`, {
-                method: 'DELETE',
+            const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/fanbase/?customuserprofile=${profileId}`, {
+                method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `JWT ${access}`
-                },
+                }
             });
             const data = await apiResponse.json();
-            console.log("after leaving:", data);
 
             if (data) {
                 return res.status(200).json({ 
@@ -40,7 +39,7 @@ export default async (req, res) => {
         }
         
     } else {
-        res.setHeader('Allow', ['POST']);
+        res.setHeader('Allow', ['GET']);
         return res.status(405).json({
             error: `Method ${req.method} not allowed`
         });
