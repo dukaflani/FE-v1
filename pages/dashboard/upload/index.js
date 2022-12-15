@@ -5,6 +5,9 @@ import SidebarNav from '../../../components/SidebarNav'
 import Navigation from '../../../components/Navigation'
 import UploadVideo from '../../../components/UploadVideo'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
+import Unauthorized from '../../../components/Unauthorized'
+import { useSelector } from 'react-redux'
+import { useFetchUserProfileQuery } from '../../../redux/features/videos/videosApiSlice'
 
 
 
@@ -13,6 +16,25 @@ const uploadPage = () => {
     const { item } = router.query
     const [videoTitle, setVideoTitle] = useState('')
     const [currentInput, setCurrentInput] = useState(0)
+
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
+
+    const queryParams = {
+      user: currentUser,
+    }
+
+    const { data: profile } = useFetchUserProfileQuery(queryParams) 
+    const userProfile = profile?.data[0] ? profile?.data[0] : null
+
+
+    const userRole = userProfile?.role
+
+    if (userRole != 'ARTIST') {
+      return  <Unauthorized/> 
+    }
+
+
 
   return (
     <SidebarNav>

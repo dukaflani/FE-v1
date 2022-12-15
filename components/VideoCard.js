@@ -40,13 +40,11 @@ const VideoCard = ({ video }) => {
 
     const handleCurrentVideo = async (id) => {
         await addView(newView);
-        router.push(`/watch/${id}?tab=links`);
+        router.push({
+            pathname: `/watch/${id}`,
+            query: { tab: "links" },
+          });
     }
-    // const handleCurrentVideo = async () => {
-    //     await addView(newView);
-    // }
-
-    {/* <article onClick={handleCurrentVideo} className='h-64 cursor-pointer'> */}
 
   return (
         <>

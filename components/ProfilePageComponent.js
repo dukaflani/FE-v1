@@ -7,7 +7,7 @@ import { Menu, Transition, Dialog } from '@headlessui/react'
 import { EllipsisVerticalIcon, CheckBadgeIcon } from '@heroicons/react/24/solid'
 import { UserIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import avatar from '../public/media/noimage.webp'
-import { useFanbaseCountQuery, useFetchUserProfileQuery } from '../redux/features/videos/videosApiSlice'
+import { useFetchUserProfileQuery } from '../redux/features/videos/videosApiSlice'
 import numeral from 'numeral';
 
 const ProfilePageComponent = () => {
@@ -19,17 +19,8 @@ const ProfilePageComponent = () => {
     user: currentUser,
   }
 
-  const fanbaseQueryParams = {
-    fan_of: currentUser,
-  }
-
   const { data: profile } = useFetchUserProfileQuery(queryParams) 
   const userProfile = profile?.data[0] ? profile?.data[0] : null
-  const { data: fancount } = useFanbaseCountQuery(fanbaseQueryParams)
-
-  const fanbase2 = fancount?.data?.length
-  let fanbase3 = ''
-  fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
   
 
 
@@ -47,6 +38,7 @@ const ProfilePageComponent = () => {
   const [tiktok, setTiktok] = useState('')
   const [youtubeChannel, setYoutubeChannel] = useState('')
   const [vetified, setVetified] = useState(false)
+  const [fanbaseCount, setFanbaseCount] = useState('')
 
 
   useEffect(() => {
@@ -64,8 +56,13 @@ const ProfilePageComponent = () => {
     setYoutubeChannel(userProfile?.youtube_channel)
     setStageName(userProfile?.stage_name)
     setVetified(userProfile?.is_verified)
-    
+    setFanbaseCount(userProfile?.fanbase_count)
   }, [profile])
+
+
+  const fanbase2 = fanbaseCount
+  let fanbase3 = ''
+  fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
 
 
   const splitCountryArray = country?.split(",")

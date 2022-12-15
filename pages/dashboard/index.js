@@ -2,12 +2,13 @@ import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { useFetchUserVideosQuery } from '../../redux/features/videos/videosApiSlice'
+import { useFetchUserProfileQuery, useFetchUserVideosQuery } from '../../redux/features/videos/videosApiSlice'
 import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
 import { TvIcon as TvSolid, RectangleGroupIcon as RGSolid } from '@heroicons/react/24/solid'
 import SidebarNav from '../../components/SidebarNav'
 import MyVideos from '../../components/MyVideos'
 import Navigation from '../../components/Navigation'
+import Unauthorized from '../../components/Unauthorized'
 
 const dashboard = () => {
   const router = useRouter()
@@ -19,8 +20,15 @@ const dashboard = () => {
   }
 
 const { data: myVideos } = useFetchUserVideosQuery(queryParams)
+const { data: profile } = useFetchUserProfileQuery(queryParams) 
+const userProfile = profile?.data[0] ? profile?.data[0] : null
 
 const numOfVideos = !myVideos?.data ? ' ' : myVideos?.data?.length
+const userRole = userProfile?.role
+
+    if (userRole != 'ARTIST') {
+      return  <Unauthorized/> 
+    }
 
 
   return (
@@ -79,7 +87,7 @@ const numOfVideos = !myVideos?.data ? ' ' : myVideos?.data?.length
                     <MyVideos video={myVideos?.data[i]} key={i}/>
                 ))}
             </div>) : (<div>You do not have any <strong>videos</strong> yet...</div>)
-            }   
+            }
           </div>
         </section>
       </main>
