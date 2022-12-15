@@ -8,7 +8,7 @@ import logoLight from '../public/branding/dukaflani-logo-blue-medium.png'
 import Button from './reuseable-components/Button'
 import InputField from './reuseable-components/InputField'
 import InputFieldPassword from './reuseable-components/InputFieldPassword'
-import Poster from '../public/media/g-like-that.png'
+import Poster from '../public/branding/dukaflani-login-cover.png'
 
 const SignInModalContent = () => {
     const dispatch = useDispatch() 

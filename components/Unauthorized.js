@@ -13,7 +13,7 @@ const Unauthorized = () => {
       </Head>
       <Navigation/>
         <div className='flex justify-center pt-20'>
-            <div className='w-2/6 flex justify-center'>
+            <div className='w-3/12 flex justify-center'>
                 <img src='/media/unauthorized-page.png' alt='unauthorized'/>
             </div>
         </div>

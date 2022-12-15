@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from "next/legacy/image";
 import logoLight from '../public/branding/dukaflani-logo-blue-medium.png'
-import Poster from '../public/media/g-like-that.png'
+import Poster from '../public/branding/dukaflani-login-cover.png'
 import { useLoginMutation } from '../redux/features/auth/authApiSlice'
 import InputField from './reuseable-components/InputField'
 import InputFieldPassword from './reuseable-components/InputFieldPassword'
