@@ -49,17 +49,18 @@ const VideoCard = ({ video }) => {
   return (
         <>
         <article onClick={() => handleCurrentVideo(video?.id)} className='h-64 cursor-pointer'>
-            <div className='h-4/6 relative rounded-md bg-gray-100'>
+            <div className='h-4/6 relative rounded-md bg-gray-200'>
                 <Image 
                     src={!video?.thumbnail ? thumbnail : video?.thumbnail}
                     layout="fill"
                     objectFit='cover'
                     alt={video?.title}
+                    className='rounded-md'
                   />
             </div>
             <div className='h-2/6 flex space-x-1 pt-2'>
                 <div className='w-2/12'>
-                    <div className='relative h-11 w-11'>
+                    <div className='relative h-11 w-11 bg-gray-200 rounded-full'>
                         <Image
                             src={video?.profile_avatar ? video?.profile_avatar : noAvatar}
                             layout="fill"
@@ -71,12 +72,12 @@ const VideoCard = ({ video }) => {
                 <div className='w-10/12'>
                     <Link legacyBehavior href={`/watch/[videoid]?videoid=${video?.id}`}>
                         <a title={video?.title}>
-                            <div className='h-3/5 font-semibold leading-4 text-gray-700 tracking-tight cursor-pointer text-sm'>{video?.title}</div>
+                            <div className='font-semibold leading-4 text-gray-700 tracking-tight cursor-pointer text-base line-clamp-2'>{video?.title}</div>
                         </a>
                     </Link>
-                    <div className='h-2/5'>
-                        <div className='-mt-1 mb-0.5 flex space-x-1 items-center justify-start'>
-                            <div className='text-gray-600 font-medium text-sm leading-3 tracking-tighter'>{video?.stage_name ? video?.stage_name : `${video?.first_name} ${video?.last_name}`}</div>
+                    <div>
+                        <div className='mt-1.5 mb-0.5 flex space-x-1 items-center justify-start pr-3'>
+                            <div className='text-gray-600 text-sm leading-3 tracking-tight line-clamp-1'>{video?.stage_name ? video?.stage_name : `${video?.first_name} ${video?.last_name}`}</div>
                             {video.verified && (
                                 <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-blue-600">

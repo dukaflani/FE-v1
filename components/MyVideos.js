@@ -59,7 +59,9 @@ const MyVideos = ({ video }) => {
 
   return (
     <>
-        <div className='col-span-3 space-x-2 flex items-center bg-white shadow justify-start border-r border-r-gray-300 pr-2'>
+    <div  className='flex'>
+        <div className='space-x-2 flex w-10/12 items-center bg-white shadow justify-start border-r border-r-gray-300 pr-2'>
+        {/* <div className='col-span-3 space-x-2 flex items-center bg-white shadow justify-start border-r border-r-gray-300 pr-2'> */}
             <div className='w-3/12 h-28 relative bg-gray-100'>
                  {video?.thumbnail && <Image 
                     src={!video?.thumbnail ? thumbnail : video?.thumbnail}
@@ -121,12 +123,13 @@ const MyVideos = ({ video }) => {
                 </div>
             </div>
         </div>
-        <div className='px-2 flex flex-col items-start justify-center'>
+        <div className='px-2 flex flex-col items-start justify-center w-2/12'>
             <div className='text-xs text-gray-800'>Added {videoUploadTime}</div>
             <div className='text-xs text-gray-800'>{view3} {view3 == 1 ? 'view' : 'views'}</div>
             <div className='text-xs text-gray-800'>{likeCount} {likeCount == 1 ? 'like' : 'likes'}</div>
             <div className='text-xs text-gray-800'>{unlikeCount} {unlikeCount == 1 ? 'dislike' : 'dislikes'}</div>
         </div>
+    </div>
 
 
         <Transition appear show={isOpen} as={Fragment}>

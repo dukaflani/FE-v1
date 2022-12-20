@@ -11,8 +11,8 @@ const GenreTabs = () => {
   const { genre } = router.query
   const genrePanel = useRef(null)
   const [activeTab, setActiveTab] = useState('')
-  const activeSyles = 'py-1 px-2 bg-gray-600 text-white rounded-full cursor-pointer tracking-tighter flex flex-nowrap'
-  const regularSyles = 'py-1 px-2 bg-gray-200 rounded-full cursor-pointer tracking-tighter flex flex-nowrap'
+  const activeSyles = 'py-1 px-2 bg-gray-600 hover:bg-gray-500 text-white rounded-full cursor-pointer tracking-tighter flex flex-nowrap'
+  const regularSyles = 'py-1 px-2 bg-gray-200 hover:bg-gray-300 rounded-full cursor-pointer tracking-tighter flex flex-nowrap'
 
 
   const sideScroll = ( element, speed, distance, step ) => {
@@ -29,7 +29,7 @@ const GenreTabs = () => {
 
   return (
     <div className='fixed top-14 z-30 mb-5 flex w-full bg-white shadow-sm'>
-      <div className='flex items-center justify-start pl-2'>Kenya</div>
+      <div className='flex items-center justify-start pl-2'>Filter</div>
           <button 
             className='cursor-pointer mx-2'
             onClick={() => {

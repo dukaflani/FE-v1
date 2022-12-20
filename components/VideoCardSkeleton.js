@@ -1,9 +1,11 @@
 import React from 'react'
+import thumbnail from '../public/media/dukaflani-thumbnail-default.png'
+
 
 const VideoCardSkeleton = () => {
   return (
     <div className="h-64 animate-pulse">
-        <div className="h-4/6 bg-gray-300"></div>
+        <div className="h-4/6 bg-gray-300 rounded-md"></div>
         <div className="h-2/6 flex space-x-1 pt-2">
         <div className="w-2/12">
         <div className="h-11 w-11 rounded-full bg-gray-300"></div>

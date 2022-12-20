@@ -93,7 +93,7 @@ const Navbar = ({ myAvatar, searchTerm }) => {
       </svg>
     </div>
     <div className="ml-5 cursor-pointer">
-    <div className='relative h-10 w-10'>
+    <div className='relative h-10 w-10 bg-gray-200 rounded-full'>
           <Image
               src={myAvatar? myAvatar : noAvatar}
               layout="fill"

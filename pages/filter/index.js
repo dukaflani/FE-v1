@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { HomeIcon, RectangleGroupIcon, UserCircleIcon, CloudArrowUpIcon } from '@heroicons/react/24/solid'
@@ -8,8 +9,7 @@ import GenreTabs from '../../components/GenreTabs'
 import Navigation from '../../components/Navigation'
 import VideoCardMapPage from '../../components/VideoCardMapPage'
 import VideoSkeletonMapPage from '../../components/VideoSkeletonMapPage'
-import { useFilterVideoGenreQuery } from '../../redux/features/videos/videosApiSlice'
-import { useEffect } from 'react'
+import useFetchVideos from '../../customHooks/useFetchVideos'
 
 
 
@@ -17,17 +17,26 @@ import { useEffect } from 'react'
 
 const FilterPage = () => {
   const router = useRouter()
-  const { gid } = router.query
+  const { gid, genre } = router.query
+  const [pageNumber, setPageNumber] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [userId, setUserId] = useState('')
+  const [genreId, setGenreId] = useState('')
+
+  useEffect(() => {
+    setPageNumber(1)
+    setGenreId(gid)
+  }, [gid])
+
+  const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId)
+
+  const filteredVideoArr = videos.filter( filteredVideo =>  {
+    return filteredVideo?.genre == gid
+  })
 
 
-  const queryParams = {
-    genre_id: gid
-  }
-
-  const { data: filteredVideos, isLoading } = useFilterVideoGenreQuery(queryParams)
   
 
-  
 
   return (
     <SidebarNav>
@@ -74,17 +83,13 @@ const FilterPage = () => {
             </nav>
           </div>
           <div className='w-1/12'></div>
-          {/* <div className='flex-1 pr-5 w-11/12 pl-24'> */}
           <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
             <div className='grid grid-cols-4 gap-x-3 gap-y-10'>
-              {isLoading ? 
-              <VideoSkeletonMapPage/>
-              :
-              <VideoCardMapPage videos={filteredVideos}/>
-            }
+              <VideoCardMapPage videos={filteredVideoArr} loading={loading} hasMore={hasMore} setPageNumber={setPageNumber} />
             </div>
           </div>
         </section>
+          {filteredVideoArr.length == 0 && !loading && <div className='p-2 flex justify-center items-start text-gray-600'>No&nbsp;<span className='uppercase font-semibold tracking-tight'>{genre.replace(/-/g, " ")}</span>&nbsp;videos available</div>}
       </main>
     </SidebarNav>
   )

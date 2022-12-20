@@ -1,15 +1,34 @@
-import React from 'react'
-import { useFetchVideosQuery } from '../redux/features/videos/videosApiSlice'
+import { useRef, useCallback } from 'react'
 import VideoCard from './VideoCard'
 
-const VideoCardMapPage = ({ videos }) => {
-  // const { data: videos } = useFetchVideosQuery()
+const VideoCardMapPage = ({ videos, loading, hasMore, setPageNumber }) => {
+
+  const observer = useRef()
+  const lastVideoElementRef = useCallback(node => {
+    if (loading) return
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPageNumber(prevPage => prevPage + 1)
+      }
+    }) 
+    if (node) observer.current.observe(node)
+  }, [ loading, hasMore ])
+
+
+
 
   return (
     <>
-    {videos?.data?.map((video, i) => (
-                <VideoCard video={video} key={i}/>
-              ))}
+    {[...new Set([...videos])]?.map((video, i) => {
+      if (videos?.length === i + 1) {
+        return  <div ref={lastVideoElementRef} key={i}><VideoCard video={video} /></div>
+      } else {
+        return  <div key={i}><VideoCard video={video} /></div> 
+      }
+
+    }
+    )}
     </>
   )
 }

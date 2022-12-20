@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { useFetchUserProfileQuery, useFetchUserVideosQuery } from '../../redux/features/videos/videosApiSlice'
+import useFetchVideos from '../../customHooks/useFetchVideos'
+import { useFetchUserProfileQuery } from '../../redux/features/videos/videosApiSlice'
 import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
 import { TvIcon as TvSolid, RectangleGroupIcon as RGSolid } from '@heroicons/react/24/solid'
 import SidebarNav from '../../components/SidebarNav'
@@ -19,12 +20,37 @@ const dashboard = () => {
     user: currentUser
   }
 
-const { data: myVideos } = useFetchUserVideosQuery(queryParams)
 const { data: profile } = useFetchUserProfileQuery(queryParams) 
 const userProfile = profile?.data[0] ? profile?.data[0] : null
-
-const numOfVideos = !myVideos?.data ? ' ' : myVideos?.data?.length
 const userRole = userProfile?.role
+
+const [pageNumber, setPageNumber] = useState('')
+const [searchQuery, setSearchQuery] = useState('')
+const [userId, setUserId] = useState('')
+const [genreId, setGenreId] = useState('')
+
+const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId)
+
+  useEffect(() => {
+    if (!!user?.info?.id) {
+    setUserId(user?.info?.id)
+    setPageNumber(1)
+    }
+  }, [user?.info?.id])
+
+  
+
+  const observer = useRef()
+  const lastVideoElementRef = useCallback(node => {
+    if (loading) return
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPageNumber(prevPage => prevPage + 1)
+      }
+    }) 
+    if (node) observer.current.observe(node)
+  }, [ loading, hasMore ])
 
     if (userRole != 'ARTIST') {
       return  <Unauthorized/> 
@@ -77,19 +103,38 @@ const userRole = userProfile?.role
             <div className='mb-2 uppercase font-semibold flex items-center justify-between pr-10'>
                 <div>
                     <div>My Videos</div>
-                    <div className='text-xs text-gray-600 font-normal'>{numOfVideos} {numOfVideos == 1 ? "video" : 'videos'}</div>
+                    <div className='text-xs text-gray-600 font-normal'>{videos?.length} {videos?.length == 1 ? "video" : 'videos'}</div>
                 </div>
                 <div onClick={() => router.push("/dashboard/upload?item=video")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Video</div>
             </div>
             {currentUser ? 
             (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>
-                {[...Array(numOfVideos).keys()].map((myItem, i) => (
-                    <MyVideos video={myVideos?.data[i]} key={i}/>
-                ))}
+                {videos?.map((myVideo, i) => {
+                  if (videos?.length === i + 1) {
+                    return  <div className='col-span-4' key={i} ref={lastVideoElementRef}><MyVideos video={myVideo}/></div>
+                  } else {
+                    return  <div className='col-span-4' key={i}><MyVideos video={myVideo}/></div>
+                  }
+                }
+                )}
             </div>) : (<div>You do not have any <strong>videos</strong> yet...</div>)
             }
           </div>
         </section>
+        {loading ? <div className='flex items-center justify-center py-3'>
+            <button type="button" className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Loading More Videos...
+            </button>
+            </div>
+            :
+            <div className='flex items-center justify-center py-3'>
+              <span className='font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed'>The End</span>
+            </div>
+            }
       </main>
     </SidebarNav>
   )
