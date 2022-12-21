@@ -30,21 +30,21 @@ Modal.setAppElement("#__next")
 const CurrentVideoPanel = () => {
     const router = useRouter()
     const dispatch = useDispatch()
-    const { videoid, tab } = router.query
+    const { v, tab } = router.query
     const { user } = useSelector((state) => state.auth)
     const [modalOpen, setModalOpen] = useState(false)
     const [fanbaseErrors, setFanbaseErrors] = useState(null)
 
     
     const videoQueryParams = {
-        video_id: videoid,
+        video_id: v,
     }
     
     const {data: currentvideo} = useCurrentVideoQuery(videoQueryParams)
-    const currentVideoProfileId = currentvideo?.data?.customuserprofile
+    const currentVideoProfileId = currentvideo?.data?.results[0]?.customuserprofile
     
     const videoProfileQueryParams = {
-        profile_id: currentVideoProfileId,
+        profile_id: currentVideoProfileId ? currentVideoProfileId : 0,
     }
     
     
@@ -99,7 +99,7 @@ const CurrentVideoPanel = () => {
 
 
     const joinDetails = {
-        "customuserprofile_id": currentvideo?.data?.customuserprofile
+        "customuserprofile_id": currentvideo?.data?.results[0]?.customuserprofile
     }
 
     const leaveDetails = {
@@ -142,7 +142,7 @@ const CurrentVideoPanel = () => {
                 </div>
                 <div className='w-8/12 flex flex-col items-start justify-center'>
                     <div className='flex space-x-1'>
-                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.data?.stage_name ? currentvideo?.data?.stage_name : ''}</div>
+                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.data?.stage_name ? currentvideo?.data?.results[0]?.stage_name : ''}</div>
                         {videoProfile?.data?.is_verified && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
@@ -197,8 +197,8 @@ const CurrentVideoPanel = () => {
                 {tabButtons.map((tabButtonItem, i) => (
                     <Link 
                         href={{
-                            pathname: `/watch/${videoid}`,
-                            query: { tab: tabButtonItem.urlQueryParams.tab },
+                            pathname: `/watch/`,
+                            query: { v: v, tab: tabButtonItem.urlQueryParams.tab },
                         }}
                         key={i} 
                         className={tab === tabButtonItem.urlQueryParams.tab ? activeStyles : regularStyles}
@@ -232,7 +232,7 @@ const CurrentVideoPanel = () => {
                   overlay:{backgroundColor: "rgba(0, 0, 0, 0.3)", zIndex:'99999'}}}
           >
           <div className='bg-white shadow w-7/12 h-5/6'>
-            <ProfileModalContent setModalOpen={setModalOpen} info={currentvideo?.data} fanbase={fanbase2} />
+            <ProfileModalContent setModalOpen={setModalOpen} info={currentvideo?.data?.results[0]} fanbase={fanbase2} />
           </div>
         </Modal>
     </>

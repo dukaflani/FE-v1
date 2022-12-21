@@ -22,13 +22,14 @@ const FilterPage = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [userId, setUserId] = useState('')
   const [genreId, setGenreId] = useState('')
+  const [uniqueId, setUniqueId] = useState('')
 
   useEffect(() => {
     setPageNumber(1)
     setGenreId(gid)
   }, [gid])
 
-  const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId)
+  const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId, uniqueId)
 
   const filteredVideoArr = videos.filter( filteredVideo =>  {
     return filteredVideo?.genre == gid

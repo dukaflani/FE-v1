@@ -1,7 +1,8 @@
 import FormData from 'form-data'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { nanoid } from 'nanoid'
 import slugify from 'slugify'
 import { useFetchAccessTokenQuery, useFetchAllGenresQuery, useFetchUserAlbumsQuery, useFetchUserLinkHoldersQuery, useFetchUserLyricssQuery, 
     useFetchUserProductsQuery, useFetchUserSkizaTunesQuery } from '../redux/features/videos/videosApiSlice'
@@ -39,6 +40,13 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
     const [createdVideo, setCreatedVideo] = useState({})
     const [errorMessage, setErrorMessage] = useState('')
     const [emptyFields, setEmptyFields] = useState(false)
+    const [nanoId, setNanoId] = useState('')
+    const [renderComponent, setRenderComponent] = useState(null)
+
+    useEffect(() => {
+        setNanoId(nanoid(16))
+    }, [])
+    
 
 
     const refreshToken = `JWT ${accessToken?.access}`
@@ -60,6 +68,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
     videoInfo.append("skiza", videoSkizaTune);
     videoInfo.append("genre", songGenre);
     videoInfo.append("customuserprofile", userProfileId);
+    videoInfo.append("url_id", nanoId);
 
     const handleVideoUpload = () => {
         if (videoTitle && songTitle && youtubeVideoId && videoDescription && thumbnail && songGenre && userProfileId != 0) {
@@ -73,17 +82,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
             .then((response) => response.json())
             .then((result) => {
                 setCreatedVideo(result)
-                setVideoTitle(" ")
-                setSongTitle(" ")
-                setSongGenre(" ")
-                setYoutubeVideoId(" ")
-                setVideoDescription(" ")
-                setVideoSmartLinks(" ")
-                setVideoProduct(" ")
-                setVideoLyrics(" ")
-                setVideoSkizaTune(" ")
-                setVideoAlbum(" ")
-                setThumbnail(null)
+                window.location.reload();
             })
             .catch((error) => {
                 setErrorMessage(error)

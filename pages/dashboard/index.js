@@ -28,8 +28,10 @@ const [pageNumber, setPageNumber] = useState('')
 const [searchQuery, setSearchQuery] = useState('')
 const [userId, setUserId] = useState('')
 const [genreId, setGenreId] = useState('')
+const [uniqueId, setUniqueId] = useState('')
 
-const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId)
+
+const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId, uniqueId)
 
   useEffect(() => {
     if (!!user?.info?.id) {

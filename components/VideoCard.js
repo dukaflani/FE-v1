@@ -41,14 +41,14 @@ const VideoCard = ({ video }) => {
     const handleCurrentVideo = async (id) => {
         await addView(newView);
         router.push({
-            pathname: `/watch/${id}`,
-            query: { tab: "links" },
+            pathname: `/watch/`,
+            query: { v: id, tab: "links" },
           });
     }
 
   return (
         <>
-        <article onClick={() => handleCurrentVideo(video?.id)} className='h-64 cursor-pointer'>
+        <article onClick={() => handleCurrentVideo(video?.url_id)} className='h-64 cursor-pointer'>
             <div className='h-4/6 relative rounded-md bg-gray-200'>
                 <Image 
                     src={!video?.thumbnail ? thumbnail : video?.thumbnail}
@@ -70,7 +70,7 @@ const VideoCard = ({ video }) => {
                     </div>
                 </div>
                 <div className='w-10/12'>
-                    <Link legacyBehavior href={`/watch/[videoid]?videoid=${video?.id}`}>
+                    <Link legacyBehavior href={`/watch?v=${video?.url_id}&tab=links`}>
                         <a title={video?.title}>
                             <div className='font-semibold leading-4 text-gray-700 tracking-tight cursor-pointer text-base line-clamp-2'>{video?.title}</div>
                         </a>

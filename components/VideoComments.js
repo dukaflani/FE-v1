@@ -4,12 +4,10 @@ import { useFetchCommentsQuery } from '../redux/features/videos/videosApiSlice'
 import RegularComment from './RegularComment'
 import PinnedComments from './PinnedComments'
 
-const VideoComments = () => {
-  const router = useRouter()
-  const { videoid } = router.query
+const VideoComments = ({ videoId }) => {
 
   const queryParams = {
-    video_id: videoid,
+    video_id: videoId ? videoId : 0,
 }
 
   const { data: comments } = useFetchCommentsQuery(queryParams)

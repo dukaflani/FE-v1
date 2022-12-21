@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-export default function useFetchVideos( searchQuery, userId, pageNumber, genreId ) {
+export default function useFetchVideos( searchQuery, userId, pageNumber, genreId, uniqueId ) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [videos, setVideos] = useState([])
@@ -10,7 +10,7 @@ export default function useFetchVideos( searchQuery, userId, pageNumber, genreId
 
     useEffect(() => {
         setVideos([])
-    }, [searchQuery, genreId])
+    }, [searchQuery, genreId, uniqueId])
     
 
 
@@ -24,7 +24,7 @@ export default function useFetchVideos( searchQuery, userId, pageNumber, genreId
         axios({
             method: 'GET',
             url: `${process.env.NEXT_PUBLIC_BASE_URL}/store/videos/`,
-            params: { user: userId, genre: genreId, search: searchQuery, page: pageNumber },
+            params: { user: userId, genre: genreId, search: searchQuery, page: pageNumber, url_id: uniqueId },
             cancelToken: new axios.CancelToken((c) => cancel = c)
         }).then(res => {
             setVideos(prevVideos => {
@@ -42,7 +42,7 @@ export default function useFetchVideos( searchQuery, userId, pageNumber, genreId
             }
         })
         return () => cancel()
-    }, [ searchQuery, userId, pageNumber, genreId ])
+    }, [ searchQuery, userId, pageNumber, genreId, uniqueId ])
     
   return { loading, error, videos, hasMore }
 }

@@ -102,7 +102,7 @@ const MyVideos = ({ video }) => {
                                 <Menu.Items className="absolute right-0 mt-2 w-56 bg-white shadow z-10 focus:outline-none">
                                     <div>
                                         <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
-                                                <button onClick={() => router.push(`/watch/${video?.id}`)}>
+                                                <button onClick={() => router.push({pathname: `/watch/`, query: { v: video?.url_id, tab: "links" }})}>
                                                     <PlayIcon className='h-5 w-5 mr-2 ml-1' /> Play
                                                 </button>
                                         </Menu.Item>

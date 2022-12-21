@@ -34,11 +34,11 @@ const CurrentVideoPlayer = () => {
     const hashTagRegex = /#[a-z0-9_]+/gi 
 
     const videoLikedQuery = {
-        video_id: video?.details?.id,
+        video_id: video?.details?.id ? video?.details?.id : 0,
     }
 
     const videoObjectsCountQuery = {
-        video_id: video?.details?.id,
+        video_id: video?.details?.id ? video?.details?.id : 0,
     }
 
 
@@ -275,7 +275,7 @@ const CurrentVideoPlayer = () => {
                 </div>
             </div>
             <div className='mt-10 mb-36'>
-                <VideoComments/>
+                <VideoComments videoId={video?.details?.id} />
             </div>
         </div>
     </article>

@@ -11,7 +11,6 @@ import GenreTabsEX from '../components/GenreTabsEX'
 import Navigation from '../components/Navigation'
 import VideoCardMapPage from '../components/VideoCardMapPage'
 import VideoSkeletonMapPage from '../components/VideoSkeletonMapPage'
-// import { useFetchVideosQuery } from '../redux/features/videos/videosApiSlice'
 
 
 
@@ -19,13 +18,13 @@ import VideoSkeletonMapPage from '../components/VideoSkeletonMapPage'
 
 const Home = () => {
   const router = useRouter()
-  // const { data, isLoading } = useFetchVideosQuery()
   const [pageNumber, setPageNumber] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [userId, setUserId] = useState('')
   const [genreId, setGenreId] = useState('')
+  const [uniqueId, setUniqueId] = useState('')
 
-  const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId)
+  const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId, uniqueId)
 
 
   useEffect(() => {
