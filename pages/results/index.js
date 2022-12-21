@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSearchForVideoQuery } from '../../redux/features/videos/videosApiSlice'
@@ -6,6 +6,7 @@ import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRi
 import SidebarNav from '../../components/SidebarNav'
 import MyVideos from '../../components/MyVideos'
 import Navigation from '../../components/Navigation'
+import useFetchVideos from '../../customHooks/useFetchVideos'
 
 const videoSearchResults = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -16,15 +17,32 @@ const videoSearchResults = () => {
   useEffect(() => {
     setSearchTerm(formatedSearchQuery)
   }, [search_query])
-  
 
-  const searchQueryParams = {
-    search_string: search_query
-  }
+const [pageNumber, setPageNumber] = useState('')
+const [searchQuery, setSearchQuery] = useState('')
+const [userId, setUserId] = useState('')
+const [genreId, setGenreId] = useState('')
+const [uniqueId, setUniqueId] = useState('')
 
-const { data: videoResults } = useSearchForVideoQuery(searchQueryParams)
+useEffect(() => {
+  setSearchQuery(search_query)
+  setPageNumber(1)
+}, [search_query])
 
-const numOfVideos = !videoResults?.data ? ' ' : videoResults?.data?.length
+const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId, uniqueId)
+const numOfVideos = videos?.length ? videos?.length : 0
+
+const observer = useRef()
+const lastVideoElementRef = useCallback(node => {
+  if (loading) return
+  if (observer.current) observer.current.disconnect()
+  observer.current = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && hasMore) {
+      setPageNumber(prevPage => prevPage + 1)
+    }
+  }) 
+  if (node) observer.current.observe(node)
+}, [ loading, hasMore ])
 
 
   return (
@@ -72,21 +90,42 @@ const numOfVideos = !videoResults?.data ? ' ' : videoResults?.data?.length
           <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
             <div className='mb-2 font-semibold flex items-center justify-between pr-10'>
                 <div>
-                    <div className='uppercase'>Search Results</div>
-                    {/* <div className='text-xs text-gray-600 font-normal'>{numOfVideos} {numOfVideos == 1 ? "video" : 'videos'}</div> */}
+                    <div className='uppercase'>Search Results For:</div>
                     <div className='text-base text-gray-600 font-normal'>{searchTerm}</div>
+                    <div className='text-xs text-gray-600 font-normal'>{numOfVideos} {numOfVideos == 1 ? "video" : 'videos'}</div>
                 </div>
                 {/* <div onClick={() => router.push("/dashboard/upload?item=video")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Video</div> */}
             </div>
             {search_query ? 
             (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>
-                {[...Array(numOfVideos).keys()].map((myItem, i) => (
-                    <MyVideos video={videoResults?.data[i]} key={i}/>
-                ))}
-            </div>) : (<div>You do not have any <strong>videos</strong> yet...</div>)
+                {videos?.map((video, i) => {
+                  if (videos?.length === i + 1) {
+                    return <div className='col-span-4' key={i} ref={lastVideoElementRef} ><MyVideos video={video}/></div>
+                  } else {
+                    return <div className='col-span-4' key={i}><MyVideos video={video}/></div>
+                  }
+                  
+                }
+                )}
+            </div>) : (<div>Enter your search in the searchbox above</div>)
             }   
+             {loading ? <div className='flex items-center justify-center py-3'>
+            <button type="button" className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Loading Videos...
+            </button>
+            </div>
+            :
+            <div className='flex items-center justify-center py-3'>
+              <span className='font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed'>The End</span>
+            </div>
+            }
           </div>
         </section>
+        {videos.length == 0 && !loading && <div className='p-2 flex justify-center items-start text-gray-600'>No results found for&nbsp;<span className='font-semibold tracking-tight'>{searchTerm}</span>.&nbsp;Please try a different search!</div>}
       </main>
     </SidebarNav>
   )

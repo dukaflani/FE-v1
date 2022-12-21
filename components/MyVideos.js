@@ -6,12 +6,17 @@ import { Menu, Transition, Dialog } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid'
 import thumbnail from '../public/media/dukaflani-thumbnail-default.png'
 import { PencilSquareIcon as EditInactive, TrashIcon, PlayIcon  } from '@heroicons/react/24/outline'
-import { useDeleteVideoMutation } from '../redux/features/videos/videosApiSlice';
+import { useAddViewMutation, useDeleteVideoMutation } from '../redux/features/videos/videosApiSlice';
+import { useSelector } from 'react-redux';
 
 const MyVideos = ({ video }) => {
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
     const router = useRouter()
     let [isOpen, setIsOpen] = useState(false)
     const [deleteErrors, setDeleteErrors] = useState(null)
+
+    const [ addView ] = useAddViewMutation();
     
     const videoUploadTime = new Date(video?.date).toDateString()
     const view2 = video?.views_count
@@ -51,6 +56,24 @@ const MyVideos = ({ video }) => {
           setDeleteErrors(null)
         }, 5000);
     }
+}
+
+const video_id = video?.id
+const user_id = currentUser ? currentUser : 1
+
+
+const newView = {
+  "video": video_id,
+  "user": user_id
+}
+
+
+const handlePlayVideo = async (id) => {
+  await addView(newView);
+  router.push({
+      pathname: `/watch/`,
+      query: { v: id, tab: "links" },
+    });
 }
 
 
@@ -102,7 +125,7 @@ const MyVideos = ({ video }) => {
                                 <Menu.Items className="absolute right-0 mt-2 w-56 bg-white shadow z-10 focus:outline-none">
                                     <div>
                                         <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
-                                                <button onClick={() => router.push({pathname: `/watch/`, query: { v: video?.url_id, tab: "links" }})}>
+                                                <button onClick={() => handlePlayVideo(video?.url_id)}>
                                                     <PlayIcon className='h-5 w-5 mr-2 ml-1' /> Play
                                                 </button>
                                         </Menu.Item>

@@ -10,7 +10,7 @@ import { useFetchUserProfileQuery } from '../redux/features/videos/videosApiSlic
 import noAvatar from '../public/media/noimage.webp'
 
 const Navbar = ({ myAvatar, searchTerm }) => {
-  const [navSearchTerm, setNavSearchTerm] = useState(searchTerm)
+  const [navSearchTerm, setNavSearchTerm] = useState('')
   const router = useRouter()
   const dispatch = useDispatch()
   
@@ -29,17 +29,17 @@ const Navbar = ({ myAvatar, searchTerm }) => {
   }, [userProfile?.data])
 
 
-  const formattedSearchTerm = navSearchTerm?.replace(/ /g, "+")
+  const formattedSearchTerm = navSearchTerm?.replace(/%2/g, "+")
 
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
-      router.push(`/results?search_query=${formattedSearchTerm}`)
+      router.push({pathname: `/results/`, query: { search_query: formattedSearchTerm }})
     }
   }
 
   const handleSearchByClick = (e) => {
-      router.push(`/results?search_query=${formattedSearchTerm}`)
+      router.push({pathname: `/results/`, query: { search_query: formattedSearchTerm }})
   }
 
 
