@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux';
 import Image from "next/legacy/image";
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
+import { useRouter } from 'next/router';
 import ShowMoreText from "react-show-more-text";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon } from '@heroicons/react/24/outline'
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn } from '@heroicons/react/24/solid'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
@@ -15,11 +17,14 @@ import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery,
     useAddUnlikeMutation, useCurrentVideoObjectsCountQuery } from '../redux/features/videos/videosApiSlice';
 
 const CurrentVideoPlayer = () => {
+    const router = useRouter()
+    const { v, tab } = router.query
     const [commentBody, setCommentBody] = useState('')
     const [createdComment, setCreatedComment] = useState(null)
     const [commentErrors, setCommentErrors] = useState(null)
     const [fieldError, setFieldError] = useState('')
     const [likeErrors, setLikeErrors] = useState(null)
+    const [linkCopied, setLinkCopied] = useState(false)
 
 
     const { video } = useSelector((state) => state.videos)
@@ -214,10 +219,15 @@ const CurrentVideoPlayer = () => {
                     </button>}
                     </div>
                     <div className='ml-14'>
-                    <button type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <ShareIcon className="mr-2 w-5 h-5" />
-                        Share
-                    </button>
+                        <CopyToClipboard
+                            text={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${v}&tab=${tab}`}
+                            onCopy={() => setLinkCopied(true)}
+                        >
+                            <button type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                <ShareIcon className="mr-2 w-5 h-5" />
+                                {linkCopied ? "Copied" : "Share"}
+                            </button>
+                        </CopyToClipboard>
                     </div>
                 </div>
             </div>
