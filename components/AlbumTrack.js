@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { PlayPauseIcon } from '@heroicons/react/24/solid'
 
 const AlbumTrack = ({ track }) => {
+  
   return (
     <div className='p-1 mb-4 flex items-center justify-center'>
         <div className='w-10/12'>
@@ -12,7 +13,7 @@ const AlbumTrack = ({ track }) => {
         </div>
         <div className='w-2/12 flex items-center justify-center'>
           {track?.video ? (
-            <Link href={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch/${track?.video}`} >< PlayPauseIcon className='h-5 w-5 text-blue-600 cursor-pointer' /></Link> 
+            <Link href={{pathname: `/watch/`, query: {v: track?.url_id, tab: "links"}}} >< PlayPauseIcon className='h-5 w-5 text-blue-600 cursor-pointer' /></Link> 
           ) : (
             <div>< PlayPauseIcon className='h-5 w-5 text-gray-100' /></div>
           )}
