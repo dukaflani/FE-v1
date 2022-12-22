@@ -7,14 +7,8 @@ import poster from '../public/media/dukaflani-poster-default.png'
 import { useFetchProductQuery } from '../redux/features/videos/videosApiSlice';
 import numeral from 'numeral';
 
-const ProductCard = () => {
+const ProductCard = ({ title }) => {
     const { video } = useSelector((state) => state.videos)
-    // const colorOptions = ['red', 'green', 'blue', 'black', 'yellow', 'white', 'brown', 'khaki']
-    // const sizeOptions = ['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']
-    // const [activeSize, setActiveSize] = useState(1)
-    // const [activeColor, setActiveColor] = useState(0)
-    // const activeSizeStyles = 'flex items-center justify-center uppercase tracking-wider font-extrabold text-sm text-gray-900 cursor-pointer'
-    // const regularSizeStyles = 'flex items-center justify-center uppercase tracking-wider font-extrabold text-sm text-gray-400 hover:text-gray-800 cursor-pointer'
 
     const queryParams = {
         product_id: video?.details?.product,
@@ -24,6 +18,10 @@ const ProductCard = () => {
 
     const localPrice = product?.data?.local_price
     let formattedLocalPrice = numeral(localPrice).format('0,0')
+
+    const msg = `Hello ${product?.data?.sold_by}, I'm interested in the ${product?.data?.title} from ${product?.data?.promoted_by}'s '${title}' video on dukaflani.com`
+    const msg2 = msg.replace(/ /g, "%20")
+    const whatsappLink = `https://wa.me/${product?.data?.whatsapp}?text=${msg2}`
 
 
   return (
@@ -66,20 +64,10 @@ const ProductCard = () => {
                     <div>{product?.data?.description}</div>
                 </ShowMoreText>
                 </div>
-                {/* <div className='px-2 text-sm tracking-tight mt-2'>Colors</div>
-                <div className='flex space-x-1 px-2'>
-                    {colorOptions.map((colorOption, i) => (
-                        <div key={i} style={{backgroundColor: `${colorOption}`, opacity:0.8}} onClick={() => setActiveColor(i)} className='h-5 w-5 cursor-pointer text-gray-300 flex items-center justify-center border border-black'>{activeColor === i && <CheckIcon/>}</div>
-                    ))}
-                </div>
-                <div className='px-2 text-sm tracking-tight mt-2'>Sizes</div>
-                <div className='flex space-x-3 px-2'>
-                    {sizeOptions.map((sizeOption, i) => (
-                        <div  key={i} className={activeSize === i ? activeSizeStyles : regularSizeStyles} onClick={() => setActiveSize(i)}>{sizeOption}</div>
-                    ))}
-                </div> */}
             </div>
-            <div style={{backgroundColor:'#25D366'}} className='flex items-center justify-center p-2 cursor-pointer mt-3 text-white uppercase text-xs tracking-wider font-semibold'>order on whatsapp</div>
+            <a href={whatsappLink} target="_blank" rel="noopener">
+                <div style={{backgroundColor:'#25D366'}} className='flex items-center justify-center p-2 cursor-pointer mt-3 text-white uppercase text-xs tracking-wider font-semibold'>order on whatsapp</div>
+            </a>
         </div>
         <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>{product?.data?.sold_by && "Sold by"} {product?.data?.sold_by}</footer>
     </div>

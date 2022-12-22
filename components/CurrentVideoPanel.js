@@ -32,6 +32,7 @@ const CurrentVideoPanel = () => {
     const dispatch = useDispatch()
     const { v, tab } = router.query
     const { user } = useSelector((state) => state.auth)
+    const { video } = useSelector((state) => state.videos)
     const [modalOpen, setModalOpen] = useState(false)
     const [fanbaseErrors, setFanbaseErrors] = useState(null)
 
@@ -214,7 +215,7 @@ const CurrentVideoPanel = () => {
             {
                 {
                     "links" : <StreamingLinks/>,
-                    "product" : <ProductCard/>,
+                    "product" : <ProductCard title={video?.details?.title} />,
                     "lyrics" : <LyricsPage/>,
                     "skiza" : <SkizaTunesPage/>,
                     "album" : <AlbumPage/>,
