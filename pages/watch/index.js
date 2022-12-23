@@ -26,7 +26,6 @@ const WatchCurrentVideo = () => {
 // }
 
   const { data: currentVideo, isLoading } = useCurrentVideoQuery(queryParams)
-  console.log("current video:", currentVideo?.data?.results[0]?.title);
 
   
   useEffect(() => {

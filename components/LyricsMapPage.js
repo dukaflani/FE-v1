@@ -19,7 +19,6 @@ const LyricsMapPage = () => {
 
     const { data: lyricsVerse } = useFetchLyricsVerseQuery(versesQueryParams)
 
-    console.log("lyrics object:", lyricsVerse?.data);
 
 
 

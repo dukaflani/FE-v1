@@ -40,7 +40,6 @@ export default async (req, res) => {
         
     } else {
         res.setHeader('Allow', ['POST']);
-        console.log("code block six");
         return res.status(405).json({
             error: `Method ${req.method} not allowed`
         });

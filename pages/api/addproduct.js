@@ -7,16 +7,6 @@ export default async (req, res) => {
         const access = cookies.access ?? false
 
 
-        console.log("Product title API:", FormData.get('title'));
-        console.log("Currency Symbol API:", req.body.currencySymbol);
-        console.log("Local price API:", req.body.localPrice);
-        console.log("Dollar price API:", req.body.dollarPrice);
-        console.log("WhatsApp API:", req.body.whatsapp);
-        console.log("Sold by API:", req.body.vendor);
-        console.log("Product description API:", req.body.prodDesc);
-        console.log("Product image API:", req.body.prodImage);
-        console.log("slug API:", req.body.prodSlug);
-
         const productInfo = new FormData()
         productInfo.append("title", req.body.productTitle)
         productInfo.append("image", req.body.prodImage)

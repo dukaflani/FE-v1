@@ -22,7 +22,6 @@ export default async (req, res) => {
                 },
             });
             const data = await apiResponse.json();
-            console.log("after leaving:", data);
 
             if (data) {
                 return res.status(200).json({ 

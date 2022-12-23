@@ -22,7 +22,6 @@ const AlbumTracksPage = () => {
       }
 
     const { data: albumTracks } = useFetchAlbumTracksQuery(albumTrackParams)
-    console.log("album tracks:", albumTracks?.data);
 
 
 

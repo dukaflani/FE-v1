@@ -112,8 +112,8 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
                         setAlbumTrackCatchError('')
                     }, 5000);
                 }
-                console.log("errors:", error?.message);
-                console.log("errors:", error);
+                setErrorMessage(error?.message);
+                setErrorMessage(error);
             }
         } else {
             setMissingAlbumTrackTitle(true)
