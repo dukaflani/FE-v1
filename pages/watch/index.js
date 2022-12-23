@@ -15,15 +15,11 @@ import { useCurrentVideoQuery } from '../../redux/features/videos/videosApiSlice
 const WatchCurrentVideo = () => {
   const router = useRouter()
   const { v } = router.query
-//   const { videoid } = router.query
   const dispatch = useDispatch() 
 
   const queryParams = {
     video_id: v,
 }
-//   const queryParams = {
-//     video_id: videoid,
-// }
 
   const { data: currentVideo, isLoading } = useCurrentVideoQuery(queryParams)
 
@@ -48,6 +44,7 @@ const WatchCurrentVideo = () => {
         <meta property="og:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
         <meta property="og:title" content={`${currentVideo?.data?.results[0]?.title} | ${currentVideo?.data?.results[0]?.stage_name} - Dukaflani`} />
         <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
+        {/* <meta property="og:image" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/api/og?stage_name=madam&song_title=mbona `}/> */}
         <meta property="og:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
