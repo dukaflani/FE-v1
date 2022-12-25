@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { useFetchLyricsVerseQuery, useFetchLyricsQuery } from '../../../../../../redux/features/videos/videosApiSlice'
-import SidebarNav from '../../../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../../components/NavigationMobile'
 import EditLyrics from '../../../../../../components/EditLyrics'
 
@@ -29,7 +29,7 @@ const editLyrics = () => {
 
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
     <Head>
         <title>Edit Lyrics | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Lyrics | Dukaflani — Home of Music Videos"/>
@@ -68,7 +68,7 @@ const editLyrics = () => {
         </footer>
       </main>
       </>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

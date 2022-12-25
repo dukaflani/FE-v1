@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { HomeIcon, RectangleGroupIcon, UserCircleIcon, CloudArrowUpIcon } from '@heroicons/react/24/solid'
 import { HomeIcon as HomeOutline, RectangleGroupIcon as RGOutline, 
   UserCircleIcon  as UCOutline, Cog6ToothIcon as C6Outline, CloudArrowUpIcon as CloudArrowUpIconOutline} from '@heroicons/react/24/outline'
-import SidebarNav from '../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import GenreTabs from '../../../../components/GenreTabs'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import VideoCardMapPage from '../../../../components/VideoCardMapPage'
@@ -39,7 +39,7 @@ const FilterPage = () => {
 
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>{genre?.replace(/-/g, " ")} | Dukaflani — Home of Music Videos</title>
         <meta name="title" content={`${genre?.replace(/-/g, " ")} | Dukaflani — Home of Music Videos`} />
@@ -109,7 +109,7 @@ const FilterPage = () => {
         </section>
           {filteredVideoArr.length == 0 && !loading && <div className='p-2 flex justify-center items-start text-gray-600'>No&nbsp;<span className='uppercase font-semibold tracking-tight'>{genre?.replace(/-/g, " ")}</span>&nbsp;videos available</div>}
       </main>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

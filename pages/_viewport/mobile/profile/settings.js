@@ -2,11 +2,11 @@ import Head from 'next/head'
 import React from 'react'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import ProfileSettingsComponent from '../../../../components/ProfileSettingsComponent'
-import SidebarNav from '../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 
 const settings = () => {
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
         <Head>
         <title>Profile Settings | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Profile Settings | Dukaflani — Home of Music Videos"/>
@@ -34,7 +34,7 @@ const settings = () => {
             <NavigationMobile/>
             <ProfileSettingsComponent/>
         </>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

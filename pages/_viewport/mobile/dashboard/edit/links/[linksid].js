@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useFetchStreamingLinksQuery, useFetchOneStreamingLinkQuery } from '../../../../../../redux/features/videos/videosApiSlice'
-import SidebarNav from '../../../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../../components/NavigationMobile'
 import EditStreamingLink from '../../../../../../components/EditStreamingLink'
 
@@ -20,7 +20,7 @@ const numOfLinks = streamingLinks?.data?.length
 
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
     <Head>
         <title>Edit Links | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Links | Dukaflani — Home of Music Videos"/>
@@ -59,7 +59,7 @@ const numOfLinks = streamingLinks?.data?.length
         </footer>
       </main>
       </>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

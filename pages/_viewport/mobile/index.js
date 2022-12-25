@@ -5,7 +5,7 @@ import { HomeIcon, RectangleGroupIcon, UserCircleIcon, CloudArrowUpIcon } from '
 import { HomeIcon as HomeOutline, RectangleGroupIcon as RGOutline, 
   UserCircleIcon  as UCOutline, Cog6ToothIcon as C6Outline, CloudArrowUpIcon as CloudArrowUpIconOutline} from '@heroicons/react/24/outline'
 import useFetchVideos from '../../../customHooks/useFetchVideos' 
-import SidebarNav from '../../../components/SidebarNav'
+import SidebarNavMobile from '../../../components/SidebarNavMobile'
 import GenreTabs from '../../../components/GenreTabs'
 import GenreTabsEX from '../../../components/GenreTabsEX'
 import NavigationMobile from '../../../components/NavigationMobile'
@@ -35,7 +35,7 @@ const Home = () => {
   
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>Mobile — Home of Music Videos</title>
         <meta name="title" content="Dukaflani — Home of Music Videos"/>
@@ -123,7 +123,7 @@ const Home = () => {
             </div>
         </section>
       </main>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

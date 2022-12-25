@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { loadCurrentVideo } from '../../../../redux/features/videos/videosSlice'
 import { useCurrentVideoQuery } from '../../../../redux/features/videos/videosApiSlice'
-import SidebarNav from '../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import CurrentVideoPlayer from '../../../../components/CurrentVideoPlayer'
 import CurrentVideoPanel from '../../../../components/CurrentVideoPanel'
@@ -32,7 +32,7 @@ const CurrentVideo = () => {
   
   
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>Dukaflani</title>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favourite musicians." />
@@ -49,7 +49,7 @@ const CurrentVideo = () => {
             </section>
         </div>
       </main>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

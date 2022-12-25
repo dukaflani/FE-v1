@@ -1,13 +1,13 @@
 import React from 'react'
 import Head from 'next/head'
-import SidebarNav from '../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import ProfilePageComponent from '../../../../components/ProfilePageComponent'
 
 const index = () => {
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
         <Head>
         <title>Profile | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Profile | Dukaflani — Home of Music Videos"/>
@@ -37,7 +37,7 @@ const index = () => {
             <ProfilePageComponent/>
         </>
     </div>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

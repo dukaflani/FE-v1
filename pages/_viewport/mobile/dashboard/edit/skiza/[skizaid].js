@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useFetchOneSkizaTuneQuery, useFetchSkizaTuneLinksQuery } from '../../../../../../redux/features/videos/videosApiSlice'
-import SidebarNav from '../../../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../../components/NavigationMobile'
 import EditSkizaTune from '../../../../../../components/EditSkizaTune'
 
@@ -21,7 +21,7 @@ const editSkiza = () => {
 
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>Edit Skiza Tune | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Skiza Tune | Dukaflani — Home of Music Videos"/>
@@ -60,7 +60,7 @@ const editSkiza = () => {
         </footer>
       </main>
       </>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

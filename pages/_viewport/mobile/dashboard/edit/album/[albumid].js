@@ -9,7 +9,7 @@ import { Transition, Dialog } from '@headlessui/react'
 import { albumActions, albumTypes } from '../../../../../../data/musicCollection'
 import cover from '../../../../../../public/media/dukaflani-cover-default.png'
 import { useFetchAccessTokenQuery, useFetchAlbumQuery, useFetchAlbumTracksQuery } from '../../../../../../redux/features/videos/videosApiSlice'
-import SidebarNav from '../../../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../../components/NavigationMobile'
 import EditMusicCollection from '../../../../../../components/EditMusicCollection'
 import InputField from '../../../../../../components/reuseable-components/InputField'
@@ -98,7 +98,7 @@ const editAlbum = () => {
 
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
     <Head>
         <title>Edit Album | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Album | Dukaflani — Home of Music Videos"/>
@@ -279,7 +279,7 @@ const editAlbum = () => {
         </Dialog>
       </Transition>
       </>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

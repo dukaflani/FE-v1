@@ -1,12 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
-import SidebarNav from '../../../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../../components/NavigationMobile'
 import EditEvent from '../../../../../../components/EditEvent'
 
 const editEvent = () => {
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
     <Head>
         <title>Edit Event | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Event | Dukaflani — Home of Music Videos"/>
@@ -41,7 +41,7 @@ const editEvent = () => {
         </footer>
       </main>
       </>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

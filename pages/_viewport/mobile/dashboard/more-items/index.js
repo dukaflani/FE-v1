@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
-import SidebarNav from '../../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../components/NavigationMobile'
 import MoreItemsWrapper from '../../../../../components/MoreItemsWrapper'
 
@@ -15,7 +15,7 @@ const moreItems = () => {
     const [currentInput, setCurrentInput] = useState(0)
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>More Items | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="More Items | Dukaflani — Home of Music Videos"/>
@@ -92,7 +92,7 @@ const moreItems = () => {
           </div>
         </section>
       </main>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

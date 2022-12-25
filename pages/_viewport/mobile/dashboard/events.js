@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
 import { TvIcon as TvSolid, BuildingStorefrontIcon as StoreSolid, TicketIcon as TicketSolid } from '@heroicons/react/24/solid'
-import SidebarNav from '../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import MyEvents from '../../../../components/MyEvents'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import { useFetchEventsQuery } from '../../../../redux/features/videos/videosApiSlice'
@@ -25,7 +25,7 @@ const events = () => {
   
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>My Events | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="My Events | Dukaflani — Home of Music Videos"/>
@@ -106,7 +106,7 @@ const events = () => {
           </div>
         </section>
       </main>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

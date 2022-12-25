@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { useSelector } from 'react-redux'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
-import SidebarNav from '../../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../components/NavigationMobile'
 import UploadVideo from '../../../../../components/UploadVideo'
 import UnauthorizedMobile from '../../../../../components/UnauthorizedMobile'
@@ -37,7 +37,7 @@ const uploadPage = () => {
 
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>Upload Page | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Upload Page | Dukaflani — Home of Music Videos"/>
@@ -118,7 +118,7 @@ const uploadPage = () => {
           </div>
         </section>
       </main>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

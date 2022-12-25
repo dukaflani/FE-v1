@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
-import SidebarNav from '../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import MyVideos from '../../../../components/MyVideos'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import useFetchVideos from '../../../../customHooks/useFetchVideos'
@@ -45,7 +45,7 @@ const lastVideoElementRef = useCallback(node => {
 
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>{searchTerm} — Home of Music Videos</title>
         <meta name="title" content={`${searchTerm} — Home of Music Videos`}/>
@@ -144,7 +144,7 @@ const lastVideoElementRef = useCallback(node => {
         </section>
         {videos.length == 0 && !loading && <div className='p-2 flex justify-center items-start text-gray-600'>No results found for&nbsp;<span className='font-semibold tracking-tight'>{searchTerm}</span>.&nbsp;Please try a different search!</div>}
       </main>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

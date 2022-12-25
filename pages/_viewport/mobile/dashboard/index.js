@@ -6,7 +6,7 @@ import useFetchVideos from '../../../../customHooks/useFetchVideos'
 import { useFetchUserProfileQuery } from '../../../../redux/features/videos/videosApiSlice'
 import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
 import { TvIcon as TvSolid, RectangleGroupIcon as RGSolid } from '@heroicons/react/24/solid'
-import SidebarNav from '../../../../components/SidebarNav'
+import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import MyVideos from '../../../../components/MyVideos'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
@@ -60,7 +60,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
 
 
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
       <Head>
         <title>Dashboard | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Dashboard | Dukaflani — Home of Music Videos"/>
@@ -156,7 +156,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
             </div>
             }
       </main>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 
