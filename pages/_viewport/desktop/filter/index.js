@@ -67,7 +67,6 @@ const FilterPage = () => {
       <main className='pt-36'>
         <section>
           <GenreTabs/>
-          {/* <GenreTabsEX/> */}
         </section>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>

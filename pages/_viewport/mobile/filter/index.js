@@ -5,7 +5,7 @@ import { HomeIcon, RectangleGroupIcon, UserCircleIcon, CloudArrowUpIcon } from '
 import { HomeIcon as HomeOutline, RectangleGroupIcon as RGOutline, 
   UserCircleIcon  as UCOutline, Cog6ToothIcon as C6Outline, CloudArrowUpIcon as CloudArrowUpIconOutline} from '@heroicons/react/24/outline'
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
-import GenreTabs from '../../../../components/GenreTabs'
+import GenreTabsMobile from '../../../../components/GenreTabsMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import VideoCardMapPage from '../../../../components/VideoCardMapPage'
 import useFetchVideos from '../../../../customHooks/useFetchVideos'
@@ -66,8 +66,7 @@ const FilterPage = () => {
       <NavigationMobile/>
       <main className='pt-36'>
         <section>
-          <GenreTabs/>
-          {/* <GenreTabsEX/> */}
+          <GenreTabsMobile/>
         </section>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>

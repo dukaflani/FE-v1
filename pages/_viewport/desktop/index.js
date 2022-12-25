@@ -7,7 +7,6 @@ import { HomeIcon as HomeOutline, RectangleGroupIcon as RGOutline,
 import useFetchVideos from '../../../customHooks/useFetchVideos' 
 import SidebarNav from '../../../components/SidebarNav'
 import GenreTabs from '../../../components/GenreTabs'
-import GenreTabsEX from '../../../components/GenreTabsEX'
 import Navigation from '../../../components/Navigation'
 import VideoCardMapPage from '../../../components/VideoCardMapPage'
 import VideoSkeletonMapPage from '../../../components/VideoSkeletonMapPage'
@@ -63,7 +62,6 @@ const Home = () => {
       <main className='pt-36'>
         <section>
           <GenreTabs/>
-          {/* <GenreTabsEX/> */}
         </section>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>

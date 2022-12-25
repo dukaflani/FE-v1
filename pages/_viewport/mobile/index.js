@@ -6,8 +6,7 @@ import { HomeIcon as HomeOutline, RectangleGroupIcon as RGOutline,
   UserCircleIcon  as UCOutline, Cog6ToothIcon as C6Outline, CloudArrowUpIcon as CloudArrowUpIconOutline} from '@heroicons/react/24/outline'
 import useFetchVideos from '../../../customHooks/useFetchVideos' 
 import SidebarNavMobile from '../../../components/SidebarNavMobile'
-import GenreTabs from '../../../components/GenreTabs'
-import GenreTabsEX from '../../../components/GenreTabsEX'
+import GenreTabsMobile from '../../../components/GenreTabsMobile'
 import NavigationMobile from '../../../components/NavigationMobile'
 import VideoCardMapPage from '../../../components/VideoCardMapPage'
 import VideoSkeletonMapPage from '../../../components/VideoSkeletonMapPage'
@@ -62,8 +61,7 @@ const Home = () => {
       <NavigationMobile/>
       <main className='pt-36'>
         <section>
-          <GenreTabs/>
-          {/* <GenreTabsEX/> */}
+          <GenreTabsMobile/>
         </section>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>
@@ -99,13 +97,13 @@ const Home = () => {
           <div className='w-1/12'></div>
           {/* <div className='flex-1 pr-5 w-11/12 pl-24'> */}
           <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
-            {/* <div className='grid grid-cols-4 gap-x-3 gap-y-10'>
+            <div className='grid grid-cols-4 gap-x-3 gap-y-10'>
               {videos?.length > 0 ? 
               <VideoCardMapPage videos={videos} loading={loading} hasMore={hasMore} setPageNumber={setPageNumber} />
               :
               <VideoSkeletonMapPage/>
             }
-            </div> */}
+            </div>
             {loading ? <div className='flex items-center justify-center py-3'>
             <button type="button" className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
               <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
