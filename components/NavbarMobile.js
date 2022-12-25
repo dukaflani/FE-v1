@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
-import { MagnifyingGlassIcon, ShoppingCartIcon, BellIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, ShoppingCartIcon, BellIcon, Bars3Icon } from '@heroicons/react/24/outline'
 import { setUserProfile } from '../redux/features/auth/authSlice'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
 import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
@@ -54,9 +54,7 @@ const Navbar = ({ myAvatar, searchTerm }) => {
       <div className={mobileSearch ? 'hidden' : 'flex px-2 py-3 items-center justify-between'}>
         <div className="flex items-center gap-2 pl-1 mr-1">
           <div onClick={() => dispatch(togglesideNavOpen())} className='cursor-pointer'>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
+            <Bars3Icon className="w-5 h-5" />
           </div>
           <Link href='/'>
               <div className='w-20 relative cursor-pointer'>

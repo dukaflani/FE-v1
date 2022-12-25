@@ -10,7 +10,7 @@ import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
 import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
 
 
-const SidebarContent = () => {
+const SidebarContentMobile = () => {
     const router = useRouter()
     const destination = router.pathname
     const destinationLength = destination.split("/").length
@@ -22,42 +22,42 @@ const SidebarContent = () => {
         {
             title: "Home",
             link:'/',
-            iconOutline: <HomeIcon className="w-6 h-6" />,
-            iconSolid: <HomeSolid className="w-6 h-6" />,
+            iconOutline: <HomeIcon className="w-5 h-5" />,
+            iconSolid: <HomeSolid className="w-5 h-5" />,
         },
         {
             title: "Dashboard",
             link:'/dashboard',
-            iconOutline: <RectangleGroupIcon className="w-6 h-6" />,
-            iconSolid: <RGSolid className="w-6 h-6" />,
+            iconOutline: <RectangleGroupIcon className="w-5 h-5" />,
+            iconSolid: <RGSolid className="w-5 h-5" />,
         },
         {
             title: "Profile",
             link:'/profile',
-            iconOutline: <UserCircleIcon className="w-6 h-6" />,
-            iconSolid: <UCSolid className="w-6 h-6" />,
+            iconOutline: <UserCircleIcon className="w-5 h-5" />,
+            iconSolid: <UCSolid className="w-5 h-5" />,
         },
         {
             title: "Upload",
             link:'/dashboard/upload',
-            iconOutline: <CloudArrowUpIcon className="w-6 h-6" />,
-            iconSolid: <CloudArrowUpIconSolid className="w-6 h-6" />,
+            iconOutline: <CloudArrowUpIcon className="w-5 h-5" />,
+            iconSolid: <CloudArrowUpIconSolid className="w-5 h-5" />,
         },
     ]
     const dispatch = useDispatch()
-    const regularLinkStyles = "flex items-center justify-start gap-4 pl-3 py-3 hover:bg-gray-100 cursor-pointer"
-    const activeLinkStyles = "flex items-center justify-start gap-4 pl-3 py-3 bg-gray-200 font-medium hover:bg-gray-100 cursor-pointer"
+    const regularLinkStyles = "flex items-center justify-start gap-4 pl-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+    const activeLinkStyles = "flex items-center justify-start gap-4 pl-3 py-2 text-sm bg-gray-200 font-medium hover:bg-gray-100 cursor-pointer"
 
 
   return (
     <aside className='flex flex-col h-screen' onClick={() => dispatch(togglesideNavOpen())}>
-        <div className='flex py-2 px-3 items-center justify-between shadow-sm border-b bg-white fixed top-0 left-0 right-0'>
-            <div className="flex items-center gap-5 pl-3 mr-60">
+        <div className='flex py-4 px-2 items-center justify-between shadow-sm border-b bg-white fixed top-0 left-0 right-0'>
+            <div className="flex items-center gap-2 pl-1 mr-1">
                 <div className='cursor-pointer'>
-                    <Bars3Icon className="w-6 h-6" />
+                    <Bars3Icon className="w-5 h-5" />
                 </div>
                 <Link href='/'>
-                        <div className='w-32 relative cursor-pointer'>
+                        <div className='w-20 relative cursor-pointer'>
                         <Image src={logoLight} 
                             alt="Dukaflani Logo" 
                             layout="responsive"
@@ -101,4 +101,4 @@ const SidebarContent = () => {
   )
 }
 
-export default SidebarContent
+export default SidebarContentMobile
