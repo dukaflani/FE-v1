@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
-import Navigation from '../../../../components/Navigation'
+import NavigationMobile from '../../../../components/NavigationMobile'
 import SidebarNav from '../../../../components/SidebarNav'
 import UserSettingsComponent from '../../../../components/UserSettingsComponent'
 
@@ -31,7 +31,7 @@ const settings = () => {
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
         <>
-            <Navigation/>
+            <NavigationMobile/>
             <UserSettingsComponent/>
         </>
     </SidebarNav>

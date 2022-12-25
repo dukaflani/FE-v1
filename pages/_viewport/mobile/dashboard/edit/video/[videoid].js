@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import SidebarNav from '../../../../../../components/SidebarNav'
-import Navigation from '../../../../../../components/Navigation'
+import NavigationMobile from '../../../../../../components/NavigationMobile'
 import EditVideo from '../../../../../../components/EditVideo'
 
 const editVideo = () => {
@@ -30,7 +30,7 @@ const editVideo = () => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <>
       <main className='flex flex-col items-center justify-center pt-20'>
         <article className='bg-white border-b shadow-sm w-7/12 p-5'>

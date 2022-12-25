@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { useFetchLyricsVerseQuery, useFetchLyricsQuery } from '../../../../../../redux/features/videos/videosApiSlice'
 import SidebarNav from '../../../../../../components/SidebarNav'
-import Navigation from '../../../../../../components/Navigation'
+import NavigationMobile from '../../../../../../components/NavigationMobile'
 import EditLyrics from '../../../../../../components/EditLyrics'
 
 const editLyrics = () => {
@@ -53,7 +53,7 @@ const editLyrics = () => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <>
       <main className='flex flex-col items-center justify-center pt-20'>
         <article className='bg-white border-b shadow-sm w-5/12 p-5'>

@@ -10,7 +10,7 @@ import { albumActions, albumTypes } from '../../../../../../data/musicCollection
 import cover from '../../../../../../public/media/dukaflani-cover-default.png'
 import { useFetchAccessTokenQuery, useFetchAlbumQuery, useFetchAlbumTracksQuery } from '../../../../../../redux/features/videos/videosApiSlice'
 import SidebarNav from '../../../../../../components/SidebarNav'
-import Navigation from '../../../../../../components/Navigation'
+import NavigationMobile from '../../../../../../components/NavigationMobile'
 import EditMusicCollection from '../../../../../../components/EditMusicCollection'
 import InputField from '../../../../../../components/reuseable-components/InputField'
 import SelectInputField from '../../../../../../components/reuseable-components/SelectInputField'
@@ -122,7 +122,7 @@ const editAlbum = () => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <>
       <main className='flex flex-col items-center justify-center pt-20'>
         <article className='bg-white border-b shadow-sm w-5/12 p-5'>

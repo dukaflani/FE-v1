@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
 import SidebarNav from '../../../../../components/SidebarNav'
-import Navigation from '../../../../../components/Navigation'
+import NavigationMobile from '../../../../../components/NavigationMobile'
 import MoreItemsWrapper from '../../../../../components/MoreItemsWrapper'
 
 
@@ -39,7 +39,7 @@ const moreItems = () => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <main className='pt-24'>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>

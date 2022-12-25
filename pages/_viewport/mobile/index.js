@@ -8,7 +8,7 @@ import useFetchVideos from '../../../customHooks/useFetchVideos'
 import SidebarNav from '../../../components/SidebarNav'
 import GenreTabs from '../../../components/GenreTabs'
 import GenreTabsEX from '../../../components/GenreTabsEX'
-import Navigation from '../../../components/Navigation'
+import NavigationMobile from '../../../components/NavigationMobile'
 import VideoCardMapPage from '../../../components/VideoCardMapPage'
 import VideoSkeletonMapPage from '../../../components/VideoSkeletonMapPage'
 
@@ -37,7 +37,7 @@ const Home = () => {
   return (
     <SidebarNav>
       <Head>
-        <title>Dukaflani — Home of Music Videos</title>
+        <title>Mobile — Home of Music Videos</title>
         <meta name="title" content="Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
@@ -59,7 +59,7 @@ const Home = () => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <main className='pt-36'>
         <section>
           <GenreTabs/>
@@ -99,13 +99,13 @@ const Home = () => {
           <div className='w-1/12'></div>
           {/* <div className='flex-1 pr-5 w-11/12 pl-24'> */}
           <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
-            <div className='grid grid-cols-4 gap-x-3 gap-y-10'>
+            {/* <div className='grid grid-cols-4 gap-x-3 gap-y-10'>
               {videos?.length > 0 ? 
               <VideoCardMapPage videos={videos} loading={loading} hasMore={hasMore} setPageNumber={setPageNumber} />
               :
               <VideoSkeletonMapPage/>
             }
-            </div>
+            </div> */}
             {loading ? <div className='flex items-center justify-center py-3'>
             <button type="button" className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
               <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

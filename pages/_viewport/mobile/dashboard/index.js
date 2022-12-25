@@ -8,8 +8,8 @@ import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRi
 import { TvIcon as TvSolid, RectangleGroupIcon as RGSolid } from '@heroicons/react/24/solid'
 import SidebarNav from '../../../../components/SidebarNav'
 import MyVideos from '../../../../components/MyVideos'
-import Navigation from '../../../../components/Navigation'
-import Unauthorized from '../../../../components/Unauthorized'
+import NavigationMobile from '../../../../components/NavigationMobile'
+import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
 
 const dashboard = () => {
   const router = useRouter()
@@ -55,7 +55,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
   }, [ loading, hasMore ])
 
     if (userRole != 'ARTIST') {
-      return  <Unauthorized/> 
+      return  <UnauthorizedMobile/> 
     }
 
 
@@ -84,7 +84,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <main className='pt-24'>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>

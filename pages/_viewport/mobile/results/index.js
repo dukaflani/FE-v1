@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
 import SidebarNav from '../../../../components/SidebarNav'
 import MyVideos from '../../../../components/MyVideos'
-import Navigation from '../../../../components/Navigation'
+import NavigationMobile from '../../../../components/NavigationMobile'
 import useFetchVideos from '../../../../customHooks/useFetchVideos'
 
 const videoSearchResults = () => {
@@ -69,7 +69,7 @@ const lastVideoElementRef = useCallback(node => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+      <NavigationMobile setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
       <main className='pt-24'>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>

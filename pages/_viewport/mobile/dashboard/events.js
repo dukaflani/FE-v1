@@ -6,7 +6,7 @@ import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, Rec
 import { TvIcon as TvSolid, BuildingStorefrontIcon as StoreSolid, TicketIcon as TicketSolid } from '@heroicons/react/24/solid'
 import SidebarNav from '../../../../components/SidebarNav'
 import MyEvents from '../../../../components/MyEvents'
-import Navigation from '../../../../components/Navigation'
+import NavigationMobile from '../../../../components/NavigationMobile'
 import { useFetchEventsQuery } from '../../../../redux/features/videos/videosApiSlice'
 
 const events = () => {
@@ -49,7 +49,7 @@ const events = () => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <main className='pt-24'>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>

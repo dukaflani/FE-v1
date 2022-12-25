@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { loadCurrentVideo } from '../../../../redux/features/videos/videosSlice'
 import { useCurrentVideoQuery } from '../../../../redux/features/videos/videosApiSlice'
 import SidebarNav from '../../../../components/SidebarNav'
-import Navigation from '../../../../components/Navigation'
+import NavigationMobile from '../../../../components/NavigationMobile'
 import CurrentVideoPlayer from '../../../../components/CurrentVideoPlayer'
 import CurrentVideoPanel from '../../../../components/CurrentVideoPanel'
 import CurrentVideoPlayerSkeleton from '../../../../components/CurrentVideoPlayerSkeleton'
@@ -57,7 +57,7 @@ const WatchCurrentVideo = () => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <main className='pt-20'>
         <div className='flex max-w-6xl mx-auto space-x-5'>
             <section className='w-8/12'>

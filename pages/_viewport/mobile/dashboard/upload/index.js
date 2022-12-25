@@ -4,9 +4,9 @@ import Head from 'next/head'
 import { useSelector } from 'react-redux'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
 import SidebarNav from '../../../../../components/SidebarNav'
-import Navigation from '../../../../../components/Navigation'
+import NavigationMobile from '../../../../../components/NavigationMobile'
 import UploadVideo from '../../../../../components/UploadVideo'
-import Unauthorized from '../../../../../components/Unauthorized'
+import UnauthorizedMobile from '../../../../../components/UnauthorizedMobile'
 import { useFetchUserProfileQuery } from '../../../../../redux/features/videos/videosApiSlice'
 
 
@@ -31,7 +31,7 @@ const uploadPage = () => {
     const userRole = userProfile?.role
 
     if (userRole != 'ARTIST') {
-      return  <Unauthorized/> 
+      return  <UnauthorizedMobile/> 
     }
 
 
@@ -61,7 +61,7 @@ const uploadPage = () => {
         
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <Navigation/>
+      <NavigationMobile/>
       <main className='pt-24'>
         <section className='flex'>
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import SidebarNav from '../../../../components/SidebarNav'
-import Navigation from '../../../../components/Navigation'
+import NavigationMobile from '../../../../components/NavigationMobile'
 import ProfilePageComponent from '../../../../components/ProfilePageComponent'
 
 const index = () => {
@@ -32,7 +32,7 @@ const index = () => {
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <div>
-      <Navigation/>
+      <NavigationMobile/>
         <>
             <ProfilePageComponent/>
         </>
