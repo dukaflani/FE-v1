@@ -1,12 +1,15 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Image from "next/legacy/image";
+import { useRouter } from 'next/router'
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
+import Poster from '../public/media/404-page.png'
 
 const errorPage = () => {
     const router = useRouter()
 
   return (
-    <div className='flex items-start justify-center h-screen'>
+    <>
         <Head>
         <title>Page Not Found | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Page Not Found | Dukaflani — Home of Music Videos"/>
@@ -28,22 +31,23 @@ const errorPage = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        <link rel="icon" href="/dukaflani-blue-logo-small.png" />
+        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-        <div className='flex flex-col'>
-            <div className='flex items-center justify-center'>
-            <div className='w-2/6'>
-                <img src='/media/404-page.png' alt='page not found'/>
-            <div className='flex items-center justify-center w-4/12 mx-auto'>
-                <img src='/branding/dukaflani-logo-black-medium.png' alt='logo'/>
-            </div>
-            <div className='flex items-center justify-center '>
-                <button onClick={() => router.back()} className='cursor-pointer'>Go Back</button>
-            </div>
-            </div>
-            </div>
+      <div className='h-screen flex items-start justify-center'>
+        <div className='relative w-5/12 h-4/6 pt-10'>
+          <Image 
+            src={Poster}
+            layout="fill"
+            objectFit='cover'
+            alt='Page not found'
+            />
         </div>
-    </div>
+            <div onClick={() => router.back()} className='absolute cursor-pointer bottom-32 font-semibold tracking-tight uppercase flex items-center justify-center space-x-2'>
+              <ArrowUturnLeftIcon className='h-5 w-5'/>   
+              <button>Go Back</button>
+            </div>
+      </div>
+    </>
   )
 }
 

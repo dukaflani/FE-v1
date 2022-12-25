@@ -5,16 +5,19 @@ import Image from "next/legacy/image";
 import { HomeIcon, RectangleGroupIcon, UserCircleIcon, Cog6ToothIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline'
 import { HomeIcon as HomeSolid, RectangleGroupIcon as RGSolid, UserCircleIcon as UCSolid, Cog6ToothIcon as C6Solid, 
     CloudArrowUpIcon as CloudArrowUpIconSolid } from '@heroicons/react/24/solid'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
 import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
 
 
 const SidebarContent = () => {
-    // const { sideNavOpen } = useSelector((state) => state.navigation)
     const router = useRouter()
     const destination = router.pathname
-    const [activeLink, setActiveLink] = useState("Home")
+    const destinationLength = destination.split("/").length
+    const destinationArray = destination.split("/")
+    const splitDestinationArray = destinationArray.splice(3, destinationLength - 1)
+    const newDestination = "/" + splitDestinationArray.toString().replace(/,/g, "/")
+
     const navLinkItems = [
         {
             title: "Home",
@@ -70,9 +73,9 @@ const SidebarContent = () => {
             <nav className='flex pt-20 w-full border-b pb-5'>
                 <ul className="w-full">
                     {navLinkItems.map((navLinkItem, i) => (
-                        <li key={i} onClick={() => router.push(navLinkItem.link)} className={destination == navLinkItem.link ? activeLinkStyles : regularLinkStyles}>
+                        <li key={i} onClick={() => router.push(navLinkItem.link)} className={newDestination == navLinkItem.link ? activeLinkStyles : regularLinkStyles}>
                                     <div>
-                                        {destination == navLinkItem.link ? navLinkItem.iconSolid : navLinkItem.iconOutline}
+                                        {newDestination == navLinkItem.link ? navLinkItem.iconSolid : navLinkItem.iconOutline}
                                     </div>
                                     <div>{navLinkItem.title}</div>
                             </li>
