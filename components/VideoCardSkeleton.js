@@ -1,5 +1,4 @@
 import React from 'react'
-import thumbnail from '../public/media/dukaflani-thumbnail-default.png'
 
 
 const VideoCardSkeleton = () => {

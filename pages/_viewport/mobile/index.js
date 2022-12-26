@@ -9,7 +9,7 @@ import SidebarNavMobile from '../../../components/SidebarNavMobile'
 import GenreTabsMobile from '../../../components/GenreTabsMobile'
 import NavigationMobile from '../../../components/NavigationMobile'
 import VideoCardMapPageMobile from '../../../components/VideoCardMapPageMobile'
-import VideoSkeletonMapPage from '../../../components/VideoSkeletonMapPage'
+import VideoSkeletonMapPageMobile from '../../../components/VideoSkeletonMapPageMobile'
 
 
 
@@ -102,7 +102,7 @@ const Home = () => {
               {videos?.length > 0 ? 
               <VideoCardMapPageMobile videos={videos} loading={loading} hasMore={hasMore} setPageNumber={setPageNumber} />
               :
-              <VideoSkeletonMapPage/>
+              <VideoSkeletonMapPageMobile/>
             }
             </div>
             {loading ? <div className='flex items-center justify-center py-3'>
