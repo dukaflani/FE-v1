@@ -59,7 +59,7 @@ const VideoCardMobile = ({ video }) => {
                   />
             </div>
             <div className='h-2/6 flex space-x-1 pt-2 px-2 md:w-8/12 landscape:w-8/12 md:flex-col landscape:flex-col'>
-                <div className='w-2/12 md:hidden landscape:hidden'>
+                <div className='md:hidden landscape:hidden'>
                     <div className='relative h-11 w-11 bg-gray-200 rounded-full'>
                         <Image
                             src={video?.profile_avatar ? video?.profile_avatar : noAvatar}
@@ -69,14 +69,14 @@ const VideoCardMobile = ({ video }) => {
                             />
                     </div>
                 </div>
-                <div className='w-10/12'>
+                <div className='flex-1 pl-2'>
                     <Link legacyBehavior href={`/watch?v=${video?.url_id}&tab=links`}>
                         <a title={video?.title}>
                             <div className='font-semibold leading-4 text-gray-700 tracking-tight cursor-pointer text-base line-clamp-2'>{video?.title}</div>
                         </a>
                     </Link>
                     <div className='md:flex landscape:flex items-center justify-start'>
-                        <div className='w-1/12 hidden md:block landscape:block'>
+                        <div className='hidden md:block landscape:block'>
                             <div className='relative h-8 w-8 bg-gray-200 rounded-full'>
                                 <Image
                                     src={video?.profile_avatar ? video?.profile_avatar : noAvatar}
@@ -86,7 +86,7 @@ const VideoCardMobile = ({ video }) => {
                                     />
                             </div>
                         </div>
-                        <div className='md:w-11/12 landscape:w-11/12 md:pl-3 landscape:pl-3 '>
+                        <div className='md:flex-1 landscape:flex-1 md:pl-2 landscape:pl-2 '>
                             <div className='mt-1.5 mb-0.5 flex space-x-1 items-center justify-start pr-3'>
                                 <div className='text-gray-600 text-sm leading-3 tracking-tight line-clamp-1'>{video?.stage_name ? video?.stage_name : `${video?.first_name} ${video?.last_name}`}</div>
                                 {video.verified && (
