@@ -7,9 +7,11 @@ import { useFetchUserProfileQuery } from '../../../../redux/features/videos/vide
 import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
 import { TvIcon as TvSolid, RectangleGroupIcon as RGSolid } from '@heroicons/react/24/solid'
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
-import MyVideos from '../../../../components/MyVideos'
+import MyVideosMobile from '../../../../components/MyVideosMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
+import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
+import GenreTabsMobile from '../../../../components/GenreTabsMobile'
 
 const dashboard = () => {
   const router = useRouter()
@@ -54,9 +56,9 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
     if (node) observer.current.observe(node)
   }, [ loading, hasMore ])
 
-    if (userRole != 'ARTIST') {
-      return  <UnauthorizedMobile/> 
-    }
+    // if (userRole != 'ARTIST') {
+    //   return  <UnauthorizedMobile/> 
+    // }
 
 
   return (
@@ -82,12 +84,14 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile/>
-      <main className='pt-24'>
+      <main className='pt-[6.3rem] md:pt-[8rem] landscape:pt-[8rem] pb-10'>
+      <section>
+          <GenreTabsMobile/>
+        </section>
         <section className='flex'>
-          <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>
+          <div className='hidden lg:flex w-1/12 items-start justify-start pl-5 fixed left-0 top-40'>
             <nav>
               <ul className='space-y-10'>
                 <li className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
@@ -117,27 +121,26 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
               </ul>
             </nav>
           </div>
-          <div className='w-1/12'></div>
-          {/* <div className='flex-1 pr-5 w-11/12 pl-24'> */}
-          <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
-            <div className='mb-2 uppercase font-semibold flex items-center justify-between pr-10'>
+          <div className='hidden lg:block w-1/12'></div>
+          <div className='flex-1 w-full max-w-7xl mx-auto'>
+            {/* <div className='mb-2 uppercase font-semibold flex items-center justify-between pr-10'>
                 <div>
                     <div>My Videos</div>
                     <div className='text-xs text-gray-600 font-normal'>{videos?.length} {videos?.length == 1 ? "video" : 'videos'}</div>
                 </div>
                 <div onClick={() => router.push("/dashboard/upload?item=video")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Video</div>
-            </div>
+            </div> */}
             {currentUser ? 
-            (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>
+            (<div className='grid grid-cols-1'>
                 {videos?.map((myVideo, i) => {
                   if (videos?.length === i + 1) {
-                    return  <div className='col-span-4' key={i} ref={lastVideoElementRef}><MyVideos video={myVideo}/></div>
+                    return  <div className='col-span-4' key={i} ref={lastVideoElementRef}><MyVideosMobile video={myVideo}/></div>
                   } else {
-                    return  <div className='col-span-4' key={i}><MyVideos video={myVideo}/></div>
+                    return  <div className='col-span-4' key={i}><MyVideosMobile video={myVideo}/></div>
                   }
                 }
                 )}
-            </div>) : (<div>You do not have any <strong>videos</strong> yet...</div>)
+            </div>) : (<div className='flex items-center justify-center text-sm'>You do not have any <strong>videos</strong> yet...</div>)
             }
           </div>
         </section>
@@ -156,6 +159,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
             </div>
             }
       </main>
+      <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }

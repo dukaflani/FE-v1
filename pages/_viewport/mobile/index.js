@@ -57,7 +57,6 @@ const Home = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile/>
       <main className='pt-[6.3rem] md:pt-[8rem] landscape:pt-[8rem] pb-10'>

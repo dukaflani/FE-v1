@@ -6,6 +6,7 @@ import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
 import Poster from '../public/media/unauthorized-page.png'
 import NavigationMobile from './NavigationMobile'
 import SidebarNav from './SidebarNav'
+import BottomNavigationMobile from './BottomNavigationMobile';
 
 const UnauthorizedMobile = () => {
   const router = useRouter()
@@ -50,6 +51,7 @@ const UnauthorizedMobile = () => {
               <button>Go Back</button>
             </div>
       </div>
+      <BottomNavigationMobile/>
     </SidebarNav>
   )
 }
