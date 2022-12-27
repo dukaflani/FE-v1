@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { HomeIcon, RectangleGroupIcon, UserCircleIcon, 
     ChevronUpDownIcon, CloudArrowUpIcon, XMarkIcon, 
     VideoCameraIcon, LinkIcon, ShoppingBagIcon, MicrophoneIcon,
-MusicalNoteIcon, TicketIcon, Cog8ToothIcon, MoonIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline'
+MusicalNoteIcon, TicketIcon, Cog8ToothIcon, MoonIcon, ArrowRightOnRectangleIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 import { HomeIcon as HomeSolid, RectangleGroupIcon as RectangleSolid, UserCircleIcon as UserSolid } from '@heroicons/react/24/solid'
 
 const BottomNavigationMobile = () => {
@@ -63,37 +63,43 @@ const BottomNavigationMobile = () => {
             </div>
             <div className='max-h-48 overflow-y-auto pb-14 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-3'>
-                    <li className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <VideoCameraIcon className='h-5 w-5'/>
                         </span>
                         <span>Upload a Video</span>
                     </li>
-                    <li className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'smart-links'}})} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <LinkIcon className='h-5 w-5'/>
                         </span>
                         <span>Add Streaming Links</span>
                     </li>
-                    <li className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'product'}})} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <ShoppingBagIcon className='h-5 w-5'/>
                         </span>
                         <span>Add a Product</span>
                     </li>
-                    <li className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'lyrics'}})} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <MicrophoneIcon className='h-5 w-5'/>
                         </span>
                         <span>Add Lyrics</span>
                     </li>
-                    <li className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'skiza-tunes'}})} className='flex items-center justify-center space-x-2'>
+                        <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
+                            <DevicePhoneMobileIcon className='h-5 w-5'/>
+                        </span>
+                        <span>Add Skiza Tunes</span>
+                    </li>
+                    <li onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'music-collection'}})} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <MusicalNoteIcon className='h-5 w-5'/>
                         </span>
                         <span>Add an Album (Music Collection)</span>
                     </li>
-                    <li className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'event'}})} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <TicketIcon className='h-5 w-5'/>
                         </span>
@@ -115,13 +121,13 @@ const BottomNavigationMobile = () => {
             </div>
             <div className='max-h-48 overflow-y-auto pb-14 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-3'>
-                    <li className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => router.push('/profile/settings')} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <UserCircleIcon className='h-5 w-5'/>
                         </span>
                         <span>Profile Settings</span>
                     </li>
-                    <li className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => router.push('/user/settings')} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <Cog8ToothIcon className='h-5 w-5'/>
                         </span>

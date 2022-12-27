@@ -177,7 +177,8 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Smart Links"
                     helperText="Can't find your smart links? Create new ones"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=smart-links")}
+                    // onHelperTextLinkClick={() => router.push("/dashboard/upload?item=smart-links")}
+                    onHelperTextLinkClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'smart-links'}})}
                 />
             </div>
             <div className='w-full'>
@@ -188,7 +189,8 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Product"
                     helperText="Can't find a product? Create one"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=product")}
+                    // onHelperTextLinkClick={() => router.push("/dashboard/upload?item=product")}
+                    onHelperTextLinkClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'product'}})}
                 />
             </div>
             <div className='w-full'>
@@ -199,7 +201,8 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Lyrics"
                     helperText="Can't find your lyrics? Add them"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=lyrics")}
+                    // onHelperTextLinkClick={() => router.push("/dashboard/upload?item=lyrics")}
+                    onHelperTextLinkClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'lyrics'}})}
                 />
             </div>
             <div className='w-full'>
@@ -210,7 +213,8 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Skiza Tunes"
                     helperText="Can't find your skiza tunes? Add them"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=skiza-tunes")}
+                    // onHelperTextLinkClick={() => router.push("/dashboard/upload?item=skiza-tunes")}
+                    onHelperTextLinkClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'skiza-tunes'}})}
                 />
             </div>
             <div className='w-full'>
@@ -221,7 +225,8 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     title="Album"
                     helperText="Can't find your album? Create one"
                     helperTextLink="here"
-                    onHelperTextLinkClick={() => router.push("/dashboard/upload?item=music-collection")}
+                    // onHelperTextLinkClick={() => router.push("/dashboard/upload?item=music-collection")}
+                    onHelperTextLinkClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'music-collection'}})}
                 />
             </div>
         </div>
