@@ -10,6 +10,7 @@ import GenreTabsMobile from '../../../components/GenreTabsMobile'
 import NavigationMobile from '../../../components/NavigationMobile'
 import VideoCardMapPageMobile from '../../../components/VideoCardMapPageMobile'
 import VideoSkeletonMapPageMobile from '../../../components/VideoSkeletonMapPageMobile'
+import BottomNavigationMobile from '../../../components/BottomNavigationMobile'
 
 
 
@@ -59,7 +60,7 @@ const Home = () => {
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile/>
-      <main className='pt-[6.3rem] md:pt-[8rem] landscape:pt-[8rem]'>
+      <main className='pt-[6.3rem] md:pt-[8rem] landscape:pt-[8rem] pb-10'>
         <section>
           <GenreTabsMobile/>
         </section>
@@ -122,6 +123,7 @@ const Home = () => {
             </div>
         </section>
       </main>
+      <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }

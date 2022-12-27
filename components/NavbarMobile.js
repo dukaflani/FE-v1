@@ -53,7 +53,7 @@ const Navbar = ({ myAvatar, searchTerm }) => {
     <nav className=" shadow-sm border-b bg-white fixed top-0 left-0 right-0 z-40">
       <div className={mobileSearch ? 'hidden' : 'flex px-2 py-3 items-center justify-between'}>
         <div className="flex items-center gap-2 pl-1 mr-1">
-          <div onClick={() => dispatch(togglesideNavOpen())} className='cursor-pointer'>
+          <div onClick={() => dispatch(togglesideNavOpen())} className='cursor-pointer hidden'>
             <Bars3Icon className="w-5 h-5" />
           </div>
           <Link href='/'>
