@@ -7,8 +7,9 @@ import { HomeIcon as HomeOutline, RectangleGroupIcon as RGOutline,
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import GenreTabsMobile from '../../../../components/GenreTabsMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
-import VideoCardMapPage from '../../../../components/VideoCardMapPage'
+import VideoCardMapPageMobile from '../../../../components/VideoCardMapPageMobile'
 import useFetchVideos from '../../../../customHooks/useFetchVideos'
+import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
 
 
 
@@ -64,12 +65,12 @@ const FilterPage = () => {
         {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile/>
-      <main className='pt-36'>
+      <main className='pt-[6.3rem] md:pt-[8rem] landscape:pt-[8rem] pb-10'>
         <section>
           <GenreTabsMobile/>
         </section>
         <section className='flex'>
-          <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>
+          <div className='hidden lg:flex w-1/12 items-start justify-start pl-5 fixed left-0 top-40'>
             <nav>
               <ul className='space-y-10'>
                 <li onClick={() => router.push('/')} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
@@ -99,15 +100,30 @@ const FilterPage = () => {
               </ul>
             </nav>
           </div>
-          <div className='w-1/12'></div>
-          <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
-            <div className='grid grid-cols-4 gap-x-3 gap-y-10'>
-              <VideoCardMapPage videos={filteredVideoArr} loading={loading} hasMore={hasMore} setPageNumber={setPageNumber} />
+          <div className='hidden lg:block w-1/12'></div>
+          <div className='flex-1 w-full max-w-7xl mx-auto'>
+            <div className='grid grid-cols-1'>
+              <VideoCardMapPageMobile videos={filteredVideoArr} loading={loading} hasMore={hasMore} setPageNumber={setPageNumber} />
             </div>
+            {loading ? <div className='flex items-center justify-center py-3'>
+            <button type="button" className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Loading Videos...
+            </button>
+            </div>
+            :
+            <div className='flex items-center justify-center py-3'>
+              <span className='font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed'>The End</span>
+            </div>
+            }
           </div>
         </section>
           {filteredVideoArr.length == 0 && !loading && <div className='p-2 flex justify-center items-start text-gray-600'>No&nbsp;<span className='uppercase font-semibold tracking-tight'>{genre?.replace(/-/g, " ")}</span>&nbsp;videos available</div>}
       </main>
+      <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }

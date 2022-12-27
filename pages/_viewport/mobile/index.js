@@ -96,9 +96,7 @@ const Home = () => {
             </nav>
           </div>
           <div className='hidden lg:block w-1/12'></div>
-          {/* <div className='flex-1 pr-5 w-11/12 pl-24'> */}
           <div className='flex-1 w-full max-w-7xl mx-auto'>
-            {/* <div className='grid grid-cols-4 gap-x-3 gap-y-10'> */}
             <div className='grid grid-cols-1'>
               {videos?.length > 0 ? 
               <VideoCardMapPageMobile videos={videos} loading={loading} hasMore={hasMore} setPageNumber={setPageNumber} />
