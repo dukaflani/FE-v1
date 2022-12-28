@@ -2,7 +2,8 @@ import React from 'react'
 import Head from 'next/head'
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
-import ProfilePageComponent from '../../../../components/ProfilePageComponent'
+import ProfilePageComponentMobile from '../../../../components/ProfilePageComponentMobile'
+import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
 
 const index = () => {
 
@@ -34,9 +35,10 @@ const index = () => {
       <div>
       <NavigationMobile/>
         <>
-            <ProfilePageComponent/>
+            <ProfilePageComponentMobile/>
         </>
     </div>
+    <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }
