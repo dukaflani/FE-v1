@@ -1,13 +1,14 @@
 import React, { Fragment, useState } from 'react'
+import { useSelector } from 'react-redux';
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
 import { Transition, Dialog } from '@headlessui/react'
 import thumbnail from '../public/media/dukaflani-thumbnail-default.png'
+import noAvatar from '../public/media/noimage.webp'
 import { HandThumbUpIcon, HandThumbDownIcon, EyeIcon } from '@heroicons/react/24/solid'
 import { EllipsisVerticalIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAddViewMutation, useDeleteVideoMutation } from '../redux/features/videos/videosApiSlice';
-import { useSelector } from 'react-redux';
 
 const MyVideosMobile = ({ video }) => {
     const { user } = useSelector((state) => state.auth)

@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { BuildingStorefrontIcon, TicketIcon, RectangleGroupIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
-import MyVideos from '../../../../components/MyVideos'
+import VideoCardMobile from '../../../../components/VideoCardMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import useFetchVideos from '../../../../customHooks/useFetchVideos'
+import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
 
 const videoSearchResults = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -66,13 +67,11 @@ const lastVideoElementRef = useCallback(node => {
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
-        
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-      <main className='pt-24'>
+      <main className='pt-[3.7rem] md:pt-[5rem] landscape:pt-[5rem] pb-10'>
         <section className='flex'>
-          <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>
+          <div className='hidden lg:flex w-1/12 items-start justify-start pl-5 fixed left-0 top-40'>
             <nav>
               <ul className='space-y-10'>
                 <li onClick={() => router.push("/dashboard")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
@@ -102,29 +101,28 @@ const lastVideoElementRef = useCallback(node => {
               </ul>
             </nav>
           </div>
-          <div className='w-1/12'></div>
-          {/* <div className='flex-1 pr-5 w-11/12 pl-24'> */}
-          <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
-            <div className='mb-2 font-semibold flex items-center justify-between pr-10'>
-                <div>
-                    <div className='uppercase'>Search Results For:</div>
-                    <div className='text-base text-gray-600 font-normal'>{searchTerm}</div>
-                    <div className='text-xs text-gray-600 font-normal'>{numOfVideos} {numOfVideos == 1 ? "video" : 'videos'}</div>
-                </div>
+          <div className='hidden lg:block w-1/12'></div>
+          <div className='flex-1 w-full max-w-7xl mx-auto'>
+            {/* <div className='mb-2 font-semibold flex items-center justify-between pr-10'> */}
+                {/* <div> */}
+                    {/* <div className='uppercase'>Search Results For:</div> */}
+                    {/* <div className='text-base text-gray-600 font-normal'>{searchTerm}</div> */}
+                    {/* <div className='text-xs text-gray-600 font-normal'>{numOfVideos} {numOfVideos == 1 ? "video" : 'videos'}</div> */}
+                {/* </div> */}
                 {/* <div onClick={() => router.push("/dashboard/upload?item=video")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Video</div> */}
-            </div>
+            {/* </div> */}
             {search_query ? 
-            (<div className='grid grid-cols-4 gap-x-3 gap-y-4 p-5'>
+            (<div className='grid grid-cols-1'>
                 {videos?.map((video, i) => {
                   if (videos?.length === i + 1) {
-                    return <div className='col-span-4' key={i} ref={lastVideoElementRef} ><MyVideos video={video}/></div>
+                    return <div className='col-span-4' key={i} ref={lastVideoElementRef} ><VideoCardMobile video={video}/></div>
                   } else {
-                    return <div className='col-span-4' key={i}><MyVideos video={video}/></div>
+                    return <div className='col-span-4' key={i}><VideoCardMobile video={video}/></div>
                   }
                   
                 }
                 )}
-            </div>) : (<div>Enter your search in the searchbox above</div>)
+            </div>) : (<div className='flex items-center justify-center text-sm'>Enter your search in the searchbox above</div>)
             }   
              {loading ? <div className='flex items-center justify-center py-3'>
             <button type="button" className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-gray-800 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
@@ -144,6 +142,7 @@ const lastVideoElementRef = useCallback(node => {
         </section>
         {videos.length == 0 && !loading && <div className='p-2 flex justify-center items-start text-gray-600'>No results found for&nbsp;<span className='font-semibold tracking-tight'>{searchTerm}</span>.&nbsp;Please try a different search!</div>}
       </main>
+      <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }
