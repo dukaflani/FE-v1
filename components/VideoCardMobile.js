@@ -25,7 +25,7 @@ const VideoCardMobile = ({ video }) => {
         },
       );
 
-      const view2 = video?.views_count
+    const view2 = video?.views_count
     let view3 = ''
     view2 < 1000 || view2 % 10 === 0 ? view3 = numeral(view2).format('0a') :  view3 = numeral(view2).format('0.0a')
 

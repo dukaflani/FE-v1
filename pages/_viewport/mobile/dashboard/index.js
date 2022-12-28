@@ -11,7 +11,6 @@ import MyVideosMobile from '../../../../components/MyVideosMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
 import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
-import GenreTabsMobile from '../../../../components/GenreTabsMobile'
 
 const dashboard = () => {
   const router = useRouter()
@@ -86,10 +85,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
         
       </Head>
       <NavigationMobile/>
-      <main className='pt-[6.3rem] md:pt-[8rem] landscape:pt-[8rem] pb-10'>
-      <section>
-          <GenreTabsMobile/>
-        </section>
+      <main className='pt-[3.7rem] md:pt-[5rem] landscape:pt-[5rem] pb-10'>
         <section className='flex'>
           <div className='hidden lg:flex w-1/12 items-start justify-start pl-5 fixed left-0 top-40'>
             <nav>
@@ -140,7 +136,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
                   }
                 }
                 )}
-            </div>) : (<div className='flex items-center justify-center text-sm'>You do not have any <strong>videos</strong> yet...</div>)
+            </div>) : (<div className='flex items-center justify-center text-sm'>You do not have any&nbsp;<strong>videos</strong>&nbsp;yet...</div>)
             }
           </div>
         </section>
