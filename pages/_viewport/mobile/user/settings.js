@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import React from 'react'
+import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
-import UserSettingsComponent from '../../../../components/UserSettingsComponent'
+import UserSettingsComponentMobile from '../../../../components/UserSettingsComponentMobile'
 
 const settings = () => {
   return (
@@ -28,12 +28,12 @@ const settings = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
         <>
             <NavigationMobile/>
-            <UserSettingsComponent/>
+            <UserSettingsComponentMobile/>
         </>
+        <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }
