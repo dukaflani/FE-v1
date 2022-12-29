@@ -61,7 +61,7 @@ const WatchCurrentVideo = () => {
       </div>
       <main>
         <div className='flex max-w-lg landscape:max-w-lg min-h-screen mx-auto'>
-            <section className='w-full'>
+            <section className='w-full md:pt-3 landscape:pt-3'>
               <CurrentVideoPlayerMobile video={currentVideo} navbarVisisble={navbarVisisble} />
             </section>
             {/* <section className='w-8/12'>

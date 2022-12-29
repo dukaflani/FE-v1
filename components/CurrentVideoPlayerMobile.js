@@ -17,6 +17,12 @@ import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery,
     useAddUnlikeMutation, useCurrentVideoObjectsCountQuery } from '../redux/features/videos/videosApiSlice';
 import AdvertisementMobile from './AdvertisementMobile';
 import ItemsTabNavigationMobile from './ItemsTabNavigationMobile';
+import ProductCard from './ProductCard';
+import StreamingLinks from './streamingLinks';
+import LyricsPage from './LyricsPage';
+import SkizaTunesPage from './SkizaTunesPage';
+import AlbumPage from './AlbumPage';
+import EventsPage from './EventsPage';
 
 const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const router = useRouter()
@@ -179,12 +185,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 }
             }
         }
-
-   
-
-
-
-   
+      
 
 
 
@@ -193,14 +194,17 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     <article className='h-full mx-auto'>
         <div className='sticky top-0'>
             <div className='aspect-w-16 aspect-h-9'>
-                <iframe width="100%" height="100%" src={`https://www.youtube.commmm/embed/${video?.details?.youtube_id}?autoplay=0&loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            {/* <iframe width="100%" height="100%" src="https://www.youtube.com/embed/H059rrXKX1s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
+            <iframe src="https://www.youtube.com/embed/w20h1AYerkw?loop=1&modestbranding=1&color=white&playlist=w20h1AYerkw" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                {/* <iframe id='iframeId' width="100%" height="100%" src={`https://www.youtube.com/embed/H059rrXKX1s?loop=1&modestbranding=1&color=white&playlist=H059rrXKX1s`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
+                {/* <iframe width="100%" height="100%" src={`https://www.youtube.commmm/embed/${video?.details?.youtube_id}?autoplay=0&loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
             </div>
             {!navbarVisisble && <ItemsTabNavigationMobile/>}
             <div>
                 
             </div>
         </div>
-        <div className='bg-white'>
+        <div className='bg-white pb-10'>
             <AdvertisementMobile/>
             <div className='px-2'>
                 <div className='tracking-tight font-semibold text-gray-800 text-base md:text-lg landscape:text-lg line-clamp-2 pr-3 pt-2'>Video Title</div>
@@ -224,7 +228,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>name</div>
                         <div className='flex-1 text-xs text-gray-600 pr-2'>1.2m</div>
                     </div>
-                    <div className='uppercase text-xs tracking-tight font-semibold p-1 border border-gray-800'>leave</div>
+                    <div className='uppercase text-xs tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>leave</div>
                 </div>
                 <div className='flex space-x-3 overflow-x-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <div className='flex justify-end items-center'>
@@ -294,17 +298,18 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                     </div>
                 </div>
                 {navbarVisisble && <ItemsTabNavigationMobile/>}
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>gvjgvjgvjg</div>
-                <div>last</div>
+                <div className='py-5 bg-gray-50 rounded-lg'>
+                {
+                {
+                    "links" : <StreamingLinks/>,
+                    "product" : <ProductCard title={video?.details?.title} />,
+                    "lyrics" : <LyricsPage/>,
+                    "skiza" : <SkizaTunesPage/>,
+                    "album" : <AlbumPage/>,
+                    "events" : <EventsPage />,
+                }[tab]
+            }
+                </div>
             </div>
         </div>
     </article>
