@@ -7,9 +7,8 @@ import numeral from 'numeral'
 import Modal from 'react-modal'
 import noAvatar from '../public/media/noimage.webp'
 import poster from '../public/media/MED.png'
-import { LinkIcon, ShoppingBagIcon, MicrophoneIcon, DevicePhoneMobileIcon, 
-    MusicalNoteIcon, CalendarDaysIcon } from '@heroicons/react/24/outline'
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
+import { tabButtons } from '../data/tabButtons';
 import StreamingLinks from './streamingLinks'
 import ProductCard from './ProductCard'
 import LyricsPage from './LyricsPage'
@@ -59,39 +58,7 @@ const CurrentVideoPanel = () => {
     fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
     const numOfFanbase = fanbase3 == 0 ? 0 : fanbase3
 
-      
-    const tabButtons = [
-        {
-            name: 'Links',
-            icon: <LinkIcon className="h-5 w-5" />,
-            urlQueryParams: {tab: 'links'},
-        },
-        {
-            name: 'Shop',
-            icon: <ShoppingBagIcon className="h-5 w-5" />,
-            urlQueryParams: {tab: 'product'},
-        },
-        {
-            name: 'Lyrics',
-            icon: <MicrophoneIcon className="h-5 w-5" />,
-            urlQueryParams: {tab: 'lyrics'},
-        },
-        {
-            name: 'Skiza',
-            icon: <DevicePhoneMobileIcon className="h-5 w-5" />,
-            urlQueryParams: {tab: 'skiza'},
-        },
-        {
-            name: 'Album',
-            icon: <MusicalNoteIcon className="h-5 w-5" />,
-            urlQueryParams: {tab: 'album'},
-        },
-        {
-            name: 'Events',
-            icon: <CalendarDaysIcon className="h-5 w-5" />,
-            urlQueryParams: {tab: 'events'},
-        },
-    ]
+    
     const activeStyles = "w-2/12 flex flex-col items-center justify-center text-xs cursor-pointer uppercase tracking-tight leading-4 py-2 border-b-2 border-black"
     const regularStyles = "w-2/12 flex flex-col items-center justify-center text-xs cursor-pointer uppercase tracking-tight leading-4 py-2 border-b-2 border-transparent hover:border-gray-200"
 

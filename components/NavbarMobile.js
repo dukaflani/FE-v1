@@ -11,11 +11,12 @@ import { useFetchUserProfileQuery } from '../redux/features/videos/videosApiSlic
 import noAvatar from '../public/media/noimage.webp'
 import MobileSearchInput from './MobileSearchInput';
 
-const Navbar = ({ myAvatar, searchTerm }) => {
+const NavbarMobile = ({ myAvatar, searchTerm }) => {
   const [navSearchTerm, setNavSearchTerm] = useState('')
   const [mobileSearch, setMobileSearch] = useState(false)
   const router = useRouter()
   const dispatch = useDispatch()
+  const urlPathname = router.pathname
   
   const { user } = useSelector((state) => state.auth)
   const currentUser = user?.info?.id
@@ -50,7 +51,7 @@ const Navbar = ({ myAvatar, searchTerm }) => {
 
 
   return (
-    <nav className=" shadow-sm border-b bg-white fixed top-0 left-0 right-0 z-40">
+    <nav className={urlPathname == "/_viewport/mobile/watch" ? "shadow-sm border-b bg-white  z-40" : "shadow-sm border-b bg-white fixed top-0 left-0 right-0 z-40"}>
       <div className={mobileSearch ? 'hidden' : 'flex px-2 py-3 items-center justify-between'}>
         <div className="flex items-center gap-2 pl-1 mr-1">
           <div onClick={() => dispatch(togglesideNavOpen())} className='cursor-pointer hidden'>
@@ -101,4 +102,4 @@ const Navbar = ({ myAvatar, searchTerm }) => {
   )
 }
 
-export default Navbar
+export default NavbarMobile

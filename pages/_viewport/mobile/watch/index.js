@@ -1,18 +1,19 @@
-import React from 'react'
 import { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
+import { useInView } from 'react-intersection-observer'
 import { loadCurrentVideo } from '../../../../redux/features/videos/videosSlice'
 import { useCurrentVideoQuery } from '../../../../redux/features/videos/videosApiSlice'
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
-import CurrentVideoPlayer from '../../../../components/CurrentVideoPlayer'
+import CurrentVideoPlayerMobile from '../../../../components/CurrentVideoPlayerMobile'
 import CurrentVideoPanel from '../../../../components/CurrentVideoPanel'
 import CurrentVideoPlayerSkeleton from '../../../../components/CurrentVideoPlayerSkeleton'
 import CurrrentVideoPanelSkeleton from '../../../../components/CurrrentVideoPanelSkeleton'
 
 const WatchCurrentVideo = () => {
+  const { ref: mobileWatchNavbarRef, inView: navbarVisisble } = useInView();
   const router = useRouter()
   const { v } = router.query
   const dispatch = useDispatch() 
@@ -54,18 +55,21 @@ const WatchCurrentVideo = () => {
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
-        
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <NavigationMobile/>
-      <main className='pt-20'>
-        <div className='flex max-w-6xl mx-auto space-x-5'>
-            <section className='w-8/12'>
+      <div ref={mobileWatchNavbarRef}>
+        <NavigationMobile/>
+      </div>
+      <main>
+        <div className='flex max-w-lg landscape:max-w-lg min-h-screen mx-auto'>
+            <section className='w-full'>
+              <CurrentVideoPlayerMobile video={currentVideo} navbarVisisble={navbarVisisble} />
+            </section>
+            {/* <section className='w-8/12'>
               {!isLoading ? <CurrentVideoPlayer video={currentVideo} /> : <CurrentVideoPlayerSkeleton/>}
             </section>
             <section className='w-4/12'>
               {!isLoading ? <CurrentVideoPanel video={currentVideo} /> : <CurrrentVideoPanelSkeleton/>}
-            </section>
+            </section> */}
         </div>
       </main>
     </SidebarNavMobile>
