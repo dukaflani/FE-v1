@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import Image from "next/legacy/image";
 import Linkify from 'react-linkify';
@@ -17,12 +17,12 @@ import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery,
     useAddUnlikeMutation, useCurrentVideoObjectsCountQuery } from '../redux/features/videos/videosApiSlice';
 import AdvertisementMobile from './AdvertisementMobile';
 import ItemsTabNavigationMobile from './ItemsTabNavigationMobile';
-import ProductCard from './ProductCard';
-import StreamingLinks from './streamingLinks';
-import LyricsPage from './LyricsPage';
-import SkizaTunesPage from './SkizaTunesPage';
-import AlbumPage from './AlbumPage';
-import EventsPage from './EventsPage';
+import ProductCardMobile from './ProductCardMobile';
+import StreamingLinksMobile from './streamingLinksMobile';
+import LyricsPageMobile from './LyricsPageMobile';
+import SkizaTunesPageMobile from './SkizaTunesPageMobile';
+import AlbumPageMobile from './AlbumPageMobile';
+import EventsPageMobile from './EventsPageMobile';
 
 const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const router = useRouter()
@@ -193,9 +193,9 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     <>
     <article className='h-full mx-auto'>
         <div className='sticky top-0'>
-            <div className='aspect-w-16 aspect-h-9'>
+            <div className='aspect-w-16 aspect-h-9 bg-gray-100'>
             {/* <iframe width="100%" height="100%" src="https://www.youtube.com/embed/H059rrXKX1s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-            <iframe src="https://www.youtube.com/embed/w20h1AYerkw?loop=1&modestbranding=1&color=white&playlist=w20h1AYerkw" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            <iframe src="https://www.youtube.comx/embed/w20h1AYerkw?loop=1&modestbranding=1&color=white&playlist=w20h1AYerkw" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 {/* <iframe id='iframeId' width="100%" height="100%" src={`https://www.youtube.com/embed/H059rrXKX1s?loop=1&modestbranding=1&color=white&playlist=H059rrXKX1s`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
                 {/* <iframe width="100%" height="100%" src={`https://www.youtube.commmm/embed/${video?.details?.youtube_id}?autoplay=0&loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
             </div>
@@ -301,12 +301,12 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 <div className='py-5 bg-gray-50 rounded-lg'>
                 {
                 {
-                    "links" : <StreamingLinks/>,
-                    "product" : <ProductCard title={video?.details?.title} />,
-                    "lyrics" : <LyricsPage/>,
-                    "skiza" : <SkizaTunesPage/>,
-                    "album" : <AlbumPage/>,
-                    "events" : <EventsPage />,
+                    "links" : <StreamingLinksMobile/>,
+                    "product" : <ProductCardMobile title={video?.details?.title} />,
+                    "lyrics" : <LyricsPageMobile/>,
+                    "skiza" : <SkizaTunesPageMobile/>,
+                    "album" : <AlbumPageMobile/>,
+                    "events" : <EventsPageMobile />,
                 }[tab]
             }
                 </div>

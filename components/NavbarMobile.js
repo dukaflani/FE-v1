@@ -58,7 +58,7 @@ const NavbarMobile = ({ myAvatar, searchTerm }) => {
             <Bars3Icon className="w-5 h-5" />
           </div>
           <Link href='/'>
-              <div className='w-20 relative cursor-pointer'>
+              <div className='w-28  relative cursor-pointer'>
                 <Image src={logoLight} 
                   alt="Dukaflani Logo" 
                   layout="responsive"
