@@ -56,7 +56,7 @@ const BottomNavigationMobile = () => {
     <div className={showUploadLinks ? 'bg-white p-2 fixed bottom-0 left-0 right-0 border-t rounded-t-lg max-h-48' : 'hidden'}>
         <nav className='relative pt-10'>
             <div className='flex items-center justify-between px-2 border-b pb-2 absolute top-0 left-0 right-0'>
-                <span className='font-medium'>Uploads</span>
+                <span className='font-medium tracking-tight'>Uploads</span>
                 <span onClick={() => setShowUploadLinks(false)}>
                     <XMarkIcon className='w-4 h-4'/>
                 </span>
@@ -114,7 +114,7 @@ const BottomNavigationMobile = () => {
     <div className={showOptions ? 'bg-white p-2 fixed bottom-0 left-0 right-0 border-t rounded-t-lg max-h-48' : 'hidden'}>
         <nav className='relative pt-10'>
             <div className='flex items-center justify-between px-2 border-b pb-2 absolute top-0 left-0 right-0'>
-                <span className='font-medium'>More Options</span>
+                <span className='font-medium tracking-tight'>More Options</span>
                 <span onClick={() => setShowOptions(false)}>
                     <XMarkIcon className='w-4 h-4'/>
                 </span>
