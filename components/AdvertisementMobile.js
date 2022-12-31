@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Image from "next/legacy/image";
 import {  XMarkIcon, LinkIcon, ShoppingBagIcon, MicrophoneIcon,
-MusicalNoteIcon, TicketIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
+MusicalNoteIcon, TicketIcon, DevicePhoneMobileIcon, PlayIcon } from '@heroicons/react/24/outline'
 import logo from '../public/apple-touch-icon.png'
 
 
@@ -69,7 +69,7 @@ const AdvertisementMobile = () => {
                     </li>
                     <li  className='flex flex-col space-y-2 items-start justify-start space-x-2 w-full pl-2 pr-5'>
                         <span className="tracking-tight leading-4">Dukaflani is a Video Streaming Platform and Online Marketplace powered by <strong>Music Videos</strong>.</span>
-                        <span className="tracking-tight leading-4 uppercase font-medium">Our Services:</span>
+                        <span className="tracking-tight leading-4 uppercase font-medium">What You Can Do:</span>
                         <div >
                             <ul className="space-y-3">
                                 <li className="space-y-1">
@@ -79,7 +79,7 @@ const AdvertisementMobile = () => {
                                         </span>
                                         <span className="tracking-tight text-gray-800 font-medium flex-1">Smart Links (Link in Bio)</span>
                                     </div>
-                                    <p className="tracking-tight text-gray-600 leading-4">Promote your music by linking to over 10 of the most popular major
+                                    <p className="tracking-tight text-gray-600 leading-4">Promote your music by linking to over a dozen of the most popular
                                      music streaming platforms for free.</p>
                                 </li>
                                 <li className="space-y-1">
@@ -89,7 +89,8 @@ const AdvertisementMobile = () => {
                                         </span>
                                         <span className="tracking-tight text-gray-800 font-medium flex-1">Products & Merchandise Sales</span>
                                     </div>
-                                    <p className="tracking-tight text-gray-600 leading-4">Sell with every video you upload and have orders made directly to your WhatsApp at no cost.</p>
+                                    <p className="tracking-tight text-gray-600 leading-4">Sell with every video you add to Dukaflani and have 
+                                    orders made directly to your WhatsApp at no cost.</p>
                                 </li>
                                 <li className="space-y-1">
                                     <div className="flex items-center justify-start space-x-2">
@@ -98,7 +99,8 @@ const AdvertisementMobile = () => {
                                         </span>
                                         <span className="tracking-tight text-gray-800 font-medium flex-1">Lyrics</span>
                                     </div>
-                                    <p className="tracking-tight text-gray-600 leading-4">kjnkjcnkj  kjnknkcj kjcnskjcns jnkjn lsjknksjs sjnskh  jkssj jnskh jk </p>
+                                    <p className="tracking-tight text-gray-600 leading-4">Share your lyrics with every video you add to Dukaflani in a 
+                                    structured and well organised setup that makes it easy for your fans to find & sing along to.</p>
                                 </li>
                                 <li className="space-y-1">
                                     <div className="flex items-center justify-start space-x-2">
@@ -107,7 +109,8 @@ const AdvertisementMobile = () => {
                                         </span>
                                         <span className="tracking-tight text-gray-800 font-medium flex-1">Skiza Tunes</span>
                                     </div>
-                                    <p className="tracking-tight text-gray-600 leading-4">kjnkjcnkj  kjnknkcj kjcnskjcns jnkjn lsjknksjs sjnskh  jkssj jnskh jk </p>
+                                    <p className="tracking-tight text-gray-600 leading-4">Sell more Ringback tunes at no cost by adding an unlimited number of SMS & USSD codes from mobile phone service providers in different
+                                    countries with every video you add to Dukaflani.</p>
                                 </li>
                                 <li className="space-y-1">
                                     <div className="flex items-center justify-start space-x-2">
@@ -116,7 +119,8 @@ const AdvertisementMobile = () => {
                                         </span>
                                         <span className="tracking-tight text-gray-800 font-medium flex-1">Album Links</span>
                                     </div>
-                                    <p className="tracking-tight text-gray-600 leading-4">kjnkjcnkj  kjnknkcj kjcnskjcns jnkjn lsjknksjs sjnskh  jkssj jnskh jk </p>
+                                    <p className="tracking-tight text-gray-600 leading-4">Make it convinient for people to discover and buy your albums, mixtapes e.t.c by 
+                                    linking to them on Dukaflani at no cost.</p>
                                 </li>
                                 <li className="space-y-1">
                                     <div className="flex items-center justify-start space-x-2">
@@ -125,7 +129,18 @@ const AdvertisementMobile = () => {
                                         </span>
                                         <span className="tracking-tight text-gray-800 font-medium flex-1">Events & Tickets</span>
                                     </div>
-                                    <p className="tracking-tight text-gray-600 leading-4">kjnkjcnkj  kjnknkcj kjcnskjcns jnkjn lsjknksjs sjnskh  jkssj jnskh jk </p>
+                                    <p className="tracking-tight text-gray-600 leading-4">Promote your events or sell event tickets from different ticketing companies at no cost 
+                                    by linking to them on Dukaflani. Events appear under all your videos with the latest event on top.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <div className="flex items-center justify-start space-x-2">
+                                        <span className="p-2 bg-gray-200 rounded-full">
+                                            <PlayIcon className="h-4 w-4"/>
+                                        </span>
+                                        <span className="tracking-tight text-gray-800 font-medium flex-1">YouTube Views & Revenue</span>
+                                    </div>
+                                    <p className="tracking-tight text-gray-600 leading-4">Your view count & revenue on YouTube will not be affected as your video
+                                     on Dukaflani is embedded directly from YouTube.</p>
                                 </li>
                                 <li>
                                 <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} Jidraff Gathura</footer>

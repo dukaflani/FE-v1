@@ -195,7 +195,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         <div className='sticky top-0'>
             <div className='aspect-w-16 aspect-h-9 bg-gray-100'>
             {/* <iframe width="100%" height="100%" src="https://www.youtube.com/embed/H059rrXKX1s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-            <iframe src="https://www.youtube.com/embed/GIqbvsSXyWU?loop=1&modestbranding=1&color=white&playlist=GIqbvsSXyWU" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            <iframe src="https://www.youtube.com/embed/h0ArklhPZHI?loop=1&modestbranding=1&color=white&playlist=h0ArklhPZHI" title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 {/* <iframe id='iframeId' width="100%" height="100%" src={`https://www.youtube.com/embed/H059rrXKX1s?loop=1&modestbranding=1&color=white&playlist=H059rrXKX1s`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
                 {/* <iframe width="100%" height="100%" src={`https://www.youtube.commmm/embed/${video?.details?.youtube_id}?autoplay=0&loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
             </div>
