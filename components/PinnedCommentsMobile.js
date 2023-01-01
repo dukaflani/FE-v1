@@ -128,8 +128,8 @@ function openEditModal() {
   return (
     <>
         <div className={comment?.is_pinned ? 'flex w-full mb-6 space-x-2 relative' : 'hidden'}>
-            <div className='w-1/12 flex items-start justify-end'>
-                <div className='relative h-10 w-10'>
+            <div className=' flex items-start justify-end'>
+                <div className='relative h-8 w-8 md:h-10 md:w-10 landscape:h-10 landscape:w-10'>
                     <Image
                         src={comment?.avatar ? comment?.avatar : noAvatar}
                         layout="fill"
@@ -138,8 +138,8 @@ function openEditModal() {
                         />
                 </div>
             </div>
-            <div className='w-11/12 flex flex-col items-start justify-start pr-10 pt-2'>
-                <div className='text-sm tracking-tight font-semibold text-gray-700 w-full flex items-center justify-start'><span className='bg-gray-700 text-white pl-1 pr-2 rounded-l-md rounded-r-full flex items-center justify-center'>{comment?.name} <BookmarkIcon className='h-4 w-4 ml-2'/> </span>&nbsp;  &bull; &nbsp; <span className='text-sm tracking-tight font-normal'>{videoUploadTime}</span></div>
+            <div className='flex-1 flex flex-col items-start justify-start pr-10 pt-2'>
+            <div className='text-sm tracking-tight font-semibold text-gray-700'>{comment?.name} &bull; <span className='text-sm tracking-tight font-normal'>{videoUploadTime}</span></div>
                 <div className='tracking-tight text-sm'>
                 <Linkify componentDecorator={(decoratedHref, decoratedText, key) => ( <a target="blank" className='text-blue-600 -mb-1 w-56 inline-block overflow-hidden overflow-ellipsis whitespace-nowrap'  href={decoratedHref} key={key}> {decoratedText} </a> )} >
                     <ShowMoreText
@@ -158,6 +158,10 @@ function openEditModal() {
                     })}
                     </ShowMoreText>
                 </Linkify>
+                </div>
+                <div className='flex items-center justify-start space-x-2 pt-2'>
+                  <BookmarkIcon className='h-4 w-4 text-gray-800'/>
+                  <span className='text-xs text-gray-800'>Pinned Comment</span>
                 </div>
             </div>
 
