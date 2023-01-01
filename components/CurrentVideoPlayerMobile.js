@@ -6,15 +6,16 @@ import numeral from 'numeral';
 import { useRouter } from 'next/router';
 import ShowMoreText from "react-show-more-text";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
+import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, ChevronDownIcon, XMarkIcon,
+PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn } from '@heroicons/react/24/solid'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 import noAvatar from '../public/media/noimage.webp'
 import thumbnail from '../public/media/dukaflani-player-default.png'
-import VideoComments from './VideoComments';
+import VideoCommentsMobile from './VideoCommentsMobile';
 import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
-    useAddUnlikeMutation, useCurrentVideoObjectsCountQuery } from '../redux/features/videos/videosApiSlice';
+    useAddUnlikeMutation, useCurrentVideoObjectsCountQuery, useFetchCommentsQuery } from '../redux/features/videos/videosApiSlice';
 import AdvertisementMobile from './AdvertisementMobile';
 import ItemsTabNavigationMobile from './ItemsTabNavigationMobile';
 import ProductCardMobile from './ProductCardMobile';
@@ -33,6 +34,8 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const [fieldError, setFieldError] = useState('')
     const [likeErrors, setLikeErrors] = useState(null)
     const [linkCopied, setLinkCopied] = useState(false)
+    const [showDescription, setShowDescription] = useState(false)
+    const [showComments, setShowComments] = useState(false)
 
 
     const { video } = useSelector((state) => state.videos)
@@ -41,6 +44,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
 
     const { userProfile } = useSelector((state) => state.auth)
     const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
+    const userProfilePicture = userProfile?.info ? userProfile?.info[0]?.profile_avatar : noAvatar
 
     const desc = video?.details?.description
     const hashTags = desc?.split(' ')
@@ -54,7 +58,11 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         video_id: video?.details?.id ? video?.details?.id : 0,
     }
 
-
+    const queryVideoCommentsParams = {
+        video_id: video?.details?.id ? video?.details?.id : 0,
+    }
+    
+    const { data: comments } = useFetchCommentsQuery(queryVideoCommentsParams)
     const {data: isLiked } = useVideoLikedQuery(videoLikedQuery)
     const {data: isUnliked } = useVideoUnlikedQuery(videoLikedQuery)
     const {data: currentVideoObjectsCount } = useCurrentVideoObjectsCountQuery(videoObjectsCountQuery)
@@ -73,6 +81,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const videoUploadTime = new Date(video?.details?.date).toDateString()
 
     const likesCountRaw = currentVideoObjectsCount?.data?.like_count
+    const likesCountLong = numeral(likesCountRaw).format('0,0')
     let likesCount = ''
     likesCountRaw < 1000 || likesCountRaw % 10 === 0 ? likesCount = numeral(likesCountRaw).format('0a') :  likesCount = numeral(likesCountRaw).format('0.0a')
     
@@ -114,6 +123,25 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 setFieldError('Please fill in all the fields')
             }
         }
+
+        const handleAddCommentByEnterKey = async (e) => {
+            if (e.key === 'Enter') {
+                if (commentBody && video?.details?.id && userProfileId) {
+                    try {
+                        setCreatedComment(await addComment(newComment))
+                        setCommentBody('')
+                    } catch (error) {
+                        setCommentErrors(error)
+                        setTimeout(() => {
+                            setCommentErrors(null)
+                        }, 5000);
+                    }
+                    
+                } else {
+                    setFieldError('Please fill in all the fields')
+                }
+            }
+          }
 
 
         const deletelikeInfo = {
@@ -207,8 +235,8 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         <div className='bg-white pb-10'>
             <AdvertisementMobile/>
             <div className='px-2'>
-                <div className='tracking-tight font-semibold text-gray-800 text-base md:text-lg landscape:text-lg line-clamp-2 pr-3 pt-2'>Video Title</div>
-                <div className='text-xs space-x-2 text-gray-600'>
+                <div onClick={() => setShowDescription(true)} className='tracking-tight font-semibold text-gray-800 text-base md:text-lg landscape:text-lg line-clamp-2 pr-3 pt-2'>Video Title</div>
+                <div onClick={() => setShowDescription(true)} className='text-xs space-x-2 text-gray-600'>
                     <span>12k views</span>
                     <span>2months ago</span>
                     <span className='uppercase text-blue-500'>Gengetone</span>
@@ -277,20 +305,29 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                         </button>
                     </div>
                 </div>
-                <div className='bg-gray-50 p-2 my-5 rounded-lg'>
-                    <p className='text-sm font-medium text-gray-800 tracking-tight'>Comments <span className='text-xs text-gray-600 font-normal tracking-tight'>300</span></p>
+                <div onClick={() => setShowComments(true)} className='bg-gray-50 p-2 my-5 rounded-lg'>
+                    <p className='text-sm font-medium text-gray-800 tracking-tight'>Comments <span className='text-xs text-gray-600 font-normal tracking-tight'>{commentCount}</span></p>
                     <div className='flex items-start'>
                         <div className='flex-1 pr-3 flex items-start space-x-2'>
                             <div>
-                                <picture>
+                                {comments?.data?.length > 0  && <picture>
                                     <img
-                                        src="/media/MED.png"
+                                        src={comments?.data[0]?.avatar ? comments?.data[0]?.avatar : noAvatar}
                                         alt="Artist avatar"
                                         className="h-7 w-7 rounded-full md:h-9 md:w-9 landscape:h-9 landscape:w-9 bg-gray-200"
                                     />
-                                </picture>
+                                </picture>}
+                                {comments?.data?.length == 0  && <picture>
+                                    <img
+                                        src={userProfilePicture}
+                                        alt="Artist avatar"
+                                        className="h-7 w-7 rounded-full md:h-9 md:w-9 landscape:h-9 landscape:w-9 bg-gray-200"
+                                    />
+                                </picture>}
                             </div>
-                            <div className='flex-1 line-clamp-2 text-xs leading-4 text-gray-900'>comment content ghbdgb fbrfbfb fbdfbbv ffb fbfbfb fbtynyn bntynt tgtntrhtrn tnhy ttyntr trhrt rnrth tghrthrt</div>
+                            {comments?.data?.length > 0 ? <div className='flex-1 line-clamp-2 text-xs leading-4 text-gray-900'>{comments?.data?.length > 0 ? comments?.data[0]?.body : ''}</div>
+                            :
+                            <span className='flex-1 bg-gray-200 rounded-full text-xs leading-4 text-gray-900 py-1 px-2'>Add Comment...</span>}
                         </div>
                         <div>
                             <ChevronDownIcon className='h-4 w-4'/>
@@ -313,7 +350,110 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             </div>
         </div>
     </article>
-
+    {/* Vide Description */}
+    <div className={showDescription ? 'bg-white p-2 fixed bottom-0 left-0 right-0 border-t rounded-t-lg h-[70%]' : 'hidden'}>
+        <nav className='relative pt-10'>
+            <div className='flex items-center justify-between px-2 border-b pb-2 absolute top-0 left-0 right-0'>
+                <span className='font-medium tracking-tight'>Video Info</span>
+                <span onClick={() => setShowDescription(false)}>
+                    <XMarkIcon className='w-4 h-4'/>
+                </span>
+            </div>
+            <div className='max-h-[35rem] overflow-y-auto pb-20 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
+                <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-5 pb-32 pt-5'>
+                    <li  className='flex items-center justify-evenly w-full'>
+                        <div className="flex flex-col items-center">
+                            <span className="text-sm font-bold leading-4 tracking-tight text-gray-800 line-clamp-3">{view3}</span>
+                            <span className="text-gray-600 text-xs line-clamp-1">{view3 == 1 ? 'View' : 'Views'}</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <span className="text-sm font-bold leading-4 tracking-tight text-gray-800 line-clamp-3">{likesCountLong ? likesCountLong : 0}</span>
+                            <span className="text-gray-600 text-xs line-clamp-1">{likesCountLong == 1 ? "Like" : "Likes"}</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <span className="text-sm font-bold leading-4 tracking-tight text-gray-800 line-clamp-3">{videoUploadTime}</span>
+                            <span className="text-gray-600 text-xs line-clamp-1">{videoUploadTime && 'Added'}</span>
+                        </div>
+                    </li>
+                    <li  className='flex items-center justify-center space-x-2 w-full pl-2 pr-5'>
+                        <span className=" border-b w-full">Description:</span>
+                    </li>
+                    <li  className='flex flex-col space-y-2 items-start justify-start space-x-2 w-full pl-2 pr-5'>
+                        <div className='w-full' >
+                            <ul className="space-y-3 w-full">
+                                <li>
+                                    <div className="text-base leading-4 tracking-tight text-gray-600 whitespace-pre-wrap">
+                                        <Linkify componentDecorator={(decoratedHref, decoratedText, key) => ( <a target="blank" className='text-blue-600 -mb-1 w-56 inline-block overflow-hidden overflow-ellipsis whitespace-nowrap'  href={decoratedHref} key={key}> {decoratedText} </a> )} >
+                                        {hashTags?.map((hashTag, i) => {
+                                                return hashTag.match(hashTagRegex) ? (
+                                                    <div key={i}><span className='text-blue-600'>{hashTag}</span> {' '}</div>
+                                                ) : hashTag + ' '
+                                            })}
+                                        </Linkify>   
+                                    </div>
+                                </li>
+                                <li>
+                                    <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} Jidraff Gathura</footer>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    {/* Video Comments */}
+    <div className={showComments ? 'bg-white p-2 fixed bottom-0 left-0 right-0 border-t rounded-t-lg h-[70%]' : 'hidden'}>
+        <nav className='relative pt-10'>
+            <div className='flex items-center justify-between px-2 border-b pb-2 absolute top-0 left-0 right-0'>
+                <span className='font-medium tracking-tight'>Comments</span>
+                <span onClick={() => setShowComments(false)}>
+                    <XMarkIcon className='w-4 h-4'/>
+                </span>
+            </div>
+            <div className='max-h-[35rem] overflow-y-auto pb-20 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
+                <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-5 pb-32 pt-5'>
+                <li className='w-full flex items-center justify-center space-x-2'>
+                <picture>
+                    <img
+                        src={userProfilePicture}
+                        alt={`${user?.info?.stage_name} profile picture`}
+                        className="h-10 w-10 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200"
+                    />
+                </picture>
+                <div className='flex-1 pr-2 bg-gray-200 rounded-full flex items-center justify-start'>
+                    <input 
+                        placeholder={user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} 
+                        className='flex-1 rounded-full placeholder:text-sm bg-gray-200 border-transparent focus:border-transparent  focus:outline-none ring-transparent focus:ring-transparent py-1' 
+                        type="text" 
+                        value={commentBody}
+                        onChange={(e) => setCommentBody(e.target.value)}
+                        onKeyDown={handleAddCommentByEnterKey}
+                    />
+                    {commentBody && <span onClick={handleAddComment} ><PaperAirplaneIcon className='h-5 w-5 text-blue-600'/></span>}
+                </div>
+                </li>
+                    <li  className='flex items-center justify-center space-x-2 w-full pl-2 pr-5'>
+                        <span className=" border-b w-full">{commentCount}  {video?.details?.comment_count == 1 ? 'Comment' : 'Comments'}</span>
+                    </li>
+                    <li  className='flex flex-col space-y-2 items-start justify-start space-x-2 w-full pl-2 pr-5'>
+                        <div className='w-full' >
+                            <ul className="space-y-3 w-full">
+                                <li>
+                                    <div>
+                                        <VideoCommentsMobile videoId={video?.details?.id} />
+                                    </div>
+                                </li>
+                                <li>
+                                    <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} Jidraff Gathura</footer>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 
 
 
@@ -422,7 +562,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 </div>
             </div>
             <div className='mt-10 mb-36'>
-                <VideoComments videoId={video?.details?.id} />
+                <VideoCommentsMobile videoId={video?.details?.id} />
             </div>
         </div>
     </article> */}
