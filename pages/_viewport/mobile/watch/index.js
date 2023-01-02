@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
@@ -11,8 +11,10 @@ import CurrentVideoPlayerMobile from '../../../../components/CurrentVideoPlayerM
 import CurrentVideoPanel from '../../../../components/CurrentVideoPanel'
 import CurrentVideoPlayerSkeleton from '../../../../components/CurrentVideoPlayerSkeleton'
 import CurrrentVideoPanelSkeleton from '../../../../components/CurrrentVideoPanelSkeleton'
+import CurrentVideoPlayerMobileSkeleton from '../../../../components/CurrentVideoPlayerMobileSkeleton'
 
 const WatchCurrentVideo = () => {
+  const [showSkeleton, setShowSkeleton] = useState(true)
   const { ref: mobileWatchNavbarRef, inView: navbarVisisble } = useInView();
   const router = useRouter()
   const { v } = router.query
@@ -30,6 +32,15 @@ const WatchCurrentVideo = () => {
       dispatch(loadCurrentVideo({details: currentVideo?.data?.results[0]}))
     }
   }, [currentVideo])
+
+  useEffect(() => {
+    if (!isLoading) {
+      setTimeout(() => {
+        setShowSkeleton(false)
+      }, 3000);
+    }
+  }, [isLoading])
+  
   
   
   return (
@@ -61,9 +72,11 @@ const WatchCurrentVideo = () => {
       </div>
       <main>
         <div className='flex max-w-lg landscape:max-w-lg min-h-screen mx-auto'>
-            <section className='w-full md:pt-3 landscape:pt-3'>
+            {showSkeleton ? <section className='w-full md:pt-3 landscape:pt-3'>
+              <CurrentVideoPlayerMobileSkeleton/>
+            </section> : <section className='w-full md:pt-3 landscape:pt-3'>
               <CurrentVideoPlayerMobile video={currentVideo} navbarVisisble={navbarVisisble} />
-            </section>
+            </section>}
             {/* <section className='w-8/12'>
               {!isLoading ? <CurrentVideoPlayer video={currentVideo} /> : <CurrentVideoPlayerSkeleton/>}
             </section>
