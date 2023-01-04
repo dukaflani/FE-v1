@@ -5,13 +5,13 @@ import Image from "next/legacy/image";
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
 import Poster from '../public/media/unauthorized-page.png'
 import NavigationMobile from './NavigationMobile'
-import SidebarNav from './SidebarNav'
+import SidebarNavMobile from './SidebarNavMobile'
 import BottomNavigationMobile from './BottomNavigationMobile';
 
 const UnauthorizedMobile = () => {
   const router = useRouter()
   return (
-    <SidebarNav>
+    <SidebarNavMobile>
         <Head>
         <title>Unauthorized!</title>
         <meta name="title" content="Unauthorized!"/>
@@ -52,7 +52,7 @@ const UnauthorizedMobile = () => {
             </div>
       </div>
       <BottomNavigationMobile/>
-    </SidebarNav>
+    </SidebarNavMobile>
   )
 }
 

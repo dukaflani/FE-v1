@@ -2,9 +2,15 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from "next/legacy/image";
-import { HomeIcon, RectangleGroupIcon, UserCircleIcon, Cog6ToothIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline'
+// Outline Icons
+import { HomeIcon, RectangleGroupIcon, UserCircleIcon, Cog6ToothIcon, CloudArrowUpIcon, ShoppingBagIcon, TicketIcon,
+ LinkIcon, MicrophoneIcon, DevicePhoneMobileIcon, MusicalNoteIcon} from '@heroicons/react/24/outline'
+//  Solid Icons
 import { HomeIcon as HomeSolid, RectangleGroupIcon as RGSolid, UserCircleIcon as UCSolid, Cog6ToothIcon as C6Solid, 
-    CloudArrowUpIcon as CloudArrowUpIconSolid, Bars3Icon } from '@heroicons/react/24/solid'
+    CloudArrowUpIcon as CloudArrowUpIconSolid, Bars3Icon, ShoppingBagIcon as ShoppingBagSolid, TicketIcon as TicketSolid,
+ LinkIcon as LinkSolid, MicrophoneIcon as MicrophoneSolid, DevicePhoneMobileIcon as MobileSolid, 
+ MusicalNoteIcon as MusicalSolid} from '@heroicons/react/24/solid'
+
 import { useDispatch } from 'react-redux'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
 import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
@@ -12,6 +18,7 @@ import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
 
 const SidebarContentMobile = () => {
     const router = useRouter()
+    const { view } = router.query
     const destination = router.pathname
     const destinationLength = destination.split("/").length
     const destinationArray = destination.split("/")
@@ -42,6 +49,51 @@ const SidebarContentMobile = () => {
             link:'/dashboard/upload',
             iconOutline: <CloudArrowUpIcon className="w-5 h-5" />,
             iconSolid: <CloudArrowUpIconSolid className="w-5 h-5" />,
+        },
+    ]
+
+    const myDashboardLinkItems = [
+        {
+            title: "Products",
+            link:'/dashboard/products',
+            linkQuery: 'my-products',
+            iconOutline: <ShoppingBagIcon className="w-5 h-5" />,
+            iconSolid: <ShoppingBagSolid className="w-5 h-5" />,
+        },
+        {
+            title: "Events",
+            link:'/dashboard/events',
+            linkQuery: 'my-events',
+            iconOutline: <TicketIcon className="w-5 h-5" />,
+            iconSolid: <TicketSolid className="w-5 h-5" />,
+        },
+        {
+            title: "Smart Links",
+            link:'/dashboard/more-items',
+            linkQuery: 'smart-links',
+            iconOutline: <LinkIcon className="w-5 h-5" />,
+            iconSolid: <LinkSolid className="w-5 h-5" />,
+        },
+        {
+            title: "Lyrics",
+            link:'/dashboard/more-items',
+            linkQuery: 'lyrics',
+            iconOutline: <MicrophoneIcon className="w-5 h-5" />,
+            iconSolid: <MicrophoneSolid className="w-5 h-5" />,
+        },
+        {
+            title: "Skiza Tunes",
+            link:'/dashboard/more-items',
+            linkQuery: 'skiza-tune',
+            iconOutline: <DevicePhoneMobileIcon className="w-5 h-5" />,
+            iconSolid: <MobileSolid className="w-5 h-5" />,
+        },
+        {
+            title: "Collections (Albums)",
+            link:'/dashboard/more-items',
+            linkQuery: 'music-collection',
+            iconOutline: <MusicalNoteIcon className="w-5 h-5" />,
+            iconSolid: <MusicalSolid className="w-5 h-5" />,
         },
     ]
     const dispatch = useDispatch()
@@ -80,19 +132,19 @@ const SidebarContentMobile = () => {
                     ))}
                 </ul>
             </nav>
-            {/* <p className='uppercase text-base py-5 px-4'>More from Dukaflani</p> */}
-            {/* <nav className='flex w-full border-b pb-5'>
+            <p className='uppercase text-base py-5 px-4'>My Uploads</p>
+            <nav className='flex w-full border-b pb-5'>
                 <ul className="w-full">
-                    {navLinkItems.map((navLinkItem, i) => (
-                        <li key={i} onClick={() => setActiveLink(navLinkItem.title)} className={activeLink == navLinkItem.title ? activeLinkStyles : regularLinkStyles}>
+                    {myDashboardLinkItems.map((myDashboardLinkItem, i) => (
+                        <li key={i} onClick={() => router.push({pathname:  myDashboardLinkItem.link, query: {view: myDashboardLinkItem.linkQuery}})} className={newDestination == myDashboardLinkItem.title || view == myDashboardLinkItem.linkQuery ? activeLinkStyles : regularLinkStyles}>
                             <div>
-                                {activeLink == navLinkItem.title ? navLinkItem.iconSolid : navLinkItem.iconOutline}
+                                {newDestination == myDashboardLinkItem.title || view == myDashboardLinkItem.linkQuery ? myDashboardLinkItem.iconSolid : myDashboardLinkItem.iconOutline}
                             </div>
-                            <div>{navLinkItem.title}</div>
+                            <div>{myDashboardLinkItem.title}</div>
                         </li>
                     ))}
                 </ul>
-            </nav> */}
+            </nav>
         </div>
         <footer className='flex items-center justify-center p-3'>
             <p className='text-xs text-gray-600'>&copy; {new Date().getFullYear()} Jidraff Gathura</p>
