@@ -4,7 +4,7 @@ import Modal from 'react-modal'
 import { setCredentials } from '../redux/features/auth/authSlice'
 import { useFetchAccessTokenQuery, useFetchUserVideosQuery, useGetProfileQuery } from '../redux/features/videos/videosApiSlice'
 import NavbarMobile from './NavbarMobile'
-import SignInRequestBottomBar from './SignInRequestBottomBar'
+import SignInRequestBottomBarMobile from './SignInRequestBottomBarMobile'
 import SignInModalContent from './SignInModalContent'
 
 Modal.setAppElement("#__next")
@@ -45,8 +45,8 @@ const userAvatar = userProfile?.info ? userProfile?.info[0]?.profile_avatar : nu
   return (
     <>
         <NavbarMobile myAvatar={userAvatar} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-        {!isLoading && !accessToken  && <SignInRequestBottomBar/>}
-        {!isLoading && errorCode == "token_not_valid"  && <SignInRequestBottomBar/>}
+        {!isLoading && !accessToken  && <SignInRequestBottomBarMobile/>}
+        {!isLoading && errorCode == "token_not_valid"  && <SignInRequestBottomBarMobile/>}
         <Modal 
           isOpen={signInModalOpen}
           style={{content:{backgroundColor:'transparent', border:'none', display:'flex', alignItems:'center', justifyContent:'center'}, 
