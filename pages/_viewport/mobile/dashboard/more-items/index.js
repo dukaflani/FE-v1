@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
 import SidebarNavMobile from '../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../components/NavigationMobile'
-import MoreItemsWrapper from '../../../../../components/MoreItemsWrapper'
+import MoreItemsWrapperMobile from '../../../../../components/MoreItemsWrapperMobile'
+import { useSelector } from 'react-redux'
+import { useFetchUserProfileQuery } from '../../../../../redux/features/videos/videosApiSlice'
+import UnauthorizedMobile from '../../../../../components/UnauthorizedMobile'
+import BottomNavigationMobile from '../../../../../components/BottomNavigationMobile'
 
 
 
@@ -13,6 +17,23 @@ const moreItems = () => {
     const { view } = router.query
     const [videoTitle, setVideoTitle] = useState('')
     const [currentInput, setCurrentInput] = useState(0)
+
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
+
+    const userProfileQueryParams = {
+      user: currentUser,
+    }
+
+    const { data: profile } = useFetchUserProfileQuery(userProfileQueryParams) 
+    const userProfile = profile?.data[0] ? profile?.data[0] : null
+    const userRole = userProfile?.role
+
+    // if (userRole != 'ARTIST') {
+    //   return  <UnauthorizedMobile/> 
+    // }
+
+
 
   return (
     <SidebarNavMobile>
@@ -37,45 +58,43 @@ const moreItems = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile/>
-      <main className='pt-24'>
+      <main className='pt-[3.7rem] md:pt-[5rem] landscape:pt-[5rem] pb-10'>
         <section className='flex'>
-          <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>
+          <div className='hidden lg:flex w-1/12 items-start justify-start pl-5 fixed left-0 top-40'>
             <nav>
             <ul className='space-y-10'>
                 <li onClick={() => router.push("/dashboard")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <RectangleGroupIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>Dashboard</div>
+                  {/* <div className='text-sm'>Dashboard</div> */}
                 </li>
                 <li onClick={() => router.push("/dashboard/products")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <BuildingStorefrontIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>My Products</div>
+                  {/* <div className='text-sm'>My Products</div> */}
                 </li>
                 <li onClick={() => router.push("/dashboard/events")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <TicketIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>My Events</div>
+                  {/* <div className='text-sm'>My Events</div> */}
                 </li>
                 <li onClick={() => router.push("/dashboard/more-items?view=smart-links")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <ChevronDoubleRightIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>More Items</div>
+                  {/* <div className='text-sm'>More Items</div> */}
                 </li>
               </ul>
             </nav>
           </div>
-          <div className='w-1/12'></div>
-          {/* <div className='flex-1 pr-5 w-11/12 pl-24'> */}
-          <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
-            <div className='mb-2 font-semibold flex items-center justify-between pr-10'>
+          <div className='hidden lg:block w-1/12'></div>
+          <div className='flex-1 w-full max-w-7xl mx-auto'>
+            {/* <div className='mb-2 font-semibold flex items-center justify-between pr-10'>
                 <div className='w-10/12'>
                     <div className='uppercase '>More Items</div>
                 </div>
@@ -87,11 +106,12 @@ const moreItems = () => {
                     "music-collection": <div onClick={() => router.push("/dashboard/upload?item=music-collection")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Album</div>,
                   }[view]
                 }
-            </div>
-                <MoreItemsWrapper currentInput={currentInput} setCurrentInput={setCurrentInput} videoTitle={videoTitle} setVideoTitle={setVideoTitle} />  
+            </div> */}
+                <MoreItemsWrapperMobile currentInput={currentInput} setCurrentInput={setCurrentInput} videoTitle={videoTitle} setVideoTitle={setVideoTitle} />  
           </div>
         </section>
       </main>
+      <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }
