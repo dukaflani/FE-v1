@@ -94,19 +94,6 @@ const moreItems = () => {
           </div>
           <div className='hidden lg:block w-1/12'></div>
           <div className='flex-1 w-full max-w-7xl mx-auto'>
-            {/* <div className='mb-2 font-semibold flex items-center justify-between pr-10'>
-                <div className='w-10/12'>
-                    <div className='uppercase '>More Items</div>
-                </div>
-                {
-                  {
-                    "smart-links": <div onClick={() => router.push("/dashboard/upload?item=smart-links")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Smart Links</div>,
-                    "lyrics": <div onClick={() => router.push("/dashboard/upload?item=lyrics")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Lyrics</div>,
-                    "skiza-tune": <div onClick={() => router.push("/dashboard/upload?item=skiza-tunes")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Skiza Tune</div>,
-                    "music-collection": <div onClick={() => router.push("/dashboard/upload?item=music-collection")} className='w-2/12 flex items-center justify-center font-medium border text-xs uppercase border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Album</div>,
-                  }[view]
-                }
-            </div> */}
                 <MoreItemsWrapperMobile currentInput={currentInput} setCurrentInput={setCurrentInput} videoTitle={videoTitle} setVideoTitle={setVideoTitle} />  
           </div>
         </section>

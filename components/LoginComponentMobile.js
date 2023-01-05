@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from "next/legacy/image";
 import logoLight from '../public/branding/dukaflani-logo-blue-medium.png'
-import Poster from '../public/branding/dukaflani-login-cover.png'
 import { useLoginMutation } from '../redux/features/auth/authApiSlice'
 import InputField from './reuseable-components/InputField'
 import InputFieldPassword from './reuseable-components/InputFieldPassword'
@@ -61,14 +60,7 @@ const LoginComponent = () => {
     
 
   return (
-    <div className='grid grid-cols-2 h-full'>
-        <div className='w-full h-full relative'>
-            <Image 
-                src={Poster}
-                layout="fill"
-                objectFit='cover'
-                />
-        </div>
+    <div className='grid grid-cols-1 h-full'>
         <div className='w-full h-full'>
             <div className='w-10/12 mx-auto h-full flex flex-col items-center justify-center'>
                 <div className='flex flex-1 w-full flex-col items-center justify-center space-y-2'>

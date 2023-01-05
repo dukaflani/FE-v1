@@ -1,6 +1,5 @@
 import Head from 'next/head'
-import React from 'react'
-import LoginComponent from '../../../../components/LoginComponent'
+import LoginComponentMobile from '../../../../components/LoginComponentMobile'
 
 
 
@@ -28,10 +27,9 @@ const login = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-      <div className='w-6/12 h-4/6 bg-white shadow'>
-        <LoginComponent/>
+      <div className='max-w-md h-4/6 bg-white shadow mx-2'>
+        <LoginComponentMobile/>
       </div>
     </div>
   )
