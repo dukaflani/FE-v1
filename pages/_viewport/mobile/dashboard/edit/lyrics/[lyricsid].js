@@ -1,11 +1,11 @@
-import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { useFetchLyricsVerseQuery, useFetchLyricsQuery } from '../../../../../../redux/features/videos/videosApiSlice'
 import SidebarNavMobile from '../../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../../components/NavigationMobile'
-import EditLyrics from '../../../../../../components/EditLyrics'
+import EditLyricsMobile from '../../../../../../components/EditLyricsMobile'
+import BottomNavigationMobile from '../../../../../../components/BottomNavigationMobile'
 
 const editLyrics = () => {
   const router = useRouter()
@@ -51,16 +51,15 @@ const editLyrics = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile/>
       <>
-      <main className='flex flex-col items-center justify-center pt-20'>
-        <article className='bg-white border-b shadow-sm w-5/12 p-5'>
+      <main className='flex flex-col items-center justify-center py-20'>
+        <article className='bg-white border-b shadow-sm max-w-md mx-2 p-5'>
         <div className='text-sm uppercase tracking-tighter text-gray-800 font-semibold'>Edit Lyrics</div>
         <div className='text-sm mb-5 tracking-tighter text-gray-700'>{songLyrics?.data?.title}</div>
             {[...Array(numOfVerses).keys()].map((item, i) => (
-                <EditLyrics verse={lyricSVerses?.data[i]} key={i}/>
+                <EditLyricsMobile verse={lyricSVerses?.data[i]} key={i}/>
             ))}
         </article>
         <footer className='flex items-center justify-center p-5'>
@@ -68,6 +67,7 @@ const editLyrics = () => {
         </footer>
       </main>
       </>
+      <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }

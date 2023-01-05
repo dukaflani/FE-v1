@@ -1,8 +1,8 @@
-import React from 'react'
 import Head from 'next/head'
 import SidebarNavMobile from '../../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../../components/NavigationMobile'
-import EditProduct from '../../../../../../components/EditProduct'
+import EditProductMobile from '../../../../../../components/EditProductMobile'
+import BottomNavigationMobile from '../../../../../../components/BottomNavigationMobile'
 
 const editProduct = () => {
   return (
@@ -28,19 +28,19 @@ const editProduct = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile/>
       <>
-      <main className='flex flex-col items-center justify-center pt-20'>
-        <article className='bg-white border-b shadow-sm w-7/12 p-5'>
-            <EditProduct/>
+      <main className='flex flex-col items-center justify-center py-20'>
+        <article className='bg-white border-b shadow-sm max-w-md mx-2 p-5'>
+            <EditProductMobile/>
         </article>
         <footer className='flex items-center justify-center p-5'>
             <p className='text-xs text-gray-600'>&copy; {new Date().getFullYear()} Jidraff Gathura</p>
         </footer>
       </main>
       </>
+      <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }

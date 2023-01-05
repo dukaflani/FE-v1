@@ -93,6 +93,14 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             providesTags: ['video']
         }),
 
+        fetchVideoToEdit: builder.query({
+            query: (args) => ({
+                url: `/api/fetchvideotoedit/`,
+                params: {...args}
+            }),
+            providesTags: ['video']
+        }),
+
         currentVideoObjectsCount: builder.query({
             query: (args) => ({
                 url: `/api/currentvideoobjectcount/`,
@@ -617,5 +625,5 @@ export const { useGetProfileQuery, useFanbaseQuery, useJoinFanbaseMutation, useL
                 useFetchSkizaTuneLinksQuery, useEditAlbumTrackMutation, useEditLyricsMutation, useEditSkizaTuneMutation, useEditStreamingLinkMutation, useDeleteAlbumMutation,
                 useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery, useSearchForVideoQuery,
                 useAddLikeMutation, useAddUnlikeMutation, useDeleteLikeMutation, useDeleteUnlikeMutation, useVideoLikedQuery, useVideoUnlikedQuery, useCurrentVideoObjectsCountQuery,
-                useFetchCurrentVideoProfileQuery, useProfileLikedQuery
+                useFetchCurrentVideoProfileQuery, useProfileLikedQuery, useFetchVideoToEditQuery
              } = videosApiSlice

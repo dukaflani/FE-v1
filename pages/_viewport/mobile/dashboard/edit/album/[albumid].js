@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Image from "next/legacy/image"
 import { useRouter } from 'next/router'
@@ -11,9 +11,10 @@ import cover from '../../../../../../public/media/dukaflani-cover-default.png'
 import { useFetchAccessTokenQuery, useFetchAlbumQuery, useFetchAlbumTracksQuery } from '../../../../../../redux/features/videos/videosApiSlice'
 import SidebarNavMobile from '../../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../../components/NavigationMobile'
-import EditMusicCollection from '../../../../../../components/EditMusicCollection'
+import EditMusicCollectionMobile from '../../../../../../components/EditMusicCollectionMobile'
 import InputField from '../../../../../../components/reuseable-components/InputField'
 import SelectInputField from '../../../../../../components/reuseable-components/SelectInputField'
+import BottomNavigationMobile from '../../../../../../components/BottomNavigationMobile'
 
 const editAlbum = () => {
   const router = useRouter()
@@ -120,16 +121,15 @@ const editAlbum = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <NavigationMobile/>
       <>
-      <main className='flex flex-col items-center justify-center pt-20'>
-        <article className='bg-white border-b shadow-sm w-5/12 p-5'>
+      <main className='flex flex-col items-center justify-center py-20'>
+        <article className='bg-white border-b shadow-sm max-w-md mx-2 p-5'>
         <div className='text-sm uppercase tracking-tighter text-gray-800 font-semibold'>Edit Music Collection</div>
-        <div className='flex items-center justify-center mb-5 border-b py-3'>
-          <div className='w-3/12'>
-            <div className='relative h-24 w-full'>
+        <div className='flex items-center w-full justify-center mb-5 border-b py-3'>
+          <div>
+            <div className='relative h-24 w-24'>
                   {albumObject?.data?.cover && <Image
                       src={!albumObject?.data?.cover ? cover : albumObject?.data?.cover}
                       layout="fill"
@@ -137,7 +137,7 @@ const editAlbum = () => {
                       />}
               </div>
           </div>
-          <div className='w-9/12 flex space-x-3 p-2'>
+          <div className='flex-1 flex space-x-3 p-2'>
             <div>
               <div className='text-base tracking-tighter text-gray-700 font-medium'>{albumObject?.data?.title}</div>
               <div className='text-sm tracking-tighter text-gray-700 '>{albumObject?.data?.album_type}</div>
@@ -149,7 +149,7 @@ const editAlbum = () => {
           </div>
         </div>
             {[...Array(numOfTracks).keys()].map((item, i) => (
-                <EditMusicCollection albumTrack={albumTrackObject?.data[i]} key={i}/>
+                <EditMusicCollectionMobile albumTrack={albumTrackObject?.data[i]} key={i}/>
             ))}
         </article>
         <footer className='flex items-center justify-center p-5'>
@@ -279,6 +279,7 @@ const editAlbum = () => {
         </Dialog>
       </Transition>
       </>
+      <BottomNavigationMobile/>
     </SidebarNavMobile>
   )
 }
