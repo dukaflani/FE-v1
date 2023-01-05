@@ -1,10 +1,9 @@
 import Head from 'next/head'
-import React from 'react'
-import AccountRegister from '../../../../components/AccountRegister'
+import AccountRegisterMobile from '../../../../components/AccountRegisterMobile'
 
 const register = () => {
   return (
-    <div className='w-7/12 mx-auto'>
+    <div className='max-w-md mx-auto'>
         <Head>
         <title>Register | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Register | Dukaflani — Home of Music Videos"/>
@@ -26,9 +25,8 @@ const register = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
-        <AccountRegister/>
+        <AccountRegisterMobile/>
     </div>
   )
 }
