@@ -29,9 +29,9 @@ const moreItems = () => {
     const userProfile = profile?.data[0] ? profile?.data[0] : null
     const userRole = userProfile?.role
 
-    // if (userRole != 'ARTIST') {
-    //   return  <UnauthorizedMobile/> 
-    // }
+    if (userRole != 'ARTIST') {
+      return  <UnauthorizedMobile/> 
+    }
 
 
 
