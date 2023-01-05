@@ -9,10 +9,8 @@ import { formatDistanceStrict } from 'date-fns';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, ChevronDownIcon, XMarkIcon,
 PaperAirplaneIcon } from '@heroicons/react/24/outline'
-import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn } from '@heroicons/react/24/solid'
-import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
+import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn, CheckBadgeIcon } from '@heroicons/react/24/solid'
 import noAvatar from '../public/media/noimage.webp'
-import thumbnail from '../public/media/dukaflani-player-default.png'
 import VideoCommentsMobile from './VideoCommentsMobile';
 import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
@@ -39,6 +37,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const [linkCopied, setLinkCopied] = useState(false)
     const [showDescription, setShowDescription] = useState(false)
     const [showComments, setShowComments] = useState(false)
+    const [showProfile, setShowProfile] = useState(false)
     const [fanbaseErrors, setFanbaseErrors] = useState(null)
 
 
@@ -71,6 +70,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const videoProfileQueryParams = {
         profile_id: currentVideoProfileId ? currentVideoProfileId : 0,
     }
+
     
     
     const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
@@ -298,7 +298,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                     <span className='font-semibold text-gray-700'>more...</span>
                 </div>
                 <div className='flex items-center space-x-1 my-2 md:my-3 landscape:my-3'>
-                    <div className="h-8 w-8 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200">
+                    <div onClick={() => setShowProfile(true)} className="h-8 w-8 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200">
                     {currentVideoProfilePic && <picture>
                         <img
                             src={!currentVideoProfilePic ? noAvatar : currentVideoProfilePic}
@@ -307,9 +307,10 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                         />
                     </picture>}
                     </div>
-                    <div className='flex-1 flex items-center space-x-1'>
+                    <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.details?.stage_name}</div>
-                        <div className='flex-1 text-xs text-gray-600 pr-2'>{fanbaseCountShort}</div>
+                        {video?.details?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
+                        <div className='flex-1 text-xs text-gray-600 px-2'>{fanbaseCountShort}</div>
                     </div>
                     {is_loggedin && <div>
                         {is_a_fan ? <button onClick={handleLeave} className='uppercase text-xs tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>leave</button>
@@ -517,117 +518,142 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         </nav>
     </div>
 
-
-
-
-
-    {/* <article>
-        <div>
-            <div className='w-full h-[425px]'>
-            {!video?.details?.youtube_id ? 
-            <div className='relative w-full h-full'>
-                <Image 
-                    src={thumbnail}
-                    layout="fill"
-                    objectFit='cover'
-                  />
-            </div> : <iframe width="100%" height="100%" src={`https://www.youtube.commmm/embed/${video?.details?.youtube_id}?autoplay=0&loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>}
+    {/* Artist Profile */}
+    <div className={showProfile ? 'bg-white p-2 fixed bottom-0 left-0 right-0 border-t rounded-t-lg h-[70%]' : 'hidden'}>
+        <nav className='relative pt-10'>
+            <div className='flex items-center justify-between px-2 border-b pb-2 absolute top-0 left-0 right-0'>
+                <span className='font-medium tracking-tight'>Profile</span>
+                <span onClick={() => setShowProfile(false)}>
+                    <XMarkIcon className='w-4 h-4'/>
+                </span>
             </div>
-            <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.details?.genre_title}</div>
-            <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.details?.title}</h1>
-            <div className='w-full flex items-center justify-between pt-1'>
-                <div className='text-sm font-semibold tracking-tight text-gray-700'> {view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime && 'Added'} {videoUploadTime}</div>
-                <div className='flex justify-end items-center pr-5'>
-                    <div className="inline-flex rounded-md" role="group">
-                    {is_liked ? <button onClick={handleDeleteLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <Likebtn className="mr-2 w-5 h-5" /> 
-                        {numOfLikes}
-                    </button>
-                    :
-                    <button onClick={handleAddLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <HandThumbUpIcon className="mr-2 w-5 h-5" />
-                        {likesCount}
-                    </button>}
-                    {is_unliked ? <button onClick={handleDeleteUnlike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <Unlikebtn className="mr-2 w-5 h-5" />
-                        {unlikesCount}
-                    </button>
-                    :
-                    <button onClick={handleAddUnlike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <HandThumbDownIcon className="mr-2 w-5 h-5" />
-                        {numOfUnlikes}
-                    </button>}
+            <div className='max-h-[35rem] overflow-y-auto pb-20 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
+                <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-5 pb-32 pt-5'>
+                <li className='w-full flex items-center justify-center space-x-2'>
+                {currentVideoProfilePic && <picture>
+                        <img
+                            src={!currentVideoProfilePic ? noAvatar : currentVideoProfilePic}
+                            alt={video?.details?.stage_name}
+                            className="h-10 w-10 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200"
+                        />
+                    </picture>}
+                <div className='flex-1 flex items-start justify-center flex-col'>
+                    <div className='flex'>
+                        <span className='text-base font-medium tracking-tight text-gray-800'>{videoProfile?.data?.stage_name}</span>
+                        {videoProfile?.data?.is_verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 pb-2 -ml-0.5'/>}
                     </div>
-                    <div className='ml-14'>
-                        <CopyToClipboard
-                            text={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${v}&tab=${tab}`}
-                            onCopy={() => setLinkCopied(true)}
-                        >
-                            <button type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                <ShareIcon className="mr-2 w-5 h-5" />
-                                {linkCopied ? "Copied" : "Share"}
-                            </button>
-                        </CopyToClipboard>
-                    </div>
+                   <span className='text-sm tracking-tight text-gray-600 -mt-1'>{videoProfile?.data?.nationality.split(",")[1]}</span>
                 </div>
+                </li>
+                    <li  className='flex items-center justify-center space-x-2 w-full pl-2 pr-5'>
+                        <span className=" border-b w-full">Info</span>
+                    </li>
+                    <li  className='flex flex-col space-y-2 items-start justify-start space-x-2 w-full pl-2 pr-5'>
+                        <div className='w-full' >
+                            <ul className="space-y-3 w-full">
+                                <li>
+                                    <div>
+                                        <span className='text-base font-bold text-gray-800 tracking-tight'>About</span>
+                                    </div>
+                                    <div>
+                                        <span className='text-xs text-gray-500 tracking-tight'>Member Since {new Date(videoProfile?.data?.date).toDateString()}</span>
+                                    </div>
+                                    <div>
+                                    <ShowMoreText
+                                        lines={3}
+                                        more="Show more"
+                                        less="Show less"
+                                        className="content-css leading-4 tracking-tight text-gray-800 whitespace-pre-wrap"
+                                        anchorClass="text-xs tracking-tight uppercase text-blue-700 ml-1"
+                                        expanded={false}
+                                        truncatedEndingComponent={"... "}
+                                    >
+                                        {videoProfile?.data?.about}
+                                    </ShowMoreText>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <span className='text-base font-bold text-gray-800 tracking-tight'>Account</span>
+                                    </div>
+                                    <div className='flex items-center justify-between'>
+                                            <div>
+                                                <div>
+                                                    <span className='text-xs text-gray-500 tracking-tight'>Videos</span>
+                                                </div>
+                                                <div>
+                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.data?.video_count).format('0,0')}</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <span className='text-xs text-gray-500 tracking-tight'>Products</span>
+                                                </div>
+                                                <div>
+                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.data?.product_count).format('0,0')}</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <span className='text-xs text-gray-500 tracking-tight'>Events</span>
+                                                </div>
+                                                <div>
+                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.data?.events_count).format('0,0')}</p>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <span className='text-base font-bold text-gray-800 tracking-tight'>For Business</span>
+                                    </div>
+                                    <div>
+                                        <span className='text-xs text-gray-500 tracking-tight'>Management</span>
+                                    </div>
+                                    <div>
+                                        <p className='leading-4 tracking-tight'>{videoProfile?.data?.management}</p>
+                                    </div>
+                                    <div>
+                                        <span className='text-xs text-gray-500 tracking-tight'>Contact</span>
+                                    </div>
+                                    <div>
+                                        <p className='leading-4 tracking-tight'>{videoProfile?.data?.booking_contact}</p>
+                                    </div>
+                                    <div>
+                                        <span className='text-xs text-gray-500 tracking-tight'>Email</span>
+                                    </div>
+                                    <div>
+                                        <p className='leading-4 tracking-tight mb-3'>{videoProfile?.data?.booking_email}</p>
+                                    </div>
+                                    <div>
+                                        <span className='text-base font-bold text-gray-800 tracking-tight'>Social Media</span>
+                                    </div>
+                                    <a href={videoProfile?.data?.facebook} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.data?.facebook}</p>
+                                    </a>
+                                    <a href={videoProfile?.data?.twitter} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.twitter}</p>
+                                    </a>
+                                    <a href={videoProfile?.data?.instagram} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.instagram}</p>
+                                    </a>
+                                    <a href={videoProfile?.data?.tiktok} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.tiktok}</p>
+                                    </a>
+                                    <a href={videoProfile?.data?.youtube_channel} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.youtube_channel}</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} Jidraff Gathura</footer>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div className='w-full text-base leading-5 tracking-tight text-gray-700 flex'>
-                <Linkify componentDecorator={(decoratedHref, decoratedText, key) => ( <a target="blank" className='text-blue-600 -mb-1 w-56 inline-block overflow-hidden overflow-ellipsis whitespace-nowrap'  href={decoratedHref} key={key}> {decoratedText} </a> )} >
-                <ShowMoreText
-                    lines={1}
-                    more="Show more"
-                    less="Show less"
-                    className="content-css text-base leading-4 tracking-tight text-gray-600 whitespace-pre-wrap"
-                    anchorClass="text-xs tracking-tight uppercase text-blue-700 ml-1"
-                    expanded={false}
-                    truncatedEndingComponent={"... "}
-                >
-                {hashTags?.map((hashTag, i) => {
-                    return hashTag.match(hashTagRegex) ? (
-                        <div key={i}><span className='text-blue-600'>{hashTag}</span> {' '}</div>
-                    ) : hashTag + ' '
-                })}
-            </ShowMoreText>
-                </Linkify>
-            </div>
-            <div className='w-full text-sm mt-4'>{commentCount}  {video?.details?.comment_count == 1 ? 'Comment' : 'Comments'}</div>
-            <hr className='mt-2 mb-10'/>
-            <div className='w-full flex items-center justify-center mt-3 space-x-3 mb-5'>
-                <div className='w-1/12 flex items-center justify-center'>
-                    <div className='relative h-12 w-12'>
-                        <Image
-                            src={video?.details?.profile_avatar ? video?.details?.profile_avatar : noAvatar}
-                            layout="fill"
-                            objectFit='cover'
-                            className='rounded-full'
-                            />
-                    </div>
-                </div>
-                <div className='w-9/12 flex items-center justify-center'>
-                    <input 
-                        placeholder={user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} 
-                        className='w-full bg-transparent border-transparent border-2 border-b-gray-400 hover:border-b-gray-500 focus:border-b-gray-700 focus:border-x-transparent focus:border-t-transparent focus:outline-none ring-transparent focus:ring-transparent py-1' 
-                        type="text" 
-                        value={commentBody}
-                        onChange={(e) => setCommentBody(e.target.value)}
-                    />
-                </div>
-                <div className='w-2/12 flex items-center justify-center'>
-                    <ApiButtonWithSpinner
-                        loading={isLoading}
-                        title="COMMENT"
-                        onClick={handleAddComment}
-                        bgColor="bg-gray-800"
-                        hoverColor="hover:bg-gray-700"
-                        textColor="text-white"
-                    />
-                </div>
-            </div>
-            <div className='mt-10 mb-36'>
-                <VideoCommentsMobile videoId={video?.details?.id} />
-            </div>
-        </div>
-    </article> */}
+        </nav>
+    </div>   
     </>
   )
 }

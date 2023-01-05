@@ -77,12 +77,6 @@ const WatchCurrentVideo = () => {
             </section> : <section className='w-full md:pt-3 landscape:pt-3'>
               <CurrentVideoPlayerMobile video={currentVideo} navbarVisisble={navbarVisisble} />
             </section>}
-            {/* <section className='w-8/12'>
-              {!isLoading ? <CurrentVideoPlayer video={currentVideo} /> : <CurrentVideoPlayerSkeleton/>}
-            </section>
-            <section className='w-4/12'>
-              {!isLoading ? <CurrentVideoPanel video={currentVideo} /> : <CurrrentVideoPanelSkeleton/>}
-            </section> */}
         </div>
       </main>
     </SidebarNavMobile>
