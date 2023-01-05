@@ -25,9 +25,9 @@ const products = () => {
     const userProfile = profile?.data[0] ? profile?.data[0] : null
     const userRole = userProfile?.role
 
-    // if (userRole != 'ARTIST') {
-    //   return  <UnauthorizedMobile/> 
-    // }
+    if (userRole != 'ARTIST') {
+      return  <UnauthorizedMobile/> 
+    }
 
 
   return (
@@ -63,38 +63,31 @@ const products = () => {
                   <div>
                     <RectangleGroupIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>Dashboard</div>
+                  {/* <div className='text-sm'>Dashboard</div> */}
                 </li>
                 <li onClick={() => router.push("/dashboard/products")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <StoreSolid className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>My Products</div>
+                  {/* <div className='text-sm'>My Products</div> */}
                 </li>
                 <li onClick={() => router.push("/dashboard/events")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <TicketIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>My Events</div>
+                  {/* <div className='text-sm'>My Events</div> */}
                 </li>
                 <li onClick={() => router.push("/dashboard/more-items?view=smart-links")} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     <ChevronDoubleRightIcon className="w-6 h-6" />
                   </div>
-                  <div className='text-sm'>More Items</div>
+                  {/* <div className='text-sm'>More Items</div> */}
                 </li>
               </ul>
             </nav>
           </div>
           <div className='hidden lg:block w-1/12'></div>
           <div className='flex-1 w-full max-w-7xl mx-auto'>
-            {/* <div className='mb-2 uppercase font-semibold flex items-center justify-between pr-10'>
-                <div>
-                    <div>My Products</div>
-                    <div className='text-xs text-gray-600 font-normal'>{!numOfProducts ? '0' : numOfProducts} {numOfProducts == 1 ? "product" : "products"}</div>
-                </div>
-                <div onClick={() => router.push("/dashboard/upload?item=product")} className='font-medium border text-xs  border-gray-500 p-2 cursor-pointer hover:bg-gray-200'>Upload Product</div>
-            </div> */}
             {!isLoading && numOfProducts != 0 ? 
             (<div className='grid grid-cols-1'>
                 {[...Array(numOfProducts).keys()].map((myItem, i) => (
