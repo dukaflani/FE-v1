@@ -55,9 +55,9 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
     if (node) observer.current.observe(node)
   }, [ loading, hasMore ])
 
-    // if (userRole != 'ARTIST') {
-    //   return  <UnauthorizedMobile/> 
-    // }
+    if (userRole != 'ARTIST') {
+      return  <UnauthorizedMobile/> 
+    }
 
 
   return (
