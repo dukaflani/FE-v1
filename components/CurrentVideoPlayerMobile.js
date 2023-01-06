@@ -19,7 +19,7 @@ import { toggleSignInModalOpen } from '../redux/features/navigation/navigationSl
 import AdvertisementMobile from './AdvertisementMobile';
 import ItemsTabNavigationMobile from './ItemsTabNavigationMobile';
 import ProductCardMobile from './ProductCardMobile';
-import StreamingLinksMobile from './streamingLinksMobile';
+import StreamingLinksMobile from './StreamingLinksMobile';
 import LyricsPageMobile from './LyricsPageMobile';
 import SkizaTunesPageMobile from './SkizaTunesPageMobile';
 import AlbumPageMobile from './AlbumPageMobile';

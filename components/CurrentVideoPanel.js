@@ -9,7 +9,7 @@ import noAvatar from '../public/media/noimage.webp'
 import poster from '../public/media/MED.png'
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 import { tabButtons } from '../data/tabButtons';
-import StreamingLinks from './streamingLinks'
+import StreamingLinks from './StreamingLinks'
 import ProductCard from './ProductCard'
 import LyricsPage from './LyricsPage'
 import SkizaTunesPage from './SkizaTunesPage'
