@@ -68,7 +68,7 @@ const AdvertisementMobile = () => {
                         <span className=" border-b w-full">Details:</span>
                     </li>
                     <li  className='flex flex-col space-y-2 items-start justify-start space-x-2 w-full pl-2 pr-5'>
-                        <span className="tracking-tight leading-4">Dukaflani is a Video Streaming Platform and Online Marketplace powered by <strong>Music Videos</strong>.</span>
+                        <span className="tracking-tight leading-4">Dukaflani is an Online Marketplace powered by <strong>Music Videos</strong>.</span>
                         <span className="tracking-tight leading-4 uppercase font-medium">What You Can Do:</span>
                         <div >
                             <ul className="space-y-3">
