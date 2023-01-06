@@ -628,21 +628,21 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                     <div>
                                         <span className='text-base font-bold text-gray-800 tracking-tight'>Social Media</span>
                                     </div>
-                                    <a href={videoProfile?.data?.facebook} rel="noopener" target="_blank">
+                                    {videoProfile?.data?.facebook && <a href={videoProfile?.data?.facebook} rel="noopener" target="_blank">
                                         <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.data?.facebook}</p>
-                                    </a>
-                                    <a href={videoProfile?.data?.twitter} rel="noopener" target="_blank">
+                                    </a>}
+                                    {videoProfile?.data?.twitter && <a href={videoProfile?.data?.twitter} rel="noopener" target="_blank">
                                         <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.twitter}</p>
-                                    </a>
-                                    <a href={videoProfile?.data?.instagram} rel="noopener" target="_blank">
+                                    </a>}
+                                    {videoProfile?.data?.instagram && <a href={videoProfile?.data?.instagram} rel="noopener" target="_blank">
                                         <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.instagram}</p>
-                                    </a>
-                                    <a href={videoProfile?.data?.tiktok} rel="noopener" target="_blank">
+                                    </a>}
+                                    {videoProfile?.data?.tiktok && <a href={videoProfile?.data?.tiktok} rel="noopener" target="_blank">
                                         <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.tiktok}</p>
-                                    </a>
-                                    <a href={videoProfile?.data?.youtube_channel} rel="noopener" target="_blank">
+                                    </a>}
+                                   {videoProfile?.data?.youtube_channel && <a href={videoProfile?.data?.youtube_channel} rel="noopener" target="_blank">
                                         <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.youtube_channel}</p>
-                                    </a>
+                                    </a>}
                                 </li>
                                 <li>
                                     <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} Jidraff Gathura</footer>
