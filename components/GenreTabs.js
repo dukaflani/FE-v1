@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/dist/client/router'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ChevronLeftIcon, ChevronRightIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 import { genres } from '../data/genres'
  
 
@@ -28,7 +28,11 @@ const GenreTabs = () => {
 
   return (
     <div className='fixed top-14 z-30 mb-5 flex w-full bg-white shadow-sm'>
-      <div className='flex items-center justify-start pl-2'>Filter</div>
+      <div className='flex items-center justify-start mx-5 border-r pr-5'>
+        <div className='bg-gray-300 p-1 text-sm'>
+          <AdjustmentsHorizontalIcon className='h-4 w-5' />
+        </div>
+      </div>
           <button 
             className='cursor-pointer mx-2'
             onClick={() => {
