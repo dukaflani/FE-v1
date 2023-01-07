@@ -183,15 +183,10 @@ const CurrentVideoPlayer = () => {
   return (
     <article>
         <div>
-            <div className='w-full h-[425px]'>
-            {!video?.details?.youtube_id ? 
-            <div className='relative w-full h-full'>
-                <Image 
-                    src={thumbnail}
-                    layout="fill"
-                    objectFit='cover'
-                  />
-            </div> : <iframe width="100%" height="100%" src={`https://www.youtube.commmm/embed/${video?.details?.youtube_id}?autoplay=0&loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>}
+            <div className='w-full'>
+                <div className='aspect-w-16 aspect-h-9 bg-black'>
+                    <iframe src={`https://www.youtube.com/embed/${video?.details?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                </div>
             </div>
             <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.details?.genre_title}</div>
             <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.details?.title}</h1>

@@ -279,7 +279,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     <>
     <article className='h-full mx-auto'>
         <div className='sticky top-0'>
-            <div className='aspect-w-16 aspect-h-9 bg-gray-100'>
+            <div className='aspect-w-16 aspect-h-9 bg-black'>
                 <iframe src={`https://www.youtube.com/embed/${video?.details?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
              </div>
             {!navbarVisisble && <ItemsTabNavigationMobile/>}
