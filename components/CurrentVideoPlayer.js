@@ -185,6 +185,7 @@ const CurrentVideoPlayer = () => {
         <div>
             <div className='w-full'>
                 <div className='aspect-w-16 aspect-h-9 bg-black'>
+                    {/* <iframe src={`https://www.youtube.com/embed/qACunLhAXC8?loop=1&modestbranding=1&color=white&playlist=qACunLhAXC8`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe> */}
                     <iframe src={`https://www.youtube.com/embed/${video?.details?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 </div>
             </div>

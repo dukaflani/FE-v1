@@ -4,7 +4,9 @@ const CurrentVideoPlayerSkeleton = () => {
   return (
     <article className='animate-pulse'>
         <div>
-            <div className='w-full h-[425px] bg-gray-300'></div>
+            <div className='w-full'>
+                <div className='aspect-w-16 aspect-h-9 bg-black'></div>
+            </div>
             <div className='w-1/12 uppercase text-sm text-blue-600 pt-2 bg-gray-300 mt-2 rounded-full'></div>
             <h1 className='w-6/12 font-semibold leading-4 text-gray-800 tracking-tight text-xl bg-gray-300 mt-2 p-2 rounded-full'></h1>
             <div className='w-full flex items-center justify-between'>
