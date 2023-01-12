@@ -37,7 +37,7 @@ const ProfilePageComponent = () => {
   const [instagram, setInstagram] = useState('')
   const [tiktok, setTiktok] = useState('')
   const [youtubeChannel, setYoutubeChannel] = useState('')
-  const [vetified, setVetified] = useState(false)
+  const [vetified, setVetified] = useState('')
   const [fanbaseCount, setFanbaseCount] = useState('')
 
 
@@ -86,7 +86,7 @@ const ProfilePageComponent = () => {
                     </div>
                     </div>
                     <div className='flex-1 pr-3'>
-                        <div className='text-base text-gray-800 font-medium tracking-tight flex '>{stageName} {vetified ? <div><CheckBadgeIcon className='h-4 w-4 ml-1 text-blue-500'/></div> : ''}</div>
+                        <div className='text-base text-gray-800 font-medium tracking-tight flex '>{stageName} {vetified == 'True' ? <div><CheckBadgeIcon className='h-4 w-4 ml-1 text-blue-500'/></div> : ''}</div>
                         {!fanbase3 ? (
                             <div className='text-sm text-gray-500 capitalize'>{roleLowerCase}</div>
                             ) : (
