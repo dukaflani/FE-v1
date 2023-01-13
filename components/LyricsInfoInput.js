@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useAddLyricsMutation, useAddLyricsVerseMutation, useFetchCreatedLyricsVersesMutation } from '../redux/features/videos/videosApiSlice'
 import slugify from 'slugify'
+import { nanoid } from 'nanoid'
 import { verseChoices } from '../data/verses'
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
@@ -27,9 +28,14 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [ addLyrics ] = useAddLyricsMutation()
     const [ addLyricsVerse ] = useAddLyricsVerseMutation()
     const [ fetchCreatedLyricsVerses ] = useFetchCreatedLyricsVersesMutation()
+    const [nanoId, setNanoId] = useState('')
     const { user } = useSelector((state) => state.auth)
     const currentUser = user?.info?.id
     const lyricsSlug = slugify(lyricsTitle, {lower: true})
+
+    useEffect(() => {
+        setNanoId(nanoid(16))
+    }, [])
 
     const newLyrics = {
         "title": lyricsTitle,
@@ -41,6 +47,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         "instruments": instrumentPlayer,
         "producer": execProducer,
         "slug": lyricsSlug,
+        "url_id": nanoId,
     }
 
     const newLyricsVerse = {

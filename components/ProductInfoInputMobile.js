@@ -1,7 +1,8 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
 import { useSelector } from 'react-redux'
 import slugify from 'slugify'
+import { nanoid } from 'nanoid'
 import { currSymbols } from '../data/currencies'
 import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 import InputField from './reuseable-components/InputField'
@@ -22,7 +23,12 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
     const { data: accessToken } = useFetchAccessTokenQuery()
     const [createdProduct, setCreatedProduct] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
+    const [nanoId, setNanoId] = useState('')
     const prodSlug = slugify(productTitle, {lower: true})
+
+    useEffect(() => {
+      setNanoId(nanoid(16))
+  }, [])
 
     const { userProfile } = useSelector((state) => state.auth)
     const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
@@ -53,6 +59,7 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
       productInfo.append("sold_by", vendor);
       productInfo.append("slug", prodSlug);
       productInfo.append("customuserprofile", userProfileId);
+      productInfo.append("url_id", nanoId);
 
       const handleAddProduct = () => {
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/products/`,

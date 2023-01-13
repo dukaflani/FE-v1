@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { eventTypes } from '../data/events'
 import InputField from './reuseable-components/InputField'
@@ -7,6 +7,7 @@ import SelectInputField from './reuseable-components/SelectInputField'
 import DatePicker from './reuseable-components/DatePicker'
 import TimePicker from './reuseable-components/TimePicker'
 import slugify from 'slugify'
+import { nanoid } from 'nanoid'
 import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 import { useSelector } from 'react-redux'
 
@@ -25,10 +26,15 @@ const EventInfoInput = () => {
     const [eventTime, setEventTime] = useState('')
     const [createdEvent, setCreatedEvent] = useState(null)
     const [errorMessage, setErrorMessage] = useState('')
+    const [nanoId, setNanoId] = useState('')
     const eventSlug = slugify(eventTitle, {lower: true})
     const { data: accessToken } = useFetchAccessTokenQuery()
     const { userProfile } = useSelector((state) => state.auth)
     const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
+
+    useEffect(() => {
+        setNanoId(nanoid(16))
+    }, [])
 
 
     const refreshToken = `JWT ${accessToken?.access}`
@@ -50,6 +56,7 @@ const EventInfoInput = () => {
     eventInfo.append("time", eventTime);
     eventInfo.append("slug", eventSlug);
     eventInfo.append("customuserprofile", userProfileId);
+    eventInfo.append("url_id", nanoId);
 
 
     const handleAddProduct = () => {

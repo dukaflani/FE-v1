@@ -16,6 +16,7 @@ export default async (req, res) => {
         lyricsInfo.append("instruments", req.body.instruments)
         lyricsInfo.append("producer", req.body.producer)
         lyricsInfo.append("slug", req.body.slug)
+        lyricsInfo.append("url_id", req.body.url_id)
 
         if (access === false) {
             return res.status(401).json({

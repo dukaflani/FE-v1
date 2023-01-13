@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import slugify from 'slugify'
+import { nanoid } from 'nanoid'
 import { albumActions, albumTypes } from '../data/musicCollection'
 import { useFetchAccessTokenQuery, useFetchCreatedAlbumTracksListMutation, useFetchUserVideosQuery } from '../redux/features/videos/videosApiSlice'
 import InputField from './reuseable-components/InputField'
@@ -29,6 +30,7 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
     const [createdAlbum, setCreatedAlbum] = useState(null)
     const [errorMessage, setErrorMessage] = useState('')
     const [missingValuesError, setMissingValuesError] = useState(false)
+    const [nanoId, setNanoId] = useState('')
 
     const [albumTrackTitle, setAlbumTrackTitle] = useState('')
     const [albumTrackVideo, setAlbumTrackVideo] = useState('')
@@ -37,6 +39,10 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
     const [createdTracksList, setCreatedTracksList] = useState([])
     const [missingAlbumTrackTitle, setMissingAlbumTrackTitle] = useState(false)
     const [albumTrackCatchError, setAlbumTrackCatchError] = useState('')
+
+    useEffect(() => {
+        setNanoId(nanoid(16))
+    }, [])
 
     const [ fetchCreatedAlbumTracksList ] = useFetchCreatedAlbumTracksListMutation()
 
@@ -54,6 +60,7 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
     albumInfo.append("album_type", albumTypeChoice);
     albumInfo.append("option_type", albumActionType);
     albumInfo.append("slug", albumTitleSlug);
+    albumInfo.append("url_id", nanoId);
 
     const albumTrackInfo = new FormData();
     albumTrackInfo.append("title", albumTrackTitle);
