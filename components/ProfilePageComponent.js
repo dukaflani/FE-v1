@@ -9,6 +9,7 @@ import { UserIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import avatar from '../public/media/noimage.webp'
 import { useFetchUserProfileQuery } from '../redux/features/videos/videosApiSlice'
 import numeral from 'numeral';
+import Spinner from './Spinner';
 
 const ProfilePageComponent = () => {
   const router = useRouter()
@@ -19,7 +20,7 @@ const ProfilePageComponent = () => {
     user: currentUser,
   }
 
-  const { data: profile } = useFetchUserProfileQuery(queryParams) 
+  const { data: profile, isLoading } = useFetchUserProfileQuery(queryParams) 
   const userProfile = profile?.data[0] ? profile?.data[0] : null
   
 
@@ -67,6 +68,11 @@ const ProfilePageComponent = () => {
 
   const splitCountryArray = country?.split(",")
   const roleLowerCase = role?.toLowerCase()
+
+
+  if (isLoading) {
+    return  <Spinner loadingStatement='Loading your profile' /> 
+  }
 
 
 

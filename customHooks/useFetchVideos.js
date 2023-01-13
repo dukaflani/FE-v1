@@ -36,7 +36,7 @@ export default function useFetchVideos( searchQuery, userId, pageNumber, genreId
         }).catch(error => {
             if(axios.isCancel(error)) return
             setError(true)
-            if (error.response.status === 404) {
+            if (error?.response?.status === 404) {
                 setHasMore(false)
                 setLoading(false)
             }

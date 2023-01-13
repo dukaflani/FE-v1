@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { useSelector } from 'react-redux'
@@ -59,7 +59,6 @@ const uploadPage = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <Navigation/>
       <main className='pt-24'>
