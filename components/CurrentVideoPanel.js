@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import { useState, Fragment } from 'react'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router'
-import { Disclosure } from '@headlessui/react'
+import { Disclosure, Dialog, Transition } from '@headlessui/react'
 // import ReactTooltip from 'react-tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import numeral from 'numeral'
@@ -35,6 +35,7 @@ const CurrentVideoPanel = () => {
     const { video } = useSelector((state) => state.videos)
     const [modalOpen, setModalOpen] = useState(false)
     const [fanbaseErrors, setFanbaseErrors] = useState(null)
+    let [isOpen, setIsOpen] = useState(false)
 
     
     const videoQueryParams = {
@@ -65,6 +66,14 @@ const CurrentVideoPanel = () => {
 
     const [ joinFanbase ] = useJoinFanbaseMutation() 
     const [ leaveFanbase ] = useLeaveFanbaseMutation()
+
+    function closeModal() {
+        setIsOpen(false)
+      }
+    
+    function openModal() {
+        setIsOpen(true)
+      }
 
 
     const joinDetails = {
@@ -157,25 +166,11 @@ const CurrentVideoPanel = () => {
                             <p className='text-xs font-light line-clamp-1'><span className='font-semibold bg-yellow-200'>Ad</span> &bull; www.safaricom.co.ke</p>
                         </div>
                     </div>
-                    <div className='flex items-center justify-center bg-sky-200 cursor-pointer'>
-                    <Disclosure>
-                        {({ open }) => (
-                            <>
-                                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                                    <div className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn more</div>
-                                    <ChevronUpIcon
-                                        className={`${
-                                            open ? 'rotate-180 transform' : ''
-                                        } h-4 w-4 text-sky-700`}
-                                    />
-                                </Disclosure.Button>
-                                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                                    If you're unhappy with your purchase for any reason, email us
-                                    within 90 days and we'll refund you in full, no questions asked.
-                                </Disclosure.Panel>
-                            </>
-                        )}
-                    </Disclosure>
+                    <div  
+                        className='flex items-center justify-center bg-sky-200 cursor-pointer'
+                        onClick={openModal}
+                        >
+                        <div className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn more</div>
                     </div>
                 </div>
             </div>
@@ -212,6 +207,8 @@ const CurrentVideoPanel = () => {
         </div>
 
 
+
+
         <Modal 
           isOpen={modalOpen}
           style={{content:{backgroundColor:'transparent', border:'none', display:'flex', alignItems:'center', justifyContent:'center'}, 
@@ -221,6 +218,81 @@ const CurrentVideoPanel = () => {
             <ProfileModalContent setModalOpen={setModalOpen} info={currentvideo?.data?.results[0]} fanbase={fanbase2} />
           </div>
         </Modal>
+
+
+
+        <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Sponsored
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <div>advertiser info</div>
+                    <p className="text-sm text-gray-500">
+                      Dukaflani is an Online Marketplace powered by <strong>Music Videos</strong>
+                    </p>
+                    <Disclosure>
+                        {({ open }) => (
+                            <>
+                                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                    <div className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>What You Can Do</div>
+                                    <ChevronUpIcon
+                                        className={`${
+                                            open ? 'rotate-180 transform' : ''
+                                        } h-4 w-4 text-sky-700`}
+                                    />
+                                </Disclosure.Button>
+                                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                                    If you're unhappy with your purchase for any reason, email us
+                                    within 90 days and we'll refund you in full, no questions asked.
+                                </Disclosure.Panel>
+                            </>
+                        )}
+                    </Disclosure>
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeModal}
+                    >
+                      Got it, thanks!
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </>
   )
 }
