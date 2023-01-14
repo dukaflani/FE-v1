@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import numeral from 'numeral'
 import Modal from 'react-modal'
 import noAvatar from '../public/media/noimage.webp'
-import poster from '../public/media/MED.png'
+import poster from '../public/apple-touch-icon.png'
 import { CheckBadgeIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
+import {  XMarkIcon, LinkIcon, ShoppingBagIcon, MicrophoneIcon,
+    MusicalNoteIcon, TicketIcon, DevicePhoneMobileIcon, PlayIcon } from '@heroicons/react/24/outline'
 import { tabButtons } from '../data/tabButtons';
 import StreamingLinks from './StreamingLinks'
 import ProductCard from './ProductCard'
@@ -150,7 +152,7 @@ const CurrentVideoPanel = () => {
                     </div>
                 </div>
                 <div className='w-8/12 pl-1 space-y-2 pt-1'>
-                    <p className='text-base line-clamp-2 tracking-tighter leading-4'>Join the biggest medical channel in Africa. Get daily updates from our resident physician</p>
+                    <p className='text-base line-clamp-2 tracking-tighter leading-4'>Sell, Advertise & Promote on Dukaflani</p>
                     <div className='flex'>
                         <div className='w-2/12 flex items-center justify-center'>
                             <div className='relative h-8 w-8'>
@@ -162,8 +164,8 @@ const CurrentVideoPanel = () => {
                             </div>
                         </div>
                         <div className='pl-1 w-10/12'>
-                            <p className='text-xs text-gray-800 font-semibold line-clamp-1'>Safaricom PLC</p>
-                            <p className='text-xs font-light line-clamp-1'><span className='font-semibold bg-yellow-200'>Ad</span> &bull; www.safaricom.co.ke</p>
+                            <p className='text-xs text-gray-800 font-semibold line-clamp-1'>Dukaflani Ads</p>
+                            <p className='text-xs font-light line-clamp-1'><span className='font-semibold bg-yellow-200'>Ad</span> &bull; dukaflani.com/business</p>
                         </div>
                     </div>
                     <div  
@@ -251,41 +253,126 @@ const CurrentVideoPanel = () => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Sponsored
+                    <div className='flex items-center justify-between'>
+                        <span>Sponsored</span>
+                        <span onClick={closeModal}>
+                            <XMarkIcon className='w-4 h-4'/>
+                        </span>
+                    </div>
                   </Dialog.Title>
                   <div className="mt-2">
-                    <div>advertiser info</div>
-                    <p className="text-sm text-gray-500">
+                    <div>
+                        <div  className='flex items-center justify-center space-x-2'>
+                            <div>
+                                <div className='relative h-20 w-20 bg-gray-100 rounded-md'>
+                                    <Image
+                                        src={poster}
+                                        layout="fill"
+                                        objectFit='cover'
+                                        className="rounded-md"
+                                        />
+                                </div>
+                            </div>
+                            <div className="flex flex-col flex-1">
+                                <span className="text-base font-bold leading-4 tracking-tight text-gray-800 line-clamp-3">Sell, Advertise & Promote on Dukaflani</span>
+                                <span className="text-gray-600 text-xs pt-2 line-clamp-1">dukaflani.com/business</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-4 mb-2">
                       Dukaflani is an Online Marketplace powered by <strong>Music Videos</strong>
                     </p>
                     <Disclosure>
                         {({ open }) => (
                             <>
-                                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                                    <div className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>What You Can Do</div>
+                                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-gray-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                    <div className='uppercase text-xs font-semibold tracking-wide text-gray-800 p-1'>What You Can Do</div>
                                     <ChevronUpIcon
                                         className={`${
                                             open ? 'rotate-180 transform' : ''
-                                        } h-4 w-4 text-sky-700`}
+                                        } h-4 w-4 text-gray-800`}
                                     />
                                 </Disclosure.Button>
                                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                                    If you're unhappy with your purchase for any reason, email us
-                                    within 90 days and we'll refund you in full, no questions asked.
+                                <ul className="space-y-3">
+                                <li className="space-y-1">
+                                    <div className="flex items-center justify-start space-x-2">
+                                        <span className="p-2 bg-gray-200 rounded-full">
+                                            <LinkIcon className="h-4 w-4"/>
+                                        </span>
+                                        <span className="tracking-tight text-gray-800 font-medium flex-1">Smart Links (Link in Bio)</span>
+                                    </div>
+                                    <p className="tracking-tight text-gray-600 leading-4">Promote your music by linking to over a dozen of the most popular
+                                     music streaming platforms for free.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <div className="flex items-center justify-start space-x-2">
+                                        <span className="p-2 bg-gray-200 rounded-full">
+                                            <ShoppingBagIcon className="h-4 w-4"/>
+                                        </span>
+                                        <span className="tracking-tight text-gray-800 font-medium flex-1">Products & Merchandise Sales</span>
+                                    </div>
+                                    <p className="tracking-tight text-gray-600 leading-4">Sell with every video you add to Dukaflani and have 
+                                    orders made directly to your WhatsApp at no cost.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <div className="flex items-center justify-start space-x-2">
+                                        <span className="p-2 bg-gray-200 rounded-full">
+                                            <MicrophoneIcon className="h-4 w-4"/>
+                                        </span>
+                                        <span className="tracking-tight text-gray-800 font-medium flex-1">Lyrics</span>
+                                    </div>
+                                    <p className="tracking-tight text-gray-600 leading-4">Share your lyrics with every video you add to Dukaflani in a 
+                                    structured and well organised setup that makes it easy for your fans to find & sing along to.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <div className="flex items-center justify-start space-x-2">
+                                        <span className="p-2 bg-gray-200 rounded-full">
+                                            <DevicePhoneMobileIcon className="h-4 w-4"/>
+                                        </span>
+                                        <span className="tracking-tight text-gray-800 font-medium flex-1">Skiza Tunes</span>
+                                    </div>
+                                    <p className="tracking-tight text-gray-600 leading-4">Sell more Ringback tunes at no cost by adding an unlimited number of SMS & USSD codes from mobile phone service providers in different
+                                    countries with every video you add to Dukaflani.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <div className="flex items-center justify-start space-x-2">
+                                        <span className="p-2 bg-gray-200 rounded-full">
+                                            <MusicalNoteIcon className="h-4 w-4"/>
+                                        </span>
+                                        <span className="tracking-tight text-gray-800 font-medium flex-1">Album Links</span>
+                                    </div>
+                                    <p className="tracking-tight text-gray-600 leading-4">Make it convinient for people to discover and buy your albums, mixtapes e.t.c by 
+                                    linking to them on Dukaflani at no cost.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <div className="flex items-center justify-start space-x-2">
+                                        <span className="p-2 bg-gray-200 rounded-full">
+                                            <TicketIcon className="h-4 w-4"/>
+                                        </span>
+                                        <span className="tracking-tight text-gray-800 font-medium flex-1">Events & Tickets</span>
+                                    </div>
+                                    <p className="tracking-tight text-gray-600 leading-4">Promote your events or sell event tickets from different ticketing companies at no cost 
+                                    by linking to them on Dukaflani. Events appear under all your videos with the latest event on top.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <div className="flex items-center justify-start space-x-2">
+                                        <span className="p-2 bg-gray-200 rounded-full">
+                                            <PlayIcon className="h-4 w-4"/>
+                                        </span>
+                                        <span className="tracking-tight text-gray-800 font-medium flex-1">YouTube Views & Revenue</span>
+                                    </div>
+                                    <p className="tracking-tight text-gray-600 leading-4">Your view count & revenue on YouTube will not be affected as your video
+                                     on Dukaflani is embedded directly from YouTube.</p>
+                                </li>
+                            </ul>
                                 </Disclosure.Panel>
                             </>
                         )}
                     </Disclosure>
                   </div>
-
                   <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
+                    <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} Jidraff Gathura</footer>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
