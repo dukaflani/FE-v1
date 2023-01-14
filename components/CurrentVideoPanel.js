@@ -159,7 +159,7 @@ const CurrentVideoPanel = () => {
                     </div>
                     <div className='flex items-center justify-center bg-sky-200 cursor-pointer'>
                     <Disclosure>
-                        <Disclosure.Button className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn more</Disclosure.Button>
+                        <Disclosure.Button className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn moreX</Disclosure.Button>
                         <Disclosure.Panel className="text-gray-500">
                             Yes! You can purchase a license that you can share with your entire
                             team.
