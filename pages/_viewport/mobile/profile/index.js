@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
@@ -30,7 +29,6 @@ const index = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <div>
       <NavigationMobile/>

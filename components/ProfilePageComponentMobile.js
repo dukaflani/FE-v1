@@ -20,7 +20,7 @@ const ProfilePageComponent = () => {
     user: currentUser,
   }
 
-  const { data: profile } = useFetchUserProfileQuery(queryParams) 
+  const { data: profile, isLoading } = useFetchUserProfileQuery(queryParams) 
   const userProfile = profile?.data[0] ? profile?.data[0] : null
   
 
