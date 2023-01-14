@@ -256,7 +256,7 @@ const CurrentVideoPanel = () => {
                     <div className='flex items-center justify-between'>
                         <span>Sponsored</span>
                         <span onClick={closeModal}>
-                            <XMarkIcon className='w-4 h-4'/>
+                            <XMarkIcon className='w-4 h-4 cursor-pointer'/>
                         </span>
                     </div>
                   </Dialog.Title>
@@ -285,7 +285,7 @@ const CurrentVideoPanel = () => {
                     <Disclosure>
                         {({ open }) => (
                             <>
-                                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-gray-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-gray-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75">
                                     <div className='uppercase text-xs font-semibold tracking-wide text-gray-800 p-1'>What You Can Do</div>
                                     <ChevronUpIcon
                                         className={`${
@@ -293,7 +293,7 @@ const CurrentVideoPanel = () => {
                                         } h-4 w-4 text-gray-800`}
                                     />
                                 </Disclosure.Button>
-                                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500 max-h-52 overflow-y-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-gray-500 hover:scrollbar-thumb-gray-700">
                                 <ul className="space-y-3">
                                 <li className="space-y-1">
                                     <div className="flex items-center justify-start space-x-2">
