@@ -8,7 +8,7 @@ import numeral from 'numeral'
 import Modal from 'react-modal'
 import noAvatar from '../public/media/noimage.webp'
 import poster from '../public/media/MED.png'
-import { CheckBadgeIcon } from '@heroicons/react/24/solid'
+import { CheckBadgeIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
 import { tabButtons } from '../data/tabButtons';
 import StreamingLinks from './StreamingLinks'
 import ProductCard from './ProductCard'
@@ -159,11 +159,22 @@ const CurrentVideoPanel = () => {
                     </div>
                     <div className='flex items-center justify-center bg-sky-200 cursor-pointer'>
                     <Disclosure>
-                        <Disclosure.Button className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn moreX</Disclosure.Button>
-                        <Disclosure.Panel className="text-gray-500">
-                            Yes! You can purchase a license that you can share with your entire
-                            team.
-                        </Disclosure.Panel>
+                        {({ open }) => (
+                            <>
+                                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                    <div className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn more</div>
+                                    <ChevronUpIcon
+                                        className={`${
+                                            open ? 'rotate-180 transform' : ''
+                                        } h-4 w-4 text-sky-700`}
+                                    />
+                                </Disclosure.Button>
+                                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                                    If you're unhappy with your purchase for any reason, email us
+                                    within 90 days and we'll refund you in full, no questions asked.
+                                </Disclosure.Panel>
+                            </>
+                        )}
                     </Disclosure>
                     </div>
                 </div>
