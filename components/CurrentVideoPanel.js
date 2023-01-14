@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router'
+import { Disclosure } from '@headlessui/react'
 // import ReactTooltip from 'react-tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import numeral from 'numeral'
@@ -157,7 +158,13 @@ const CurrentVideoPanel = () => {
                         </div>
                     </div>
                     <div className='flex items-center justify-center bg-sky-200 cursor-pointer'>
-                        <button className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn more</button>
+                    <Disclosure>
+                        <Disclosure.Button className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn more</Disclosure.Button>
+                        <Disclosure.Panel className="text-gray-500">
+                            Yes! You can purchase a license that you can share with your entire
+                            team.
+                        </Disclosure.Panel>
+                    </Disclosure>
                     </div>
                 </div>
             </div>
