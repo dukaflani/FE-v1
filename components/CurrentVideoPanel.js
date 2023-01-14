@@ -172,7 +172,7 @@ const CurrentVideoPanel = () => {
                         className='flex items-center justify-center bg-sky-200 cursor-pointer'
                         onClick={openModal}
                         >
-                        <div className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>learn more</div>
+                        <div className='uppercase text-xs font-semibold tracking-wide text-sky-700 p-1'>More Info</div>
                     </div>
                 </div>
             </div>
@@ -293,7 +293,7 @@ const CurrentVideoPanel = () => {
                                         } h-4 w-4 text-gray-800`}
                                     />
                                 </Disclosure.Button>
-                                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500 max-h-52 overflow-y-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-gray-500 hover:scrollbar-thumb-gray-700">
+                                <Disclosure.Panel className="px-4 mt-4 pt-2 pb-2 text-sm text-gray-500 max-h-52 overflow-y-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-gray-500 hover:scrollbar-thumb-gray-700">
                                 <ul className="space-y-3">
                                 <li className="space-y-1">
                                     <div className="flex items-center justify-start space-x-2">
