@@ -8,6 +8,7 @@ import numeral from 'numeral'
 import Modal from 'react-modal'
 import noAvatar from '../public/media/noimage.webp'
 import poster from '../public/apple-touch-icon.png'
+import poster1 from '../public/media/dukaflani-advert-poster.jpg'
 import { CheckBadgeIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
 import {  XMarkIcon, LinkIcon, ShoppingBagIcon, MicrophoneIcon,
     MusicalNoteIcon, TicketIcon, DevicePhoneMobileIcon, PlayIcon } from '@heroicons/react/24/outline'
@@ -144,7 +145,7 @@ const CurrentVideoPanel = () => {
                 <div className='w-4/12'>
                 <div className='relative h-full w-full'>
                         <Image
-                            src={poster}
+                            src={poster1}
                             layout="fill"
                             objectFit='contain'
                             priority
