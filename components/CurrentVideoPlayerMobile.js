@@ -540,7 +540,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 <div className='flex-1 flex items-start justify-center flex-col'>
                     <div className='flex'>
                         <span className='text-base font-medium tracking-tight text-gray-800'>{videoProfile?.data?.stage_name}</span>
-                        {videoProfile?.data?.is_verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 pb-2 -ml-0.5'/>}
+                        {videoProfile?.data?.is_verified == 'True' && <CheckBadgeIcon className='h-6 w-6 text-blue-500 pb-2 -ml-0.5'/>}
                     </div>
                    <span className='text-sm tracking-tight text-gray-600 -mt-1'>{videoProfile?.data?.nationality.split(",")[1]}</span>
                 </div>
