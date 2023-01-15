@@ -123,7 +123,7 @@ const CurrentVideoPanel = () => {
                 <div className='w-8/12 flex flex-col items-start justify-center'>
                     <div className='flex space-x-1'>
                         <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.data?.stage_name ? currentvideo?.data?.results[0]?.stage_name : ''}</div>
-                        {videoProfile?.data?.is_verified && 
+                        {videoProfile?.data?.is_verified == 'True' && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
                         </span>
