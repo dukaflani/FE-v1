@@ -33,6 +33,7 @@ const CurrentVideoPlayer = () => {
 
     const { userProfile } = useSelector((state) => state.auth)
     const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
+    const userProfilePicture = userProfile?.info ? userProfile?.info[0]?.profile_avatar : noAvatar
 
     const desc = video?.details?.description
     const hashTags = desc?.split(' ')
@@ -252,7 +253,7 @@ const CurrentVideoPlayer = () => {
                 <div className='w-1/12 flex items-center justify-center'>
                     <div className='relative h-12 w-12'>
                         <Image
-                            src={video?.details?.profile_avatar ? video?.details?.profile_avatar : noAvatar}
+                            src={userProfilePicture}
                             layout="fill"
                             objectFit='cover'
                             className='rounded-full'
