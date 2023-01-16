@@ -14,7 +14,7 @@ const ProductCardMobile = ({ title }) => {
         product_id: video?.details?.product,
       }
 
-    const { data: product } = useFetchProductQuery(queryParams)
+    const { data: product, isLoading } = useFetchProductQuery(queryParams)
 
     const localPrice = product?.data?.local_price
     let formattedLocalPrice = numeral(localPrice).format('0,0')
@@ -37,13 +37,20 @@ const ProductCardMobile = ({ title }) => {
                         objectFit='cover'
                         />
                 </div> */}
-                <picture>
+                {isLoading && <picture>
                     <img
-                        src={!product?.data?.image ? poster : product?.data?.image}
-                        alt={`${product?.data?.title} picture`}
+                        src={poster}
+                        alt="Loading product..."
                         className="h-[21rem] w-full"
                     />
-                </picture>
+                </picture>}
+                {!isLoading && <picture>
+                    <img
+                        src={!product?.data?.image ? poster : product?.data?.image}
+                        alt="Product Picture"
+                        className="h-[21rem] w-full"
+                    />
+                </picture>}
             </div>
             <div className='text-xs py-1 px-2 uppercase tracking-wide bg-gray-800 text-white font-semibold'>
                 <div className='line-clamp-1'>{!product?.data?.id ? "No product found" : "Buy now!"} </div>

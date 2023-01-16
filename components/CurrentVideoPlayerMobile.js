@@ -372,7 +372,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                     <p className='text-sm font-medium text-gray-800 tracking-tight'>Comments &nbsp; <span className='text-xs text-gray-600 font-normal tracking-tight'>{commentCount}</span></p>
                     <div className='flex items-start'>
                         <div className='flex-1 pr-3 flex items-start space-x-2'>
-                            <div>
+                            {is_loggedin && <div>
                                 {comments?.data?.length > 0  && <picture>
                                     <img
                                         src={comments?.data[0]?.avatar ? comments?.data[0]?.avatar : noAvatar}
@@ -387,7 +387,14 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                         className="h-7 w-7 rounded-full md:h-9 md:w-9 landscape:h-9 landscape:w-9 bg-gray-200"
                                     />
                                 </picture>}
-                            </div>
+                            </div>}
+                            {!is_loggedin && <picture>
+                                    <img
+                                        src={noAvatar}
+                                        alt="!"
+                                        className="h-7 w-7 rounded-full md:h-9 md:w-9 landscape:h-9 landscape:w-9 bg-gray-200"
+                                    />
+                                </picture>}
                             {comments?.data?.length > 0 ? <div className='flex-1 line-clamp-2 text-xs leading-4 text-gray-900'>{comments?.data?.length > 0 ? comments?.data[0]?.body : ''}</div>
                             :
                             <span className='flex-1 bg-gray-200 rounded-full text-xs leading-4 text-gray-900 py-1 px-2'>Add Comment...</span>}
