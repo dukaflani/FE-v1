@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import Image from "next/legacy/image";
-import { useSelector } from 'react-redux';
 import numeral from 'numeral';
 import ShowMoreText from "react-show-more-text";
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
@@ -10,9 +9,11 @@ import instagram from '../public/media/Instagram-logo.png'
 import tiktok from '../public/media/tiktok-logo.png'
 import twitter from '../public/media/twitter-logo.png'
 import youtube from '../public/media/youtube-logo.png'
+import { useFetchCurrentVideoProfileQuery } from '../redux/features/videos/videosApiSlice';
 
 const ProfileModalContent = ({ setModalOpen, info, fanbase }) => {
   const countryArr = info?.country
+  const currentVideoProfileId = info?.customuserprofile
   const splitCountryArr = countryArr.split(",")
   const country = splitCountryArr[1]
   const totalFanbase = numeral(fanbase).format('0,0')
@@ -32,24 +33,29 @@ const ProfileModalContent = ({ setModalOpen, info, fanbase }) => {
   const [tiktokLink, setTiktokLink] = useState('')
   const [youtubeLink, setYoutubeLink] = useState('')
 
-  const { userProfile } = useSelector((state) => state.auth)
+  const videoProfileQueryParams = {
+    profile_id: currentVideoProfileId ? currentVideoProfileId : 0,
+  }
+
+  const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
+
 
   useEffect(() => {
-    setAbout(userProfile?.info[0]?.about)
-    setRole(userProfile?.info[0]?.role)
-    setJoined(userProfile?.info[0]?.date)
-    setManagement(userProfile?.info[0]?.management)
-    setBookingContact(userProfile?.info[0]?.booking_contact)
-    setBookingEmail(userProfile?.info[0]?.booking_email)
-    setVideoCount(userProfile?.info[0]?.video_count)
-    setEventCount(userProfile?.info[0]?.events_count)
-    setProductCount(userProfile?.info[0]?.product_count)
-    setFacebookLink(userProfile?.info[0]?.facebook)
-    setTwitterLink(userProfile?.info[0]?.twitter)
-    setInstagramLink(userProfile?.info[0]?.instagram)
-    setTiktokLink(userProfile?.info[0]?.tiktok)
-    setYoutubeLink(userProfile?.info[0]?.youtube_channel)
-  }, [userProfile?.info])
+    setAbout(videoProfile?.data?.about)
+    setRole(videoProfile?.data?.role)
+    setJoined(videoProfile?.data?.date)
+    setManagement(videoProfile?.data?.management)
+    setBookingContact(videoProfile?.data?.booking_contact)
+    setBookingEmail(videoProfile?.data?.booking_email)
+    setVideoCount(videoProfile?.data?.video_count)
+    setEventCount(videoProfile?.data?.events_count)
+    setProductCount(videoProfile?.data?.product_count)
+    setFacebookLink(videoProfile?.data?.facebook)
+    setTwitterLink(videoProfile?.data?.twitter)
+    setInstagramLink(videoProfile?.data?.instagram)
+    setTiktokLink(videoProfile?.data?.tiktok)
+    setYoutubeLink(videoProfile?.data?.youtube_channel)
+  }, [videoProfile?.data])
 
   const lowerCaseRole = role.toLocaleLowerCase()
   const dateJoined = new Date(joined).toDateString()
@@ -100,11 +106,14 @@ const ProfileModalContent = ({ setModalOpen, info, fanbase }) => {
           <div className='p-2 text-gray-600 text-sm capitalize'>{lowerCaseRole}</div>
           <div className='overflow-y-auto h-32 scrollbar-thin scrollbar-track-white scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-800'>
               <div className='px-2 text-gray-400 text-xs'>Member since {dateJoined}</div>
-              <div className='p-1 font-medium text-gray-800'>For Business</div>
+              <div className='p-1 font-medium text-gray-900'>For Business</div>
+              <div className='px-2 text-gray-800 text-sm font-medium'>Management</div>
               <div className='px-2 text-gray-600 text-sm'>{management}</div>
+              <div className='px-2 text-gray-800 text-sm font-medium'>Contact</div>
               <div className='px-2 text-gray-600 text-sm'>{bookingContact}</div>
+              <div className='px-2 text-gray-800 text-sm font-medium'>Email</div>
               <div className='px-2 text-gray-600 text-sm'>{bookingEmail}</div>
-              <div className='p-1 font-medium text-gray-800'>Account</div>
+              <div className='p-1 font-medium text-gray-900'>Account</div>
               <div className='px-2 text-gray-600 text-sm'>Fanbase: {totalFanbase}</div>
               <div className='px-2 text-gray-600 text-sm'>Videos: {numOfVideos}</div>
               <div className='px-2 text-gray-600 text-sm'>Products: {numOfProducts}</div>

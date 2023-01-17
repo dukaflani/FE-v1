@@ -38,8 +38,10 @@ const ProductCard = ({ title }) => {
                         />
                 </div>
             </div>
-            <div className='text-xs py-1 px-2 uppercase tracking-wide bg-gray-800 text-white font-semibold'>
-                <div className='line-clamp-1'>{!product?.data?.id ? "No product found" : "Buy now!"} </div>
+            <div className='flex items-center justify-between text-xs py-1 px-2 tracking-wide bg-gray-800 text-white font-semibold'>
+                {!product?.data?.is_sponsored ? <div className='line-clamp-1 uppercase'>{!product?.data?.id ? "No product found" : "Buy now!"} </div>
+                :
+                <p className='line-clamp-1 font-normal bg-yellow-400 px-1'>Sponsored</p>}
             </div>
             <div>
                 <div className='flex flex-col space-y-2 mt-3'>
