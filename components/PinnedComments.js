@@ -171,7 +171,7 @@ function openEditModal() {
             </div>
 
             <div className={isHidden ? 'hidden' : "absolute top-0 right-0 flex items-start justify-end p-1"}>
-        <Menu className="relative inline-block text-left" as="div">
+              <Menu className="relative inline-block text-left" as="div">
                             <Menu.Button className="inline-flex w-full justify-center focus:outline-none">
                                 <EllipsisVerticalIcon className='h-5 w-5 cursor-pointer'/>
                             </Menu.Button>

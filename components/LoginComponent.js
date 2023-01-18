@@ -6,7 +6,7 @@ import Poster from '../public/branding/dukaflani-login-cover.png'
 import { useLoginMutation } from '../redux/features/auth/authApiSlice'
 import InputField from './reuseable-components/InputField'
 import InputFieldPassword from './reuseable-components/InputFieldPassword'
-import Button from './reuseable-components/Button'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner';
 
 
 const LoginComponent = () => {
@@ -17,7 +17,7 @@ const LoginComponent = () => {
     const [password, setPassword] = useState('')
     const [errMessage, setErrMessage] = useState('')
 
-    const [login, {isLoading}] = useLoginMutation()
+    const [login, {isLoading, isSuccess}] = useLoginMutation()
 
     // useEffect(() => {
     //   emailRef.current.focus()
@@ -43,7 +43,7 @@ const LoginComponent = () => {
             })
             setEmail('')
             setPassword('')
-            router.push('/')
+            // router.push('/')
         } catch (error) {
             if(!error?.originalStatus) {
                 setErrMessage('No Server Response')
@@ -57,6 +57,10 @@ const LoginComponent = () => {
             errorRef.current.focus()
         }
     }
+
+    if (isSuccess == true) {
+        router.push('/')
+      }
     
     
 
@@ -119,10 +123,14 @@ const LoginComponent = () => {
                         <label className='text-xs' >By continuing, you agree to Dukaflani's <span className='text-blue-700 cursor-pointer'> T&Cs</span> and <span className='text-blue-700 cursor-pointer'>Privacy Policy</span></label>
                     </div>
                     <div className='flex space-x-3'>
-                        <Button
+                        <ApiButtonWithSpinner
                             title="Login"
                             onClick={handleSubmit}
-                            />
+                            loading={isLoading}
+                            bgColor="bg-gray-300"
+                            hoverColor="hover:bg-gray-200"
+                            textColor="text-gray-800"
+                        />
                     </div>
                     <div className='pt-5 flex items-center justify-center'>
                         <span onClick={() => router.push("/account/register")} className='text-xs text-gray-800 cursor-pointer py-1 border-r border-r-gray-400 pr-4'>Register an Account</span>

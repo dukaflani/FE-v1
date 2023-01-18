@@ -6,16 +6,32 @@ import { HomeIcon, RectangleGroupIcon, UserCircleIcon,
     VideoCameraIcon, LinkIcon, ShoppingBagIcon, MicrophoneIcon,
 MusicalNoteIcon, TicketIcon, Cog8ToothIcon, MoonIcon, ArrowRightOnRectangleIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 import { HomeIcon as HomeSolid, RectangleGroupIcon as RectangleSolid, UserCircleIcon as UserSolid } from '@heroicons/react/24/solid'
+import { useLogoutMutation } from '../redux/features/videos/videosApiSlice'
 
 const BottomNavigationMobile = () => {
     const [showUploadLinks, setShowUploadLinks] = useState(false)
     const [showOptions, setShowOptions] = useState(false)
+    const [logoutError, setLogoutError] = useState('')
     const router = useRouter()
     const destination = router.pathname
     const destinationLength = destination.split("/").length
     const destinationArray = destination.split("/")
     const splitDestinationArray = destinationArray.splice(3, destinationLength - 1)
     const newDestination = "/" + splitDestinationArray.toString().replace(/,/g, "/")
+
+    const [ logout, { isSuccess } ] = useLogoutMutation()
+
+    const handleLogout = async () => {
+        try {
+          await logout()
+        } catch (error) {
+          setLogoutError(error)
+        }
+      }
+    
+      if (isSuccess == true) {
+        window.location.reload(true)
+      }
 
 
 
@@ -160,13 +176,13 @@ const BottomNavigationMobile = () => {
                         </span>
                         <span>User Settings</span>
                     </li>
-                    <li onClick={() => setShowOptions(false)} className='flex items-center justify-center space-x-2'>
+                    <li onClick={() => setShowOptions(false)} className='flex items-center justify-center space-x-2 text-gray-300'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <MoonIcon className='h-5 w-5'/>
                         </span>
                         <span>Dark Mode</span>
                     </li>
-                    <li onClick={() => setShowOptions(false)} className='flex items-center justify-center space-x-2'>
+                    <li onClick={handleLogout} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <ArrowRightOnRectangleIcon className='h-5 w-5'/>
                         </span>

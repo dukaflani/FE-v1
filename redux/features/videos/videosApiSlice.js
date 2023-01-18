@@ -45,6 +45,19 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             invalidatesTags: ['Auth']
         }),
 
+        logout: builder.mutation({
+            query: () => ({
+                url: "/api/logout/",
+                method: "POST",
+            }),
+            // invalidatesTags: ['Auth']
+        }),
+
+        fetchAccessToken: builder.query({
+            query: () => 'api/getaccesstoken',
+            providesTags: ['Auth']
+        }),
+
         editUser: builder.mutation({
             query: editUserInfo => ({
                 url: "/api/edituser/",
@@ -331,10 +344,6 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                 body: deleteProductInfo
             }),
             invalidatesTags: ['product']
-        }),
-
-        fetchAccessToken: builder.query({
-            query: () => 'api/getaccesstoken'
         }),
 
         fetchLyricsVerse: builder.query({
@@ -645,4 +654,5 @@ export const { useGetProfileQuery, useFanbaseQuery, useJoinFanbaseMutation, useL
                 useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery, useSearchForVideoQuery,
                 useAddLikeMutation, useAddUnlikeMutation, useDeleteLikeMutation, useDeleteUnlikeMutation, useVideoLikedQuery, useVideoUnlikedQuery, useCurrentVideoObjectsCountQuery,
                 useFetchCurrentVideoProfileQuery, useProfileLikedQuery, useFetchVideoToEditQuery, usePasswordChangeRequestMutation, useConfirmMyNewPasswordMutation,
+                useLogoutMutation
              } = videosApiSlice

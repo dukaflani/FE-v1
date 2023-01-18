@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useLoginMutation } from '../redux/features/auth/authApiSlice'
 import { toggleSignInModalOpen } from '../redux/features/navigation/navigationSlice'
 import logoLight from '../public/branding/dukaflani-logo-blue-medium.png'
-import Button from './reuseable-components/Button'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 import InputField from './reuseable-components/InputField'
 import InputFieldPassword from './reuseable-components/InputFieldPassword'
 import Poster from '../public/branding/dukaflani-login-cover.png'
@@ -18,7 +18,7 @@ const SignInModalContent = () => {
     const [password, setPassword] = useState('')
     const [errMessage, setErrMessage] = useState('')
 
-    const [login, {isLoading}] = useLoginMutation()
+    const [login, {isLoading, isSuccess}] = useLoginMutation()
 
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const SignInModalContent = () => {
             // setEmail('')
             // setPassword('')
             // dispatch(toggleSignInModalOpen(false))
-            window.location.reload(true)
+            // window.location.reload(true)
         } catch (error) {
             if(!error?.originalStatus) {
                 setErrMessage('No Server Response')
@@ -55,6 +55,10 @@ const SignInModalContent = () => {
             errorRef.current.focus()
         }
     }
+
+    if (isSuccess == true) {
+        window.location.reload(true)
+      }
 
   return (
     <div className='w-full h-full flex'>
@@ -113,9 +117,13 @@ const SignInModalContent = () => {
                     title="Cancel"
                     onClick={() => dispatch(toggleSignInModalOpen(false))}
                     /> */}
-                <Button
+                <ApiButtonWithSpinner
                     title="Login"
                     onClick={handleSubmit}
+                    loading={isLoading}
+                    bgColor="bg-gray-300"
+                    hoverColor="hover:bg-gray-200"
+                    textColor="text-gray-800"
                     />
                 </div>
                 <div className='mt-5 flex items-center justify-center'>
