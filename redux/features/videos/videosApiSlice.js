@@ -1,7 +1,8 @@
 import { apiSlice } from "../../app/apiSlice";
 
 const apiWithTag = apiSlice.enhanceEndpoints({addTagTypes: ['Fanbase', 'Comment', 'Likes',
-'Auth', 'video', 'events', 'product', 'streamingLinks', 'lyrics', 'skiza', 'albumTrack', 'album']})
+'Auth', 'video', 'events', 'product', 'streamingLinks', 'lyrics', 'skiza', 'albumTrack', 'album',
+'Password']})
 
 export const videosApiSlice = apiWithTag.injectEndpoints({
     endpoints: builder => ({
@@ -608,6 +609,24 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
             invalidatesTags: ['Likes']
         }),
 
+        passwordChangeRequest: builder.mutation({
+            query: ( myAccountEmail ) => ({
+                url: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/users/reset_password/`,
+                method: 'POST',
+                body: myAccountEmail
+            }),
+            invalidatesTags: ['Password']
+        }),
+
+        confirmMyNewPassword: builder.mutation({
+            query: ( myNewEmail ) => ({
+                url: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/users/reset_password_confirm/`,
+                method: 'POST',
+                body: myNewEmail
+            }),
+            invalidatesTags: ['Password']
+        }),
+
         }),
         overrideExisting: true
     })
@@ -625,5 +644,5 @@ export const { useGetProfileQuery, useFanbaseQuery, useJoinFanbaseMutation, useL
                 useFetchSkizaTuneLinksQuery, useEditAlbumTrackMutation, useEditLyricsMutation, useEditSkizaTuneMutation, useEditStreamingLinkMutation, useDeleteAlbumMutation,
                 useDeleteLyricsMutation, useDeleteSkizaTuneMutation, useDeleteStreamingLinkMutation, useEditUserMutation, useFilterVideoGenreQuery, useSearchForVideoQuery,
                 useAddLikeMutation, useAddUnlikeMutation, useDeleteLikeMutation, useDeleteUnlikeMutation, useVideoLikedQuery, useVideoUnlikedQuery, useCurrentVideoObjectsCountQuery,
-                useFetchCurrentVideoProfileQuery, useProfileLikedQuery, useFetchVideoToEditQuery
+                useFetchCurrentVideoProfileQuery, useProfileLikedQuery, useFetchVideoToEditQuery, usePasswordChangeRequestMutation, useConfirmMyNewPasswordMutation,
              } = videosApiSlice

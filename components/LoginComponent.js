@@ -126,7 +126,7 @@ const LoginComponent = () => {
                     </div>
                     <div className='pt-5 flex items-center justify-center'>
                         <span onClick={() => router.push("/account/register")} className='text-xs text-gray-800 cursor-pointer py-1 border-r border-r-gray-400 pr-4'>Register an Account</span>
-                        <span className='text-xs text-gray-800 cursor-pointer py-1 pl-4'>Reset your Password</span>
+                        <span onClick={() => router.push("/password/reset")} className='text-xs text-gray-800 cursor-pointer py-1 pl-4'>Reset your Password</span>
                     </div>
                 </div>
                 <footer className='flex items-center justify-center p-2'>
