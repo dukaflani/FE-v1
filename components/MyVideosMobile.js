@@ -13,6 +13,8 @@ import { useAddViewMutation, useDeleteVideoMutation } from '../redux/features/vi
 const MyVideosMobile = ({ video }) => {
     const { user } = useSelector((state) => state.auth)
     const currentUser = user?.info?.id
+    const videoOwner = video?.user
+    const loggedInUser = currentUser
     const router = useRouter()
     let [isOpen, setIsOpen] = useState(false)
     const [openOptions, setOpenOptions] = useState(false)
@@ -198,10 +200,14 @@ const handlePlayVideo = async (id) => {
                     Delete Video?
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
+                    {videoOwner == loggedInUser ? <p className="text-sm text-gray-500">
                         You're about to delete <strong>{video?.title}</strong>. This action
                         is irreversible and you won't be able to see this video again.
                     </p>
+                    :
+                    <p className="text-sm text-gray-500">
+                        You're not authorized to delete this video
+                    </p>}
                   </div>
 
                   <div className="mt-5 space-x-2">
@@ -212,13 +218,13 @@ const handlePlayVideo = async (id) => {
                     >
                       Cancel
                     </button>
-                    <button
+                    {videoOwner == loggedInUser && <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteVideo}
                     >
                       Yes, Delete!
-                    </button>
+                    </button>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -279,13 +285,13 @@ const handlePlayVideo = async (id) => {
                     >
                       Delete
                     </button>
-                    <button
+                    {videoOwner == loggedInUser && <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => router.push(`/dashboard/edit/video/${video?.id}`)}
                     >
                       Edit
-                    </button>
+                    </button>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

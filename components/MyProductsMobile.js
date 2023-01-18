@@ -7,10 +7,14 @@ import numeral from 'numeral';
 import Link from 'next/link';
 import poster from '../public/media/dukaflani-poster-default.png'
 import { useDeleteProductMutation } from '../redux/features/videos/videosApiSlice';
+import { useSelector } from 'react-redux';
 
 
 const MyProductsMobile = ({ product }) => {
     const router = useRouter()
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
+    const productOwner = product?.user
     let [isOpen, setIsOpen] = useState(false)
     const [optionsModalOpen, setOptionsModalOpen] = useState(false)
     const [deleteProductError, setDeleteProductError] = useState(null)
@@ -153,13 +157,13 @@ const MyProductsMobile = ({ product }) => {
                     >
                       Delete
                     </button>
-                    <button
+                    {currentUser == productOwner && <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => router.push({pathname: `/dashboard/edit/product/${product?.id}`})} 
                     >
                       Edit
-                    </button>
+                    </button>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -202,10 +206,14 @@ const MyProductsMobile = ({ product }) => {
                     Delete Product?
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
+                    {currentUser == productOwner ? <p className="text-sm text-gray-500">
                         You're about to delete <strong>{product?.title}</strong>. This action
                         is irreversible and you won't be able to see this product again.
                     </p>
+                    :
+                    <p className="text-sm text-gray-500">
+                        You're not authorized to delete this product
+                    </p>}
                   </div>
 
                   <div className="mt-5 space-x-2">
@@ -216,13 +224,13 @@ const MyProductsMobile = ({ product }) => {
                     >
                       Cancel
                     </button>
-                    <button
+                    {currentUser == productOwner && <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteProduct}
                     >
                       Yes, Delete!
-                    </button>
+                    </button>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

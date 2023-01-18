@@ -5,7 +5,7 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/solid'
 import { PencilSquareIcon as EditInactive, TrashIcon  } from '@heroicons/react/24/outline'
 import { useDeleteStreamingLinkMutation } from '../redux/features/videos/videosApiSlice'
 
-const MySmartLinksObject = ({ streaminglink, numOfStreamingLinks }) => {
+const MySmartLinksObject = ({ streaminglink, numOfStreamingLinks, currentUser }) => {
     const router = useRouter()
     // const { linksid } = router.query
     const linksid = streaminglink?.id

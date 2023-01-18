@@ -10,10 +10,13 @@ import DatePicker from './reuseable-components/DatePicker'
 import TimePicker from './reuseable-components/TimePicker'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 import { useFetchAccessTokenQuery, useFetchEditEventQuery } from '../redux/features/videos/videosApiSlice'
+import { useSelector } from 'react-redux'
 
 const EditEvent = () => {
     const router = useRouter()
     const { eventid } = router.query
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
 
 
     const [poster, setPoster] = useState('')
@@ -30,6 +33,7 @@ const EditEvent = () => {
     const [editedEvent, setEditedEvent] = useState(null)
     const [editErrors, setEditErrors] = useState('')
     const [editing, setEditing] = useState(false)
+    const [eventUserId, setEventUserId] = useState('') 
     const slugString = eventTitle ? eventTitle : " "
     const eventSlug = slugify(slugString, {lower: true})
 
@@ -53,6 +57,7 @@ const EditEvent = () => {
         setTicketLink(events?.data?.ticket_link)
         setEventDate(events?.data?.date)
         setEventTime(events?.data?.time)
+        setEventUserId(events?.data?.user)
 
     }, [events?.data])
 
@@ -199,14 +204,14 @@ const EditEvent = () => {
                 textColor="text-white"
                 onClick={() => router.push("/dashboard/events")}
             />
-            <ApiButtonWithSpinner
+            {eventUserId == currentUser && <ApiButtonWithSpinner
                 title='Edit'
                 bgColor="bg-blue-500"
                 hoverColor="hover:bg-blue-400"
                 textColor="text-white"
                 onClick={handleEditEvent}
                 loading={editing}
-            />
+            />}
         </div>
     </div>
   )

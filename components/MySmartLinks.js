@@ -21,7 +21,7 @@ const MySmartLinks = () => {
         <div className='px-2 text-sm text-gray-400 border-b pb-5'>{numOfStreamingLinks} {numOfStreamingLinks == 1 ? "Link Item" : "Link Items"}</div>
         {true ? (<div className='space-y-4 mt-5 px-2'>
             {[...Array(numOfStreamingLinks).keys()].map((obj, i) => (
-                    <MySmartLinksObject key={i} numOfStreamingLinks={userStreamingLinks?.data[i]?.streamingobject_set?.length} streaminglink={userStreamingLinks?.data[i]} />
+                    <MySmartLinksObject key={i} numOfStreamingLinks={userStreamingLinks?.data[i]?.streamingobject_set?.length} streaminglink={userStreamingLinks?.data[i]} currentUser={currentUser} />
            ))}
         </div>) : (<div className='mt-5'>You don't have any <strong>streaming links</strong> yet...</div>)}
     </div>

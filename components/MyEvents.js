@@ -6,9 +6,13 @@ import poster from '../public/media/dukaflani-poster-default.png'
 import { Transition, Dialog } from '@headlessui/react'
 import Link from 'next/link';
 import { useDeleteEventMutation } from '../redux/features/videos/videosApiSlice';
+import { useSelector } from 'react-redux';
 
 const MyEvents = ({ event }) => {
     const router = useRouter()
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
+    const eventOwner = event?.user
     const [isOpen, setIsOpen] = useState(false)
     const [deleteEventError, setDeleteEventError] = useState(null)
 
@@ -90,9 +94,11 @@ const MyEvents = ({ event }) => {
                 </div>
             </div>
             <div className='grid grid-cols-2 border-t bg-gray-100 items-center justify-center cursor-pointer mt-3 uppercase text-xs tracking-wider font-semibold'>
-              <Link href={`/dashboard/edit/event/${event?.id}`}>
+              {currentUser == eventOwner ? <Link href={`/dashboard/edit/event/${event?.id}`}>
                   <div className='flex items-center justify-center text-blue-500 p-2 hover:bg-gray-50 border-r border-r-gray-300'>Edit</div>
               </Link>
+              :
+              <div className='flex items-center justify-center text-blue-500 p-2 hover:bg-gray-50 border-r border-r-gray-300'>---</div>}
               <div onClick={openModal} className='flex items-center justify-center text-red-500 p-2 hover:bg-gray-50'>Delete</div>
             </div>
         </div>
@@ -131,10 +137,14 @@ const MyEvents = ({ event }) => {
                     Delete Event?
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
+                    {currentUser == eventOwner ? <p className="text-sm text-gray-500">
                         You're about to delete <strong>{event?.title}</strong>. This action
                         is irreversible and you won't be able to see this event again.
                     </p>
+                    :
+                    <p className="text-sm text-gray-500">
+                        You're not authorized to delete this event
+                    </p>}
                   </div>
 
                   <div className="mt-5 space-x-2">
@@ -145,13 +155,13 @@ const MyEvents = ({ event }) => {
                     >
                       Cancel
                     </button>
-                    <button
+                    {currentUser == eventOwner && <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteEvent}
                     >
                       Yes, Delete!
-                    </button>
+                    </button>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import FormData from 'form-data'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
@@ -52,6 +52,7 @@ const EditVideo = () => {
     const [videoAlbum, setVideoAlbum] = useState('')
     const [updatedVideo, setupdatedVideo] = useState(null)
     const [errorMessage, setErrorMessage] = useState('')
+    const [videoUserId, setVideoUserId] = useState('') 
     
     const [genrePlaceholder, setGenrePlaceholder] = useState('')
     const [linksPlaceholder, setLinksPlaceholder] = useState('')
@@ -81,6 +82,7 @@ const EditVideo = () => {
         setGenrePlaceholder(currentVideo?.data?.genre_title)
         setVideoDescription(currentVideo?.data?.description)
         setYoutubeVideoId(currentVideo?.data?.youtube_id)
+        setVideoUserId(currentVideo?.data?.user)
 
         setSongGenre(!currentVideo?.data?.genre ? ' ' : currentVideo?.data?.genre)
         setVideoSmartLinks(!currentVideo?.data?.links ? ' ' : currentVideo?.data?.links)
@@ -269,15 +271,16 @@ const EditVideo = () => {
                     bgColor="bg-red-600"
                     hoverColor="hover:bg-red-500"
                     textColor="text-white"
+                    onClick={() => router.push("/dashboard")}
                 />
-                <ApiButtonWithSpinner
+                {videoUserId == currentUser && <ApiButtonWithSpinner
                     title='Edit'
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
                     textColor="text-white"
                     loading={loading}
                     onClick={handleUpdateVideo}
-                />
+                />}
                </div>
             {!true && <div className='text-red-500 font-medium tracking-tighter text-sm flex items-center justify-center'>Please fill in all the (*) mandatory fields or refresh and try again</div>}
         </div>

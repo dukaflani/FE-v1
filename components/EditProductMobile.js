@@ -9,10 +9,15 @@ import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 import InputField from './reuseable-components/InputField'
 import SelectInputFieldWithKeysLocal from './reuseable-components/SelectInputFieldWithKeysLocal'
 import TextAreaField from './reuseable-components/TextAreaField'
+import { useSelector } from 'react-redux'
 
 const EditProduct = () => {
   const router = useRouter()
   const { productid } = router.query
+  const { user } = useSelector((state) => state.auth)
+  const currentUser = user?.info?.id
+
+
   const [isOpen, setIsOpen] = useState(false)
   const [editing, setEditing] = useState(false)
   const [productTitle, setProductTitle] = useState("")
@@ -26,6 +31,7 @@ const EditProduct = () => {
   const { data: accessToken } = useFetchAccessTokenQuery()
   const [editedProduct, setEditedProduct] = useState(null)
   const [editErrors, setEditErrors] = useState(null)
+  const [productUserId, setProductUserId] = useState('')
   const slugString = !productTitle ? '' : productTitle
   const prodSlug = slugify(slugString, {lower: true})
 
@@ -53,6 +59,7 @@ const EditProduct = () => {
       setWhatsapp(product?.data?.whatsapp)
       setVendor(product?.data?.sold_by)
       setProdDesc(product?.data?.description)
+      setProductUserId(product?.data?.user)
     }, [product?.data])
 
 
@@ -203,14 +210,14 @@ const EditProduct = () => {
                         textColor="text-white"
                         onClick={() => router.push("/dashboard/products")}
                     />
-                    <ApiButtonWithSpinner
+                    {productUserId == currentUser && <ApiButtonWithSpinner
                         title='Edit'
                         loading={editing}
                         bgColor="bg-blue-500"
                         hoverColor="hover:bg-blue-400"
                         textColor="text-white"
                         onClick={handleEditProduct}
-                    />
+                    />}
             </div>
         </div>
 

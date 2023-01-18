@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import { Transition, Dialog } from '@headlessui/react'
@@ -6,10 +6,14 @@ import numeral from 'numeral';
 import Link from 'next/link';
 import poster from '../public/media/dukaflani-poster-default.png'
 import { useDeleteProductMutation } from '../redux/features/videos/videosApiSlice';
+import { useSelector } from 'react-redux';
 
 
 const MyProducts = ({ product }) => {
     const router = useRouter()
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
+    const productOwner = product?.user
     let [isOpen, setIsOpen] = useState(false)
     const [deleteProductError, setDeleteProductError] = useState(null)
 
@@ -96,9 +100,11 @@ const MyProducts = ({ product }) => {
                 </div> */}
             </div>
             <div className='grid grid-cols-2 border-t bg-gray-100 items-center justify-center cursor-pointer mt-3 uppercase text-xs tracking-wider font-semibold'>
-              <Link href={`/dashboard/edit/product/${product?.id}`}>
+              {currentUser == productOwner ? <Link href={`/dashboard/edit/product/${product?.id}`}>
                 <div className='flex items-center justify-center text-blue-500 p-2 hover:bg-gray-50 border-r border-r-gray-300'>Edit</div>
               </Link>
+              :
+              <div className='flex items-center justify-center text-blue-500 p-2 hover:bg-gray-50 border-r border-r-gray-300'>---</div>}
               <div onClick={openModal} className='flex items-center justify-center text-red-500 p-2 hover:bg-gray-50'>Delete</div>
             </div>
         </div>
@@ -137,10 +143,14 @@ const MyProducts = ({ product }) => {
                     Delete Product?
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
+                    {currentUser == productOwner ? <p className="text-sm text-gray-500">
                         You're about to delete <strong>{product?.title}</strong>. This action
                         is irreversible and you won't be able to see this product again.
                     </p>
+                    :
+                    <p className="text-sm text-gray-500">
+                        You're not authorized to delete this product
+                    </p>}
                   </div>
 
                   <div className="mt-5 space-x-2">
@@ -151,13 +161,13 @@ const MyProducts = ({ product }) => {
                     >
                       Cancel
                     </button>
-                    <button
+                    {currentUser == productOwner && <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteProduct}
                     >
                       Yes, Delete!
-                    </button>
+                    </button>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

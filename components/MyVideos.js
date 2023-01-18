@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import numeral from 'numeral';
@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 const MyVideos = ({ video }) => {
     const { user } = useSelector((state) => state.auth)
     const currentUser = user?.info?.id
+    const videoOwner = video?.user
+    const loggedInUser = currentUser
     const router = useRouter()
     let [isOpen, setIsOpen] = useState(false)
     const [deleteErrors, setDeleteErrors] = useState(null)
@@ -124,21 +126,39 @@ const handlePlayVideo = async (id) => {
                                 >
                                 <Menu.Items className="absolute right-0 mt-2 w-56 bg-white shadow z-10 focus:outline-none">
                                     <div>
-                                        <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
+                                        {videoOwner == loggedInUser ? <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
                                                 <button onClick={() => handlePlayVideo(video?.url_id)}>
                                                     <PlayIcon className='h-5 w-5 mr-2 ml-1' /> Play
                                                 </button>
                                         </Menu.Item>
+                                        :
                                         <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
+                                                <button >
+                                                    <PlayIcon className='h-5 w-5 mr-2 ml-1' /> Unauthorized
+                                                </button>
+                                        </Menu.Item>}
+                                        {videoOwner == loggedInUser ? <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
                                                 <button onClick={() => router.push(`/dashboard/edit/video/${video?.id}`)}>
                                                     <EditInactive className='h-5 w-5 mr-2 ml-1' /> Edit
                                                 </button>
                                         </Menu.Item>
+                                        :
                                         <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
+                                                <button>
+                                                    <EditInactive className='h-5 w-5 mr-2 ml-1' /> Unauthorized
+                                                </button>
+                                        </Menu.Item>}
+                                        {videoOwner == loggedInUser ? <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
                                                 <button onClick={openModal}>
                                                     <TrashIcon className='h-5 w-5 mr-2 ml-1' /> Delete
                                                 </button>
                                         </Menu.Item>
+                                        :
+                                        <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
+                                                <button>
+                                                    <TrashIcon className='h-5 w-5 mr-2 ml-1' /> Unauthorized
+                                                </button>
+                                        </Menu.Item>}
                                     </div>
                                 </Menu.Items>
                             </Transition>

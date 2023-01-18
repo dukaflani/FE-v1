@@ -6,9 +6,13 @@ import poster from '../public/media/dukaflani-poster-default.png'
 import { Transition, Dialog } from '@headlessui/react'
 import { useDeleteEventMutation } from '../redux/features/videos/videosApiSlice';
 import { EllipsisVerticalIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { useSelector } from 'react-redux';
 
 const MyEvents = ({ event }) => {
     const router = useRouter()
+    const { user } = useSelector((state) => state.auth)
+    const currentUser = user?.info?.id
+    const eventOwner = event?.user
     const [isOpen, setIsOpen] = useState(false)
     const [optionsModalOpen, setOptionsModalOpen] = useState(false)
     const [deleteEventError, setDeleteEventError] = useState(null)
@@ -140,10 +144,14 @@ const MyEvents = ({ event }) => {
                     Delete Event?
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
+                    {currentUser == eventOwner ? <p className="text-sm text-gray-500">
                         You're about to delete <strong>{event?.title}</strong>. This action
                         is irreversible and you won't be able to see this event again.
                     </p>
+                    :
+                    <p className="text-sm text-gray-500">
+                        You're not authorized to delete this event
+                    </p>}
                   </div>
 
                   <div className="mt-5 space-x-2">
@@ -154,13 +162,13 @@ const MyEvents = ({ event }) => {
                     >
                       Cancel
                     </button>
-                    <button
+                    {currentUser == eventOwner && <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteEvent}
                     >
                       Yes, Delete!
-                    </button>
+                    </button>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -215,13 +223,13 @@ const MyEvents = ({ event }) => {
                     >
                       Delete
                     </button>
-                    <button
+                    {currentUser == eventOwner && <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => router.push({pathname: `/dashboard/edit/event/${event?.id}`})} 
                     >
                      Edit
-                    </button>
+                    </button>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
