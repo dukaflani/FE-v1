@@ -19,16 +19,8 @@ const { data: streaminglinks } = useFetchStreamingLinksQuery(queryParams)
     {[...Array(streaminglinks?.data?.length).keys()].map((link, i) => (
         <div key={i}>
                 <a href={streaminglinks?.data[i]?.link ? streaminglinks?.data[i]?.link : "#"} target="_blank" rel="noopener">
-                <div className='flex items-center justify-start rounded-l-xl mb-2 bg-white shadow py-2 pr-2  cursor-pointer max-h-14 animateCard'>
+                <div className='flex items-center justify-start rounded-l-xl mb-2 bg-white shadow py-2 pr-2  cursor-pointer max-h-14'>
                     <div className='w-3/12'>
-                        {/* <div className='relative h-14 w-full rounded-l-xl bg-gray-200'>
-                            {streaminglinks?.data[i]?.logo && <Image
-                                src={streaminglinks?.data[i]?.logo}
-                                layout="fill"
-                                objectFit='cover'
-                                className='rounded-l-xl'
-                                />}
-                        </div> */}
                         {streaminglinks?.data[i]?.logo && <picture>
                             <img
                                 src={streaminglinks?.data[i]?.logo}
