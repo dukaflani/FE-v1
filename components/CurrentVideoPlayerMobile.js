@@ -291,7 +291,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         <div className='bg-white pb-10'>
             <AdvertisementMobile/>
             <div className='px-2'>
-                <div onClick={() => setShowDescription(true)} className='tracking-tight font-semibold text-gray-800 text-base md:text-lg landscape:text-lg line-clamp-2 pr-3 pt-2'>{video?.details?.title}</div>
+                <div onClick={() => setShowDescription(true)} className='tracking-tight font-semibold text-gray-800 text-base md:text-lg landscape:text-lg line-clamp-2 pr-3 pt-2 leading-4'>{video?.details?.title}</div>
                 <div onClick={() => setShowDescription(true)} className='text-xs space-x-2 text-gray-600'>
                     <span>{viewsCountShort} {viewsCountShort == 1 ? "view" : "views"}</span>
                     <span>{videoUploadTimeShort}</span>
