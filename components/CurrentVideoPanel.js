@@ -58,7 +58,6 @@ const CurrentVideoPanel = () => {
     const is_loggedin = !!user?.info?.id
     const is_a_fan = !!videoProfileLiked?.data[0]?.id
 
-    console.log("current video:", currentvideo?.data?.results[0]);
 
     const fanbase2 = videoProfile?.data?.fanbase_count
     let fanbase3 = ''

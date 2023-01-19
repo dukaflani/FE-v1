@@ -308,18 +308,25 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                         />
                     </picture>}
                     </div>
-                    <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
+                    {!is_loggedin && <div onClick={() => router.push("/account/login")} className='flex-1 flex items-center'>
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.details?.stage_name}</div>
                         {video?.details?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
-                        <div className='flex-1 text-xs text-gray-600 px-2'>{fanbaseCountShort}</div>
-                    </div>
+                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>Login to view fanbase</div>}
+                        {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>{fanbaseCountShort}</div>}
+                    </div>}
+                    {is_loggedin && <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
+                        <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.details?.stage_name}</div>
+                        {video?.details?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
+                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>Login to view fanbase</div>}
+                        {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>{fanbaseCountShort}</div>}
+                    </div>}
                     {is_loggedin && <div>
                         {is_a_fan ? <button onClick={handleLeave} className='uppercase text-xs tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>leave</button>
                         :
                         <button onClick={handleJoin}  className='uppercase text-xs bg-gray-800 text-white tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>Join</button>}
                         </div>}
                     {!is_loggedin && <div>
-                        <button onClick={() => dispatch(toggleSignInModalOpen(true))} className='uppercase text-xs bg-gray-800 text-white tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>Join</button>
+                        <button onClick={() => router.push("/account/login")} className='uppercase text-xs bg-gray-800 text-white tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>Login</button>
                         </div>}
                 </div>
                 <div className='flex space-x-3 overflow-x-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
