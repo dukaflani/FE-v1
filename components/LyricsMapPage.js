@@ -10,7 +10,7 @@ const LyricsMapPage = () => {
         lyrics_id: video?.details?.lyrics,
       }
 
-    const { data: lyrics } = useFetchLyricsQuery(queryParams)
+    const { data: lyrics, isLoading } = useFetchLyricsQuery(queryParams)
 
     const versesQueryParams = {
         lyricsVerse_id: video?.details?.lyrics,
@@ -26,7 +26,7 @@ const LyricsMapPage = () => {
     <div className='px-5'>
     <div className='text-sm uppercase tracking-tighter text-gray-800 font-semibold'>Lyrics</div>
     <div className='text-sm mb-5 tracking-tighter text-gray-700'>Learn the lyrics to {video?.details?.song_title} straight from {video?.details?.stage_name}</div>
-    <div className='bg-white p-3 shadow-sm border-b'>
+    {isLoading ? (<div className='text-sm text-gray-800'>Loading lyrics...</div>) : (<div className='bg-white p-3 shadow-sm border-b'>
         <div className='flex flex-col items-start justify-center space-y-2'>
             <div>
                 <div className='uppercase text-xs tracking-tight font-extrabold text-gray-600'>Vocals</div>
@@ -61,7 +61,7 @@ const LyricsMapPage = () => {
             {[...Array(lyricsVerse?.data?.length).keys()].map((verse, i) => (
                 <div><Lyrics verse={lyricsVerse?.data[i]} key={i}/></div>
             ))}
-    </div>
+    </div>)}
     <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} {video?.details?.stage_name}</footer>
     </div>
   )

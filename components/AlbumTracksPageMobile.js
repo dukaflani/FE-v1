@@ -14,7 +14,7 @@ const AlbumTracksPageMobile = () => {
         album_id: video?.details?.album,
       }
 
-    const { data: album } = useFetchAlbumQuery(queryParams)
+    const { data: album, isLoading } = useFetchAlbumQuery(queryParams)
 
 
     const albumTrackParams = {
@@ -64,11 +64,11 @@ const AlbumTracksPageMobile = () => {
                 </div>
             </div>
         </div>   
-        {[...Array(albumTracks?.data?.length).keys()].map((albumTrack, i) => (
+        {!isLoading && [...Array(albumTracks?.data?.length).keys()].map((albumTrack, i) => (
             <AlbumTrackMobile track={albumTracks?.data[i]} key={i}/>
         ))}
         </div>}
-        {!album?.data?.id && <div className='text-sm tracking-tight leading-4 text-gray-800'>No music collection found...</div>}
+        {isLoading && <div className='text-sm tracking-tight leading-4 text-gray-800'>Loading music collection...</div>}
     <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} {video?.details?.stage_name}</footer>
     </div>
   )

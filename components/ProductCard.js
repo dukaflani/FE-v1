@@ -14,7 +14,7 @@ const ProductCard = ({ title }) => {
         product_id: video?.details?.product,
       }
 
-    const { data: product } = useFetchProductQuery(queryParams)
+    const { data: product, isLoading } = useFetchProductQuery(queryParams)
 
     const localPrice = product?.data?.local_price
     let formattedLocalPrice = numeral(localPrice).format('0,0')
@@ -28,7 +28,7 @@ const ProductCard = ({ title }) => {
     <div className='px-5'>
         <div className='text-sm uppercase tracking-tighter text-gray-800 font-semibold'>Products & Merchandise</div>
         <div className='text-sm mb-5 tracking-tighter text-gray-700'>Buy directly from {video?.details?.stage_name} partners and associates</div>
-        <div className='bg-white shadow-lg'>
+        {isLoading ? (<div className='text-sm text-gray-800'>Loading product card...</div>) : (<div className='bg-white shadow-lg'>
             <div>
                 <div className='relative h-[21rem] w-full'>
                     <Image
@@ -70,7 +70,7 @@ const ProductCard = ({ title }) => {
             <a href={whatsappLink} target="_blank" rel="noopener">
                 <div style={{backgroundColor:'#25D366'}} className='flex items-center justify-center p-2 cursor-pointer mt-3 text-white uppercase text-xs tracking-wider font-semibold'>order on whatsapp</div>
             </a>
-        </div>
+        </div>)}
         <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>{product?.data?.sold_by && "Sold by"} {product?.data?.sold_by}</footer>
     </div>
   )
