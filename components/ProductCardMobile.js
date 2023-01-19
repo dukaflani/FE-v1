@@ -39,7 +39,7 @@ const ProductCardMobile = ({ title }) => {
                 </div> */}
                 {isLoading && <picture>
                     <img
-                        src={poster}
+                        src={!product?.data?.image ? poster : product?.data?.image}
                         alt="Loading product..."
                         className="h-[21rem] w-full"
                     />
@@ -55,7 +55,7 @@ const ProductCardMobile = ({ title }) => {
             <div className='text-xs py-1 px-2 uppercase tracking-wide bg-gray-800 text-white font-semibold'>
                 {!product?.data?.is_sponsored ? <div className='line-clamp-1 uppercase'>{!product?.data?.id ? "No product found" : "Buy now!"} </div>
                 :
-                <p className='line-clamp-1 font-normal bg-yellow-400 px-1'>Sponsored</p>}
+                <div><p className='line-clamp-1 font-normal bg-yellow-400 px-1 max-w-fit'>Sponsored</p></div>}
             </div>
             <div>
                 <div className='flex flex-col space-y-2 mt-3'>

@@ -11,6 +11,7 @@ import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, Chev
 PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn, CheckBadgeIcon } from '@heroicons/react/24/solid'
 import noAvatar from '../public/media/noimage.webp'
+import nopic from "../public/media/noimage.webp"
 import VideoCommentsMobile from './VideoCommentsMobile';
 import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
@@ -388,16 +389,14 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                     />
                                 </picture>}
                             </div>}
-                            {!is_loggedin && <picture>
-                                    <img
-                                        src={noAvatar}
-                                        alt="!"
+                            {!is_loggedin && <div
                                         className="h-7 w-7 rounded-full md:h-9 md:w-9 landscape:h-9 landscape:w-9 bg-gray-200"
-                                    />
-                                </picture>}
+                                        onClick={() => router.push("/account/login")}
+                            >     
+                                </div>}
                             {comments?.data?.length > 0 ? <div className='flex-1 line-clamp-2 text-xs leading-4 text-gray-900'>{comments?.data?.length > 0 ? comments?.data[0]?.body : ''}</div>
                             :
-                            <span className='flex-1 bg-gray-200 rounded-full text-xs leading-4 text-gray-900 py-1 px-2'>Add Comment...</span>}
+                            <span className='flex-1 bg-gray-200 rounded-full text-xs leading-4 text-gray-900 py-1 px-2'>{is_loggedin ? "Add Comment..." : "Login to Comment..."}</span>}
                         </div>
                         <div>
                             <ChevronDownIcon className='h-4 w-4'/>
@@ -484,13 +483,18 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             <div className='max-h-[35rem] overflow-y-auto pb-20 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-5 pb-32 pt-5'>
                 <li className='w-full flex items-center justify-center space-x-2'>
-                <picture>
+                {is_loggedin && <picture>
                     <img
                         src={userProfilePicture}
                         alt={`${user?.info?.stage_name} profile picture`}
                         className="h-10 w-10 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200"
                     />
-                </picture>
+                </picture>}
+                {!is_loggedin && <div
+                    className="h-10 w-10 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200"
+                    onClick={() => router.push("/account/login")}
+                >
+                </div>}
                 <div className='flex-1 pr-2 bg-gray-200 rounded-full flex items-center justify-start'>
                     <input 
                         placeholder={user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} 
