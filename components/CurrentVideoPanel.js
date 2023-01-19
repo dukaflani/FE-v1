@@ -58,6 +58,8 @@ const CurrentVideoPanel = () => {
     const is_loggedin = !!user?.info?.id
     const is_a_fan = !!videoProfileLiked?.data[0]?.id
 
+    console.log("current video:", currentvideo?.data?.results[0]);
+
     const fanbase2 = videoProfile?.data?.fanbase_count
     let fanbase3 = ''
     fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
@@ -113,24 +115,39 @@ const CurrentVideoPanel = () => {
             <div className='flex py-4 border-b px-1 bg-white'>
                 <div className='w-2/12 flex items-center justify-center'>
                     <div className='relative h-12 w-12'>
-                        <Image
+                        {!is_loggedin && <Image
+                            src={currentvideo?.data?.results[0]?.profile_avatar ? currentvideo?.data?.results[0]?.profile_avatar : noAvatar}
+                            layout="fill"
+                            objectFit='cover'
+                            className='rounded-full'
+                            />}
+                        {is_loggedin && <Image
                             src={videoProfile?.data?.profile_avatar ? videoProfile?.data?.profile_avatar : noAvatar}
                             layout="fill"
                             objectFit='cover'
                             className='rounded-full'
-                            />
+                            />}
                     </div>
                 </div>
                 <div className='w-8/12 flex flex-col items-start justify-center'>
-                    <div className='flex space-x-1'>
+                    {!is_loggedin && <div className='flex space-x-1'>
+                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{currentvideo?.data?.results[0]?.stage_name ? currentvideo?.data?.results[0]?.stage_name : ''}</div>
+                        {currentvideo?.data?.results[0]?.verified && 
+                        <span>
+                            <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
+                        </span>
+                        }
+                    </div>}
+                    {is_loggedin && <div className='flex space-x-1'>
                         <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.data?.stage_name ? currentvideo?.data?.results[0]?.stage_name : ''}</div>
                         {videoProfile?.data?.is_verified == 'True' && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
                         </span>
                         }
-                    </div>
-                    <div className='mx-1 text-sm tracking-tight text-gray-600'>Fanbase {numOfFanbase}</div>
+                    </div>}
+                    {!is_loggedin && <div className='mx-1 text-sm tracking-tight text-gray-600'>Login to view fanbase</div>}
+                    {is_loggedin && <div className='mx-1 text-sm tracking-tight text-gray-600'>Fanbase {numOfFanbase}</div>}
                 </div>
                 {is_loggedin && <div className='w-2/12 flex items-center justify-center'>
                     {is_a_fan ? <button onClick={handleLeave} className='uppercase p-1 border border-gray-700 text-gray-800 font-semibold tracking-wider text-xs'>Leave</button> 
@@ -138,7 +155,7 @@ const CurrentVideoPanel = () => {
                     <button onClick={handleJoin} className='uppercase p-1 bg-gray-800 text-white font-semibold tracking-wider text-xs'>Join</button>}
                  </div>}
                 {!is_loggedin && <div className='w-2/12 flex items-center justify-center'>
-                    <button onClick={() => dispatch(toggleSignInModalOpen(true))} className='uppercase p-1 bg-gray-800 text-white font-semibold tracking-wider text-xs'>Join</button>
+                    <button onClick={() => dispatch(toggleSignInModalOpen(true))} className='uppercase p-1 bg-gray-800 text-white font-semibold tracking-wider text-xs'>Login</button>
                 </div>}
             </div>
             <div className='mx-2 my-5 flex'>
