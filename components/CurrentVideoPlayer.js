@@ -6,7 +6,7 @@ import numeral from 'numeral';
 import { useRouter } from 'next/router';
 import ShowMoreText from "react-show-more-text";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon } from '@heroicons/react/24/outline'
+import { FlagIcon, HandThumbDownIcon, HandThumbUpIcon, ShareIcon, StarIcon } from '@heroicons/react/24/outline'
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn } from '@heroicons/react/24/solid'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 import noAvatar from '../public/media/noimage.webp'
@@ -223,7 +223,7 @@ const CurrentVideoPlayer = () => {
             </div>
             <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.details?.genre_title}</div>
             <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.details?.title}</h1>
-            <div className='w-full flex items-center justify-between pt-1'>
+            <div className='w-full flex flex-col items-start justify-between py-2 space-y-1'>
                 <div className='text-sm font-semibold tracking-tight text-gray-700'> {view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime && 'Added'} {videoUploadTime}</div>
                 <div className='flex justify-end items-center pr-5'>
                     <div className="inline-flex rounded-md" role="group">
@@ -256,6 +256,18 @@ const CurrentVideoPlayer = () => {
                                 {linkCopied ? "Copied" : "Share"}
                             </button>
                         </CopyToClipboard>
+                    </div>
+                    <div className='ml-2'>
+                        <button type="button" className="inline-flex cursor-not-allowed items-center py-2 px-4 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            <StarIcon className="mr-2 w-5 h-5" />
+                            Vote
+                        </button>
+                    </div>
+                    <div className='ml-2'>
+                        <button type="button" className="inline-flex cursor-not-allowed items-center py-2 px-4 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            <FlagIcon className="mr-2 w-5 h-5" />
+                            Report
+                        </button>
                     </div>
                 </div>
             </div>

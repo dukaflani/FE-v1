@@ -31,7 +31,9 @@ const AlbumTrack = ({ track }) => {
         <div className='w-10/12'>
             <div className='text-sm text-gray-800'>{track?.title}</div>
             <hr className='mb-1'/>
-            <div className='text-xs text-gray-400'>{track?.featuring ? `ft. ${track?.featuring}` : "solo project"}</div>
+            {track?.id ? <div className='text-xs text-gray-400'>{track?.featuring ? `ft. ${track?.featuring}` : "solo project"}</div>
+             : 
+            <div className='text-xs text-gray-400'>Loading tracks...</div>}
         </div>
         <div className='w-2/12 flex items-center justify-center'>
           {track?.video ? (
