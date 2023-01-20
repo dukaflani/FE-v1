@@ -40,6 +40,10 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const [showComments, setShowComments] = useState(false)
     const [showProfile, setShowProfile] = useState(false)
     const [fanbaseErrors, setFanbaseErrors] = useState(null)
+    const [numberOfLikes, setNumberOfLikes] = useState('') 
+    const [numberOfUnlikes, setNumberOfUnlikes] = useState('')  
+    const [is_liked, setIs_liked] = useState(false)
+    const [is_unliked, setIs_unliked] = useState(false) 
 
 
     const { video } = useSelector((state) => state.videos)
@@ -88,26 +92,36 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const [ joinFanbase ] = useJoinFanbaseMutation() 
     const [ leaveFanbase ] = useLeaveFanbaseMutation()
 
-    const is_liked = !!isLiked?.data[0]?.id
-    const is_unliked = !!isUnliked?.data[0]?.id
+    // const is_liked = !!isLiked?.data[0]?.id
+    // const is_unliked = !!isUnliked?.data[0]?.id
     const is_loggedin = !!user?.info?.id
     const is_a_fan = !!videoProfileLiked?.data[0]?.id
+
+
+    useEffect(() => {
+        setNumberOfLikes(currentVideoObjectsCount?.data?.like_count)
+        setNumberOfUnlikes(currentVideoObjectsCount?.data?.unlike_count)
+        setIs_liked(!!isLiked?.data[0]?.id)  
+        setIs_unliked(!!isUnliked?.data[0]?.id)
+    }, [currentVideoObjectsCount?.data?.like_count, currentVideoObjectsCount?.data?.unlike_count, isLiked?.data[0]?.id, isUnliked?.data[0]?.id])
     
 
 
     const videoUploadTime = new Date(video?.details?.date).toDateString()
 
-    const likesCountRaw = currentVideoObjectsCount?.data?.like_count
+    // let likesCountRaw = currentVideoObjectsCount?.data?.like_count
+    let likesCountRaw = numberOfLikes ? numberOfLikes : 0
     const likesCountLong = numeral(likesCountRaw).format('0,0')
     let likesCount = ''
     likesCountRaw < 1000 || likesCountRaw % 10 === 0 ? likesCount = numeral(likesCountRaw).format('0a') :  likesCount = numeral(likesCountRaw).format('0.0a')
     
-    const unlikesCountRaw = currentVideoObjectsCount?.data?.unlike_count
+    // let unlikesCountRaw = currentVideoObjectsCount?.data?.unlike_count
+    let unlikesCountRaw = numberOfUnlikes ? numberOfUnlikes : 0
     let unlikesCount = ''
     unlikesCountRaw < 1000 || unlikesCountRaw % 10 === 0 ? unlikesCount = numeral(unlikesCountRaw).format('0a') :  unlikesCount = numeral(unlikesCountRaw).format('0.0a')
     
-    const numOfLikes = likesCount == 0 ? 0 : likesCount
-    const numOfUnlikes = unlikesCount == 0 ? 0 : unlikesCount
+    let numOfLikes = likesCount == 0 ? 0 : likesCount
+    let numOfUnlikes = unlikesCount == 0 ? 0 : unlikesCount
 
     const view2 = currentVideoObjectsCount?.data?.views_count
     let view3 = numeral(view2).format('0,0')
@@ -222,6 +236,8 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
 
 
         const handleDeleteLike = async () => {
+            setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes - 1)
+            setIs_liked(false)
             try {
                 await deleteLike(deletelikeInfo)
             } catch (error) {
@@ -230,6 +246,8 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         }
 
         const handleDeleteUnlike = async () => {
+            setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes - 1)
+            setIs_unliked(false)
             try {
                 await deleteUnlike(deleteUnlikeInfo)
             } catch (error) {
@@ -239,6 +257,10 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
 
         const handleAddLike = async () => { 
             if (is_unliked) {
+                setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes + 1)
+                setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes - 1)
+                setIs_liked(true)
+                setIs_unliked(false)
                 try {
                     await deleteUnlike(deleteUnlikeInfo)
                     await addLike(likeVideoInfo)
@@ -247,6 +269,8 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 }
                 
             } else {
+                setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes + 1)
+                setIs_liked(true)
                 try {
                     await addLike(likeVideoInfo)
                 } catch (error) {
@@ -257,6 +281,10 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
 
         const handleAddUnlike  = async () => {
             if (is_liked) {
+                setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes - 1)
+                setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes + 1)
+                setIs_liked(false)
+                setIs_unliked(true)
                 try {
                     await deleteLike(deletelikeInfo)
                     await addUnlike(unlikeVideoInfo)
@@ -265,6 +293,8 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 }
                 
             } else {
+                setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes + 1)
+                setIs_unliked(true)
                 try {
                     await addUnlike(unlikeVideoInfo)
                 } catch (error) {
