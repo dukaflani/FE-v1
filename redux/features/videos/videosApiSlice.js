@@ -73,7 +73,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                     url: `/api/fanbase/`,
                     params: {...args}
                 }),
-                providesTags: ['Fanbase']
+                // providesTags: ['Fanbase']
             }),   
 
             joinFanbase: builder.mutation({
@@ -82,7 +82,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                 method: "POST",
                 body: fan
             }),
-            invalidatesTags: ['Fanbase']
+            // invalidatesTags: ['Fanbase']
         }),
 
         leaveFanbase: builder.mutation({
@@ -91,7 +91,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                 method: 'POST',
                 body: deleteItem
             }),
-            invalidatesTags: ['Fanbase']
+            // invalidatesTags: ['Fanbase']
         }),
 
         fetchVideos: builder.query({
@@ -571,7 +571,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                     url: `/api/liked/`,
                     params: {...args}
                 }),
-                providesTags: ['Likes']
+                // providesTags: ['Likes']
             }),   
 
         addLike: builder.mutation({
@@ -580,7 +580,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                 method: "POST",
                 body: likeVideoInfo
             }),
-            invalidatesTags: ['Likes']
+            // invalidatesTags: ['Likes']
         }),
 
         deleteLike: builder.mutation({
@@ -589,7 +589,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                 method: 'POST',
                 body: deletelikeInfo
             }),
-            invalidatesTags: ['Likes']
+            // invalidatesTags: ['Likes']
         }),
 
         videoUnliked: builder.query({
@@ -597,7 +597,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                     url: `/api/unliked/`,
                     params: {...args}
                 }),
-                providesTags: ['Likes']
+                // providesTags: ['Likes']
             }),   
 
         addUnlike: builder.mutation({
@@ -606,7 +606,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                 method: "POST",
                 body: unlikeVideoInfo
             }),
-            invalidatesTags: ['Likes']
+            // invalidatesTags: ['Likes']
         }),
 
         deleteUnlike: builder.mutation({
@@ -615,7 +615,7 @@ export const videosApiSlice = apiWithTag.injectEndpoints({
                 method: 'POST',
                 body: deleteUnlikeInfo
             }),
-            invalidatesTags: ['Likes']
+            // invalidatesTags: ['Likes']
         }),
 
         passwordChangeRequest: builder.mutation({

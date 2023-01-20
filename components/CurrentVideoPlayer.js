@@ -70,7 +70,8 @@ const CurrentVideoPlayer = () => {
         setNumberOfUnlikes(currentVideoObjectsCount?.data?.unlike_count)
         setIs_liked(!!isLiked?.data[0]?.id)  
         setIs_unliked(!!isUnliked?.data[0]?.id)
-    }, [currentVideoObjectsCount?.data?.like_count, currentVideoObjectsCount?.data?.unlike_count, isLiked?.data[0]?.id, isUnliked?.data[0]?.id])
+    }, [currentVideoObjectsCount?.data?.like_count, currentVideoObjectsCount?.data?.unlike_count, 
+        isLiked?.data[0]?.id, isUnliked?.data[0]?.id])
     
      
 
@@ -142,9 +143,9 @@ const CurrentVideoPlayer = () => {
 
 
         const handleDeleteLike = async () => {
-            setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes - 1)
-            setIs_liked(false)
             try {
+                setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes - 1)
+                setIs_liked(false)
                 await deleteLike(deletelikeInfo)
             } catch (error) {
                 setLikeErrors(error)
@@ -152,9 +153,9 @@ const CurrentVideoPlayer = () => {
         }
 
         const handleDeleteUnlike = async () => {
-            setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes - 1)
-            setIs_unliked(false)
             try {
+                setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes - 1)
+                setIs_unliked(false)
                 await deleteUnlike(deleteUnlikeInfo)
             } catch (error) {
                 setLikeErrors(error)
@@ -163,11 +164,11 @@ const CurrentVideoPlayer = () => {
 
         const handleAddLike = async () => { 
             if (is_unliked) {
-                setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes + 1)
-                setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes - 1)
-                setIs_liked(true)
-                setIs_unliked(false)
                 try {
+                    setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes + 1)
+                    setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes - 1)
+                    setIs_liked(true)
+                    setIs_unliked(false)
                     await deleteUnlike(deleteUnlikeInfo)
                     await addLike(likeVideoInfo)
                 } catch (error) {
@@ -175,9 +176,9 @@ const CurrentVideoPlayer = () => {
                 }
                 
             } else {
-                setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes + 1)
-                setIs_liked(true)
                 try {
+                    setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes + 1)
+                    setIs_liked(true)
                     await addLike(likeVideoInfo)
                 } catch (error) {
                     setLikeErrors(error)
@@ -187,11 +188,11 @@ const CurrentVideoPlayer = () => {
 
         const handleAddUnlike  = async () => {
             if (is_liked) {
-                setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes - 1)
-                setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes + 1)
-                setIs_liked(false)
-                setIs_unliked(true)
                 try {
+                    setNumberOfLikes(prevNumberOfLikes => prevNumberOfLikes - 1)
+                    setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes + 1)
+                    setIs_liked(false)
+                    setIs_unliked(true)
                     await deleteLike(deletelikeInfo)
                     await addUnlike(unlikeVideoInfo)
                 } catch (error) {
@@ -199,9 +200,9 @@ const CurrentVideoPlayer = () => {
                 }
                 
             } else {
-                setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes + 1)
-                setIs_unliked(true)
                 try {
+                    setNumberOfUnlikes(prevNumberOfUnlikes => prevNumberOfUnlikes + 1)
+                    setIs_unliked(true)
                     await addUnlike(unlikeVideoInfo)
                 } catch (error) {
                     setLikeErrors(error)

@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router'
 import { Disclosure, Dialog, Transition } from '@headlessui/react'
@@ -39,6 +39,9 @@ const CurrentVideoPanel = () => {
     const [modalOpen, setModalOpen] = useState(false)
     const [fanbaseErrors, setFanbaseErrors] = useState(null)
     let [isOpen, setIsOpen] = useState(false)
+    const [is_loggedin, setIs_loggedin] = useState(false)
+    const [is_a_fan, setIs_a_fan] = useState(false)
+    const [totalFanBaseCount, setTotalFanBaseCount] = useState('')
 
     
     const videoQueryParams = {
@@ -55,11 +58,18 @@ const CurrentVideoPanel = () => {
     
     const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
     const {data: videoProfileLiked } = useProfileLikedQuery(videoProfileQueryParams)
-    const is_loggedin = !!user?.info?.id
-    const is_a_fan = !!videoProfileLiked?.data[0]?.id
+    // const is_loggedin = !!user?.info?.id
+    // const is_a_fan = !!videoProfileLiked?.data[0]?.id
+
+    useEffect(() => {
+        setIs_loggedin(!!user?.info?.id)
+        setIs_a_fan(!!videoProfileLiked?.data[0]?.id)
+        setTotalFanBaseCount(videoProfile?.data?.fanbase_count)
+    }, [user?.info?.id, videoProfileLiked?.data[0]?.id, videoProfile?.data?.fanbase_count])
+    
 
 
-    const fanbase2 = videoProfile?.data?.fanbase_count
+    const fanbase2 = totalFanBaseCount
     let fanbase3 = ''
     fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
     const numOfFanbase = fanbase3 == 0 ? 0 : fanbase3
@@ -70,6 +80,7 @@ const CurrentVideoPanel = () => {
 
     const [ joinFanbase ] = useJoinFanbaseMutation() 
     const [ leaveFanbase ] = useLeaveFanbaseMutation()
+
 
     function closeModal() {
         setIsOpen(false)
@@ -92,6 +103,8 @@ const CurrentVideoPanel = () => {
 
     const handleJoin = async () => {
         try {
+            setIs_a_fan(true)
+            setTotalFanBaseCount(prevFanbaseCount => prevFanbaseCount + 1)
             await joinFanbase(joinDetails)
         } catch (error) {
             setFanbaseErrors(error)
@@ -101,6 +114,8 @@ const CurrentVideoPanel = () => {
 
     const handleLeave = async () => {
         try {
+            setIs_a_fan(false)
+            setTotalFanBaseCount(prevFanbaseCount => prevFanbaseCount - 1)
             await leaveFanbase(leaveDetails)
         } catch (error) {
             setFanbaseErrors(error)
