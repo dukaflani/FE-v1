@@ -13,8 +13,23 @@ import { useSelector } from 'react-redux'
 
 const EditVideo = () => {
     const router = useRouter()
-    const linkToUploadPage = () => {
-        router.push("/dashboard/upload")
+    const linkToUploadPageGenre = () => {
+        router.push("/dashboard/upload?item=genre")
+    }
+    const linkToUploadPageProduct = () => {
+        router.push("/dashboard/upload?item=product")
+    }
+    const linkToUploadPageSmartLinks = () => {
+        router.push("/dashboard/upload?item=smart-links")
+    }
+    const linkToUploadPageLyrics = () => {
+        router.push("/dashboard/upload?item=lyrics")
+    }
+    const linkToUploadPageSkizaTunes = () => {
+        router.push("/dashboard/upload?item=skiza-tunes")
+    }
+    const linkToUploadPageAlbum = () => {
+        router.push("/dashboard/upload?item=music-collection")
     }
 
     const { user } = useSelector((state) => state.auth)
@@ -30,7 +45,7 @@ const EditVideo = () => {
         user: currentUser,
       }
 
-    const { data: currentVideo, isLoading } = useFetchVideoToEditQuery(currentVideoQueryParams)
+    const { data: currentVideoToEdit} = useFetchVideoToEditQuery(currentVideoQueryParams)
     const { data: userStreamingLinks } = useFetchUserLinkHoldersQuery(queryParams)
     const { data: userProducts } = useFetchUserProductsQuery(queryParams)
     const { data: userLyrics } = useFetchUserLyricssQuery(queryParams)
@@ -71,26 +86,26 @@ const EditVideo = () => {
 
 
     useEffect(() => {
-        setCurrentVideoId(currentVideo?.data?.id)
-        setLinksPlaceholder(currentVideo?.data?.links_title)
-        setSkizaPlaceholder(currentVideo?.data?.skiza_title)
-        setAlbumPlaceholder(currentVideo?.data?.album_title)
-        setProductPlaceholder(currentVideo?.data?.product_title)
-        setLyricsPlaceholder(currentVideo?.data?.lyrics_title)
-        setSongTitle(currentVideo?.data?.song_title)
-        setVideoTitle(currentVideo?.data?.title)
-        setGenrePlaceholder(currentVideo?.data?.genre_title)
-        setVideoDescription(currentVideo?.data?.description)
-        setYoutubeVideoId(currentVideo?.data?.youtube_id)
-        setVideoUserId(currentVideo?.data?.user)
+        setCurrentVideoId(currentVideoToEdit?.data?.id)
+        setLinksPlaceholder(currentVideoToEdit?.data?.links_title)
+        setSkizaPlaceholder(currentVideoToEdit?.data?.skiza_title)
+        setAlbumPlaceholder(currentVideoToEdit?.data?.album_title)
+        setProductPlaceholder(currentVideoToEdit?.data?.product_title)
+        setLyricsPlaceholder(currentVideoToEdit?.data?.lyrics_title)
+        setSongTitle(currentVideoToEdit?.data?.song_title)
+        setVideoTitle(currentVideoToEdit?.data?.title)
+        setGenrePlaceholder(currentVideoToEdit?.data?.genre_title)
+        setVideoDescription(currentVideoToEdit?.data?.description)
+        setYoutubeVideoId(currentVideoToEdit?.data?.youtube_id)
+        setVideoUserId(currentVideoToEdit?.data?.user)
 
-        setSongGenre(!currentVideo?.data?.genre ? ' ' : currentVideo?.data?.genre)
-        setVideoSmartLinks(!currentVideo?.data?.links ? ' ' : currentVideo?.data?.links)
-        setVideoProduct(!currentVideo?.data?.product ? ' ' : currentVideo?.data?.product)
-        setVideoLyrics(!currentVideo?.data?.lyrics ? ' ' : currentVideo?.data?.lyrics)
-        setVideoSkizaTune(!currentVideo?.data?.skiza ? ' ' : currentVideo?.data?.skiza)
-        setVideoAlbum(!currentVideo?.data?.album ? ' ' : currentVideo?.data?.album)
-    }, [currentVideo?.data])
+        setSongGenre(!currentVideoToEdit?.data?.genre ? ' ' : currentVideoToEdit?.data?.genre)
+        setVideoSmartLinks(!currentVideoToEdit?.data?.links ? ' ' : currentVideoToEdit?.data?.links)
+        setVideoProduct(!currentVideoToEdit?.data?.product ? ' ' : currentVideoToEdit?.data?.product)
+        setVideoLyrics(!currentVideoToEdit?.data?.lyrics ? ' ' : currentVideoToEdit?.data?.lyrics)
+        setVideoSkizaTune(!currentVideoToEdit?.data?.skiza ? ' ' : currentVideoToEdit?.data?.skiza)
+        setVideoAlbum(!currentVideoToEdit?.data?.album ? ' ' : currentVideoToEdit?.data?.album)
+    }, [currentVideoToEdit?.data])
 
 
 
@@ -160,7 +175,7 @@ const EditVideo = () => {
                     title="Genre"
                     helperText="Didn't find your genre? Create it"
                     helperTextLink="here"
-                    onHelperTextLinkClick={linkToUploadPage}
+                    onHelperTextLinkClick={linkToUploadPageGenre}
                 />
             </div>
         </div>
@@ -215,7 +230,7 @@ const EditVideo = () => {
                     title="Smart Links"
                     helperText="Can't find your smart links? Create new ones"
                     helperTextLink="here"
-                    onHelperTextLinkClick={linkToUploadPage}
+                    onHelperTextLinkClick={linkToUploadPageSmartLinks}
                 />
             </div>
             <div className='w-full'>
@@ -226,7 +241,7 @@ const EditVideo = () => {
                     title="Product"
                     helperText="Can't find a product? Create one"
                     helperTextLink="here"
-                    onHelperTextLinkClick={linkToUploadPage}
+                    onHelperTextLinkClick={linkToUploadPageProduct}
                 />
             </div>
             <div className='w-full'>
@@ -237,7 +252,7 @@ const EditVideo = () => {
                     title="Lyrics"
                     helperText="Can't find your lyrics? Add them"
                     helperTextLink="here"
-                    onHelperTextLinkClick={linkToUploadPage}
+                    onHelperTextLinkClick={linkToUploadPageLyrics}
                 />
             </div>
             <div className='w-full'>
@@ -248,7 +263,7 @@ const EditVideo = () => {
                     title="Skiza Tunes"
                     helperText="Can't find your skiza tunes? Add them"
                     helperTextLink="here"
-                    onHelperTextLinkClick={linkToUploadPage}
+                    onHelperTextLinkClick={linkToUploadPageSkizaTunes}
                 />
             </div>
             <div className='w-full'>
@@ -259,7 +274,7 @@ const EditVideo = () => {
                     title="Album"
                     helperText="Can't find your album? Create one"
                     helperTextLink="here"
-                    onHelperTextLinkClick={linkToUploadPage}
+                    onHelperTextLinkClick={linkToUploadPageAlbum}
                 />
             </div>
         </div>

@@ -67,25 +67,25 @@ const Home = () => {
           <div className='w-1/12 flex items-start justify-start pl-5 fixed left-0 top-40'>
             <nav>
               <ul className='space-y-10'>
-                <li onClick={() => router.push('/')} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push({ pathname: '/' })} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     {true ? <HomeIcon className="w-6 h-6"/> : <HomeOutline className="w-6 h-6"/>}
                   </div>
                   {/* <div className='text-sm'>Home</div> */}
                 </li>
-                <li onClick={() => router.push('/dashboard')} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push({ pathname: '/dashboard' })} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     {!true ? <RectangleGroupIcon className="w-6 h-6"/> : <RGOutline className="w-6 h-6"/>}
                   </div>
                   {/* <div className='text-sm'>Dashboard</div> */}
                 </li>
-                <li onClick={() => router.push('/profile')} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push({ pathname: '/profile' })} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     {!true ? <UserCircleIcon className="w-6 h-6"/> : <UCOutline className="w-6 h-6"/>}
                   </div>
                   {/* <div className='text-sm'>Profile</div> */}
                 </li>
-                <li onClick={() => router.push('/dashboard/upload')} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push({ pathname: '/dashboard/upload', query: { view: 'smart-links' } })} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     {!true ? <CloudArrowUpIcon className="w-6 h-6"/> : <CloudArrowUpIconOutline className="w-6 h-6"/>}
                   </div>

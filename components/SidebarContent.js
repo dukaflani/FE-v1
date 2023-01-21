@@ -39,7 +39,7 @@ const SidebarContent = () => {
         },
         {
             title: "Upload",
-            link:'/dashboard/upload',
+            link:'/dashboard/upload?item=video',
             iconOutline: <CloudArrowUpIcon className="w-6 h-6" />,
             iconSolid: <CloudArrowUpIconSolid className="w-6 h-6" />,
         },
