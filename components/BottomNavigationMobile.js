@@ -42,27 +42,27 @@ const BottomNavigationMobile = () => {
             <ul className='text-xs flex items-center justify-between w-full'>
                 <Link href="/">
                     <li className='flex flex-col items-center justify-center'>
-                        {newDestination == "/" ? <HomeSolid className="w-4 h-4" /> : <HomeIcon className='w-4 h-4'/>}
+                        {newDestination == "/" ? <HomeSolid className="w-5 h-5" /> : <HomeIcon className='w-5 h-5'/>}
                         <span>Home</span>
                     </li>
                 </Link>
                 <Link href="/dashboard">
                     <li className='flex flex-col items-center justify-center'>
-                        {newDestination == "/dashboard" ? <RectangleSolid className="w-4 h-4" /> : <RectangleGroupIcon className='w-4 h-4'/>}
+                        {newDestination == "/dashboard" ? <RectangleSolid className="w-5 h-5" /> : <RectangleGroupIcon className='w-5 h-5'/>}
                         <span>Dashboard</span>
                     </li>
                 </Link>
                 <li onClick={() => setShowUploadLinks(true)} className='flex flex-col items-center justify-center p-1 rounded-full border border-gray-800'>
-                    <CloudArrowUpIcon className='w-4 h-4'/>
+                    <CloudArrowUpIcon className='w-5 h-5'/>
                 </li>
                 <Link href="/profile">
                     <li className='flex flex-col items-center justify-center'>
-                        {newDestination == "/profile" ? <UserSolid className="w-4 h-4" /> : <UserCircleIcon className='w-4 h-4'/>}
+                        {newDestination == "/profile" ? <UserSolid className="w-5 h-5" /> : <UserCircleIcon className='w-5 h-5'/>}
                         <span>Profile</span>
                     </li>
                 </Link>
                 <li onClick={() => setShowOptions(true)} className='flex flex-col items-center justify-center'>
-                    <ChevronUpDownIcon className='w-4 h-4'/>
+                    <ChevronUpDownIcon className='w-5 h-5'/>
                     <span>Options</span>
                 </li>
             </ul>
