@@ -3,7 +3,7 @@ export default async (req, res) => {
         const videoId = req.query.video_id
 
         try {
-            const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/videos/?url_id=${videoId}`, {
+            const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/videos/?youtube_id=${videoId}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

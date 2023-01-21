@@ -1,4 +1,3 @@
-import React from 'react'
 import Image from "next/legacy/image";
 import Link from 'next/link';
 import { useRouter } from 'next/router'
@@ -48,7 +47,7 @@ const VideoCard = ({ video }) => {
 
   return (
         <>
-        <article onClick={() => handleCurrentVideo(video?.url_id)} className='h-64 cursor-pointer'>
+        <article onClick={() => handleCurrentVideo(video?.youtube_id)} className='h-64 cursor-pointer'>
             <div className='h-4/6 relative rounded-md bg-gray-200'>
                 <Image 
                     src={!video?.thumbnail ? thumbnail : video?.thumbnail}
@@ -70,7 +69,7 @@ const VideoCard = ({ video }) => {
                     </div>
                 </div>
                 <div className='w-10/12'>
-                    <Link legacyBehavior href={`/watch?v=${video?.url_id}&tab=links`}>
+                    <Link legacyBehavior href={`/watch?v=${video?.youtube_id}&tab=links`}>
                         <a title={video?.title}>
                             <div className='font-semibold leading-4 text-gray-700 tracking-tight cursor-pointer text-base line-clamp-2'>{video?.title}</div>
                         </a>

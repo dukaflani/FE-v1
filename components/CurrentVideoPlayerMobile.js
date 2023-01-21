@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import Image from "next/legacy/image";
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
 import { useRouter } from 'next/router';
@@ -11,12 +10,10 @@ import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, Chev
 PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn, CheckBadgeIcon } from '@heroicons/react/24/solid'
 import noAvatar from '../public/media/noimage.webp'
-import nopic from "../public/media/noimage.webp"
 import VideoCommentsMobile from './VideoCommentsMobile';
 import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
     useAddUnlikeMutation, useCurrentVideoObjectsCountQuery, useFetchCommentsQuery, useFetchCurrentVideoProfileQuery, useProfileLikedQuery, useJoinFanbaseMutation, useLeaveFanbaseMutation } from '../redux/features/videos/videosApiSlice';
-import { toggleSignInModalOpen } from '../redux/features/navigation/navigationSlice';
 import AdvertisementMobile from './AdvertisementMobile';
 import ItemsTabNavigationMobile from './ItemsTabNavigationMobile';
 import ProductCardMobile from './ProductCardMobile';
@@ -26,8 +23,32 @@ import SkizaTunesPageMobile from './SkizaTunesPageMobile';
 import AlbumPageMobile from './AlbumPageMobile';
 import EventsPageMobile from './EventsPageMobile';
 
+
+
+export const YouTubeIframe = () => {
+    const router = useRouter()
+    const { v } = router.query
+
+    const [videoYoutubeId, setVideoYoutubeId] = useState('')
+
+    useEffect(() => {
+        setVideoYoutubeId(v)
+    }, [v])
+    
+
+    return (
+        <div className='aspect-w-16 aspect-h-9 bg-black'>
+            <iframe src={`https://www.youtube.com/embed/${videoYoutubeId}?loop=1&modestbranding=1&color=white&playlist=${videoYoutubeId}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div>
+    )
+}  
+
+
+
+
+
+
 const CurrentVideoPlayer = ({ navbarVisisble }) => {
-    const dispatch = useDispatch()
     const router = useRouter()
     const { v, tab } = router.query
     const [commentBody, setCommentBody] = useState('')
@@ -322,9 +343,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     <>
     <article className='h-full mx-auto'>
         <div className='sticky top-0'>
-            <div className='aspect-w-16 aspect-h-9 bg-black'>
-                <iframe src={`https://www.youtube.com/embed/${video?.details?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.details?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-             </div>
+            <YouTubeIframe/>
             {!navbarVisisble && <ItemsTabNavigationMobile/>}
             <div>
                 

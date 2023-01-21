@@ -1,4 +1,3 @@
-import React from 'react'
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { PlayPauseIcon } from '@heroicons/react/24/solid'
@@ -22,7 +21,7 @@ const AlbumTrack = ({ track }) => {
       await addView(newView);
       router.push({
           pathname: `/watch/`,
-          query: { v: id, tab: "links" },
+          query: { v: id, tab: "album" },
         });
   }
   
@@ -37,7 +36,7 @@ const AlbumTrack = ({ track }) => {
         </div>
         <div className='w-2/12 flex items-center justify-center'>
           {track?.video ? (
-            <div onClick={() => handlePlayVideo(track?.url_id)} >< PlayPauseIcon className='h-5 w-5 text-blue-600 cursor-pointer' /></div> 
+            <div onClick={() => handlePlayVideo(track?.youtube_id)} >< PlayPauseIcon className='h-5 w-5 text-blue-600 cursor-pointer' /></div> 
           ) : (
             <div>< PlayPauseIcon className='h-5 w-5 text-gray-100' /></div>
           )}

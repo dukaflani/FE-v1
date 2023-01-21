@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useSelector } from 'react-redux';
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
@@ -106,7 +106,7 @@ const handlePlayVideo = async (id) => {
   return (
     <>
     <article  className='h-64 md:h-28 landscape:h-28 cursor-pointer md:flex landscape:flex md:w-10/12 landscape:w-10/12 md:mx-auto landscape:mx-auto md:mb-4 landscape:mb-4'>
-      <div onClick={() => handlePlayVideo(video?.url_id)} className='h-4/6 md:h-full landscape:h-full md:w-4/12 landscape:w-4/12 relative md:rounded-md landscape:rounded-md bg-gray-200'>
+      <div onClick={() => handlePlayVideo(video?.youtube_id)} className='h-4/6 md:h-full landscape:h-full md:w-4/12 landscape:w-4/12 relative md:rounded-md landscape:rounded-md bg-gray-200'>
         {video?.thumbnail && <Image 
             src={!video?.thumbnail ? thumbnail : video?.thumbnail}
             layout="fill"

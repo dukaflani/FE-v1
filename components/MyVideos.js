@@ -127,7 +127,7 @@ const handlePlayVideo = async (id) => {
                                 <Menu.Items className="absolute right-0 mt-2 w-56 bg-white shadow z-10 focus:outline-none">
                                     <div>
                                         {videoOwner == loggedInUser ? <Menu.Item className="cursor-pointer px-2 py-2 flex items-center justify-start w-full hover:bg-gray-50">
-                                                <button onClick={() => handlePlayVideo(video?.url_id)}>
+                                                <button onClick={() => handlePlayVideo(video?.youtube_id)}>
                                                     <PlayIcon className='h-5 w-5 mr-2 ml-1' /> Play
                                                 </button>
                                         </Menu.Item>
