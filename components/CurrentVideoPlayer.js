@@ -112,10 +112,10 @@ const CurrentVideoPlayer = () => {
     let numOfLikes = likesCount == 0 ? 0 : likesCount
     let numOfUnlikes = unlikesCount == 0 ? 0 : unlikesCount
 
-    const view2 = currentVideoObjectsCount?.data?.views_count
+    const view2 = currentVideoObjectsCount?.data?.views_count ? currentVideoObjectsCount?.data?.views_count : 0
           let view3 = numeral(view2).format('0,0')
           
-    const commentCountRaw = currentVideoObjectsCount?.data?.comment_count
+    const commentCountRaw = currentVideoObjectsCount?.data?.comment_count ? currentVideoObjectsCount?.data?.comment_count : 0
           let commentCount = numeral(commentCountRaw).format('0,0')
 
 

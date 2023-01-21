@@ -69,7 +69,7 @@ const CurrentVideoPanel = () => {
     
 
 
-    const fanbase2 = totalFanBaseCount
+    const fanbase2 = totalFanBaseCount ? totalFanBaseCount : 0
     let fanbase3 = ''
     fanbase2 < 1000 || fanbase2 % 10 === 0 ? fanbase3 = numeral(fanbase2).format('0a') :  fanbase3 = numeral(fanbase2).format('0.0a')
     const numOfFanbase = fanbase3 == 0 ? 0 : fanbase3

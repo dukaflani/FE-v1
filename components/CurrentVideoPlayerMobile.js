@@ -152,17 +152,17 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     let numOfLikes = likesCount == 0 ? 0 : likesCount
     let numOfUnlikes = unlikesCount == 0 ? 0 : unlikesCount
 
-    const view2 = currentVideoObjectsCount?.data?.views_count
+    const view2 = currentVideoObjectsCount?.data?.views_count ? currentVideoObjectsCount?.data?.views_count : 0
     let view3 = numeral(view2).format('0,0')
     let viewsCountShort = ''
     view2 < 1000 || view2 % 10 === 0 ? viewsCountShort = numeral(view2).format('0a') :  viewsCountShort = numeral(view2).format('0.0a')
           
-    const commentCountRaw = currentVideoObjectsCount?.data?.comment_count
+    const commentCountRaw = currentVideoObjectsCount?.data?.comment_count ? currentVideoObjectsCount?.data?.comment_count : 0
     let commentCount = numeral(commentCountRaw).format('0,0')
 
     const timeOfVideoUpload = video?.details?.date ? video?.details?.date : new Date()
 
-    const fanbaseCountRaw = totalFanBaseCount
+    const fanbaseCountRaw = totalFanBaseCount ? totalFanBaseCount : 0
     let fanbaseCountShort = ''
     fanbaseCountRaw < 1000 || fanbaseCountRaw % 10 === 0 ? fanbaseCountShort = numeral(fanbaseCountRaw).format('0a') :  fanbaseCountShort = numeral(fanbaseCountRaw).format('0.0a')
 
