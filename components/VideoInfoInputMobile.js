@@ -9,6 +9,7 @@ import { useFetchAccessTokenQuery, useFetchAllGenresQuery, useFetchUserAlbumsQue
 import Combobox from './reuseable-components/Combobox'
 import InputField from './reuseable-components/InputField'
 import TextAreaField from './reuseable-components/TextAreaField'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTitle, songTitle, setSongTitle,
     songGenre, setSongGenre, youtubeVideoId, setYoutubeVideoId, videoDescription, setVideoDescription, thumbnail, setThumbnail,
@@ -24,7 +25,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
     const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
 
 
-    const videoSlug = slugify(videoTitle, {lower: true})
+    const videoSlug = slugify(songTitle, {lower: true})
 
     const queryParams = {
         user: currentUser,
@@ -40,6 +41,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
     const [createdVideo, setCreatedVideo] = useState({})
     const [errorMessage, setErrorMessage] = useState('')
     const [emptyFields, setEmptyFields] = useState(false)
+    const [uploadingVideo, setUploadingVideo] = useState(false)
     const [nanoId, setNanoId] = useState('')
     const [renderComponent, setRenderComponent] = useState(null)
 
@@ -71,6 +73,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
     videoInfo.append("url_id", nanoId);
 
     const handleVideoUpload = () => {
+        setUploadingVideo(true)
         if (videoTitle && songTitle && youtubeVideoId && videoDescription && thumbnail && songGenre && userProfileId != 0) {
             fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/videos/`,
             {
@@ -85,11 +88,13 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                 window.location.reload();
             })
             .catch((error) => {
+                setUploadingVideo(false)
                 setErrorMessage(error)
             });
             
         } else {
             setEmptyFields(true)
+            setUploadingVideo(false)
             setTimeout(() => {
                 setEmptyFields(false)
             }, 5000);
@@ -233,8 +238,21 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
         <br/>
         <div className='flex flex-col'>
             <div className='flex items-center justify-between'>
-                <div className='bg-red-600 hover:bg-red-400 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Cancel</div>
-                <div onClick={handleVideoUpload} className='border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Upload Video</div>
+                <ApiButtonWithSpinner
+                    title="Cancel"
+                    bgColor="bg-red-600"
+                    hoverColor="hover:bg-red-400"
+                    textColor="text-white"
+                    onClick={() => router.push({pathname: '/dashboard'})}
+                />
+                <ApiButtonWithSpinner
+                    loading={uploadingVideo}
+                    title="Upload"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleVideoUpload}
+                />
             </div>
             {emptyFields && <div className='text-red-500 font-medium tracking-tighter text-sm flex items-center justify-center'>Please fill in all the (*) mandatory fields or refresh and try again</div>}
         </div>

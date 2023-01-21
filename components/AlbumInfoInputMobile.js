@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import slugify from 'slugify'
 import { nanoid } from 'nanoid'
@@ -7,6 +7,7 @@ import { useFetchAccessTokenQuery, useFetchCreatedAlbumTracksListMutation, useFe
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
 import SelectInputFieldWithKeys from './reuseable-components/SelectInputFieldWithKeys'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
 
@@ -209,8 +210,21 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
               </div>
         </div>
         <div className='px-1 my-2 flex items-center justify-start space-x-3'>
-            <button className='bg-red-600 hover:bg-red-400 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Cancel</button>
-            <button onClick={handleAddAlbum} className='border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Create</button>
+                <ApiButtonWithSpinner
+                    title="Cancel"
+                    bgColor="bg-red-600"
+                    hoverColor="hover:bg-red-400"
+                    textColor="text-white"
+                    onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
+                />
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Create"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddAlbum}
+                />
             {missingValuesError && <div className='text-red-500 font-medium tracking-tighter text-sm'>Please add title!</div>}
         </div>
         </>
@@ -262,7 +276,14 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
             </div>
         </div>
         <div className='px-1 mt-2'>
-            <button onClick={handleAddAlbumTrack} className='bg-sky-300 text-blue-700 hover:bg-sky-200 flex items-center justify-center uppercase p-1 text-sm font-semibold tracking-tight'>Add Track</button>
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Add Track"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddAlbumTrack}
+                />
             {missingAlbumTrackTitle && <div className='text-red-500 font-medium tracking-tighter text-sm'>Please fill in the track title</div>}
         </div>
         </>
@@ -281,10 +302,6 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
         <div className='px-2'>
             <div className='text-red-500 font-medium tracking-tighter text-sm'>{albumTrackCatchError}</div>
         </div>
-        {/* <div className='flex items-center justify-between'>
-            <div onClick={() => setCurrentInput(0)} className=' bg-gray-700 hover:bg-gray-500 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Video Info</div>
-            <div onClick={() => setCurrentInput(2)} className=' border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Product</div>
-        </div> */}
     </div>
   )
 }

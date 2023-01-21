@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useAddSkizaTuneInfoMutation, useAddSkizaTuneMutation, useFetchCreatedSkizaTuneListMutation } from '../redux/features/videos/videosApiSlice'
 import InputField from './reuseable-components/InputField'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
     const [skizaTitle, setSkizaTitle] = useState("")
@@ -87,8 +88,21 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
             />
         </div>
         <div className='px-1 my-2 flex space-x-3'>
-            <button className='bg-red-600 hover:bg-red-400 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Cancel</button>
-            <button onClick={handleAddSkizaTune} className='border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Create</button>
+                <ApiButtonWithSpinner
+                    title="Cancel"
+                    bgColor="bg-red-600"
+                    hoverColor="hover:bg-red-400"
+                    textColor="text-white"
+                    onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
+                />
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Create"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddSkizaTune}
+                />
             {skizaTuneError && <div className='text-red-500 font-medium tracking-tighter text-sm'>Please fill in all the title above</div>}
         </div>
         </>
@@ -164,7 +178,14 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
             </div>
         </div>
         <div className='px-1 mt-2 flex items-center justify-start space-x-1'>
-            <button onClick={handleAddSkizaTuneInfo} className='bg-sky-300 text-blue-700 hover:bg-sky-200 flex items-center justify-center uppercase p-1 text-sm font-semibold tracking-tight'>Add Skiza Tune</button>
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Add Skiza"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddSkizaTuneInfo}
+                />
             {skizaTuneInfoError && <div className='text-red-500 font-medium tracking-tighter text-sm'>Please fill in both Country and Carrier</div>}
         </div>
         </>
@@ -183,10 +204,6 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
                 </div>
             ))}
         </div>
-        {/* <div className='flex items-center justify-between'>
-            <div onClick={() => setCurrentInput(0)} className=' bg-gray-700 hover:bg-gray-500 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Video Info</div>
-            <div onClick={() => setCurrentInput(2)} className=' border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Product</div>
-        </div> */}
     </div>
   )
 }

@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import slugify from 'slugify'
 import { useAddGenreMutation } from '../redux/features/videos/videosApiSlice'
 import InputField from './reuseable-components/InputField'
 import TextAreaField from './reuseable-components/TextAreaField'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const GenreInfoInput = ({ setCurrentInput, currentInput }) => {
     const [genreName, setGenreName] = useState('')
@@ -102,8 +103,21 @@ const GenreInfoInput = ({ setCurrentInput, currentInput }) => {
         <br/>
         <div className='flex flex-col'>
             <div className='flex items-center justify-between'>
-                <div onClick={() => setCurrentInput(0)} className='bg-red-600 hover:bg-red-400 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Back to video info</div>
-                <div onClick={handleAddGenre} className=' border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Add Genre</div>
+                <ApiButtonWithSpinner
+                    title="Cancel"
+                    bgColor="bg-red-600"
+                    hoverColor="hover:bg-red-400"
+                    textColor="text-white"
+                    onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
+                />
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Add Genre"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddGenre}
+                />
             </div>
             <div className='flex items-center justify-center'>
                 {fieldErrors && <div className='text-red-500 font-medium tracking-tighter text-sm'>{fieldErrors}</div>}

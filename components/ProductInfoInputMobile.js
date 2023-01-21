@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
 import { useSelector } from 'react-redux'
 import slugify from 'slugify'
@@ -8,6 +8,7 @@ import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlic
 import InputField from './reuseable-components/InputField'
 import SelectInputFieldWithKeysLocal from './reuseable-components/SelectInputFieldWithKeysLocal'
 import TextAreaField from './reuseable-components/TextAreaField'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 
 const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
@@ -185,8 +186,21 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
             </div>
             <br/>
             <div className='flex items-center justify-between'>
-                <div className='bg-red-600 hover:bg-red-400 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Cancel</div>
-                <div onClick={handleAddProduct} className=' border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Add Product</div>
+                <ApiButtonWithSpinner
+                    title="Cancel"
+                    bgColor="bg-red-600"
+                    hoverColor="hover:bg-red-400"
+                    textColor="text-white"
+                    onClick={() => router.push({pathname: '/dashboard/products'})}
+                />
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Add Product"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddProduct}
+                />
             </div>
         </div>
 

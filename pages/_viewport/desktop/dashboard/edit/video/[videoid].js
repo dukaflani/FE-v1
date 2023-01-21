@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import SidebarNav from '../../../../../../components/SidebarNav'
 import Navigation from '../../../../../../components/Navigation'
@@ -28,7 +27,6 @@ const editVideo = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <Navigation/>
       <>

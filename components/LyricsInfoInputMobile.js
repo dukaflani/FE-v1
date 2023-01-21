@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useAddLyricsMutation, useAddLyricsVerseMutation, useFetchCreatedLyricsVersesMutation } from '../redux/features/videos/videosApiSlice'
 import slugify from 'slugify'
@@ -7,6 +7,7 @@ import { verseChoices } from '../data/verses'
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
 import TextAreaField from './reuseable-components/TextAreaField'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [lyricsTitle, setLyricsTitle] = useState('')
@@ -202,8 +203,21 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         </div>
         </div>
         <div className='px-1 my-2 flex space-x-3'>
-            <button className='bg-red-600 hover:bg-red-400 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Cancel</button>
-            <button onClick={handleAddLyrics} className='border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Create</button>
+                <ApiButtonWithSpinner
+                    title="Cancel"
+                    bgColor="bg-red-600"
+                    hoverColor="hover:bg-red-400"
+                    textColor="text-white"
+                    onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
+                />
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Create"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddLyrics}
+                />
             {fieldsError && <div className='text-red-500 font-medium tracking-tighter text-sm'>Please fill in all the (*) mandatory fields</div>}
         </div>
         </>
@@ -253,7 +267,14 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
             </div>
         </div>
         <div className='px-1 mt-2 flex items-center justify-start space-x-3'>
-            <button onClick={handleAddLyricsVerse} className='bg-sky-300 text-blue-700 hover:bg-sky-200 flex items-center justify-center uppercase p-1 text-sm font-semibold tracking-tight'>Add Lyrics</button>
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Add Lyrics"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddLyricsVerse}
+                />
             {verseError && <div className='text-red-500 font-medium tracking-tighter text-sm'>Please fill in all fields or change your [Verse type]</div>}
         </div>
         </>
@@ -272,10 +293,6 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
             ))}
         </div>
         }
-        {/* <div className='flex items-center justify-between'>
-            <div onClick={() => setCurrentInput(0)} className=' bg-gray-700 hover:bg-gray-500 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Video Info</div>
-            <div onClick={() => setCurrentInput(2)} className=' border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Product</div>
-        </div> */}
     </div>
   )
 }

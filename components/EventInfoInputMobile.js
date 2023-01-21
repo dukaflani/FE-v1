@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { eventTypes } from '../data/events'
 import InputField from './reuseable-components/InputField'
@@ -10,6 +10,7 @@ import slugify from 'slugify'
 import { nanoid } from 'nanoid'
 import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 import { useSelector } from 'react-redux'
+import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const EventInfoInput = () => {
     const router = useRouter()
@@ -59,7 +60,7 @@ const EventInfoInput = () => {
     eventInfo.append("url_id", nanoId);
 
 
-    const handleAddProduct = () => {
+    const handleAddEvent = () => {
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/events/`,
         {
             method: 'POST',
@@ -167,8 +168,21 @@ const EventInfoInput = () => {
         </div>
         <br/>
         <div className='flex items-center justify-between'>
-            <div className='bg-red-600 hover:bg-red-400 text-white cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Cancel</div>
-            <div onClick={handleAddProduct} className='border border-gray-500 text-gray-500 hover:bg-gray-300 hover:border-gray-300 cursor-pointer px-2 py-1 uppercase font-semibold text-sm tracking-tight'>Add Event</div>
+                <ApiButtonWithSpinner
+                    title="Cancel"
+                    bgColor="bg-red-600"
+                    hoverColor="hover:bg-red-400"
+                    textColor="text-white"
+                    onClick={() => router.push({pathname: '/dashboard/events'})}
+                />
+                <ApiButtonWithSpinner
+                    // loading={uploadingVideo}
+                    title="Add Event"
+                    bgColor="bg-blue-500"
+                    hoverColor="hover:bg-blue-400"
+                    textColor="text-white"
+                    onClick={handleAddEvent}
+                />
         </div>
     </div>
   )
