@@ -37,8 +37,8 @@ const EventModalContent = ({ setModalOpen, event }) => {
             <div className='w-1/2 flex flex-col pt-5'>
                 <div className='flex w-full px-5'>
                 <div className='flex py-2 border-b px-1 bg-white w-full space-x-2'>
-                    <div className='w-2/12 flex items-center justify-center'>
-                        <div className='relative h-12 w-full'>
+                    <div className='flex items-center justify-center'>
+                        <div className='relative h-12 w-12 xl:h-16 xl:w-16'>
                             <Image
                                 src={!event?.profile_avatar ? noAvatar : event?.profile_avatar}
                                 layout="fill"
@@ -47,7 +47,7 @@ const EventModalContent = ({ setModalOpen, event }) => {
                                 />
                         </div>
                     </div>
-                <div className='w-10/12 flex flex-col items-start justify-center'>
+                <div className='flex-1 flex flex-col items-start justify-center'>
                     <div className='flex space-x-1'>
                     <div className='text-base tracking-tighter font-medium text-gray-900 line-clamp-2'>{event?.stage_name ? event?.stage_name : 'Event Organizer'}</div>
                     {event?.verified && 

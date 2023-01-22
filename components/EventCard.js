@@ -29,7 +29,7 @@ const EventCard = ({ event, isFirst }) => {
   return (
     <>
     { isFirst == 0 && <div className='flex justify-end' >
-        <div className='w-5/12 bg-gray-500 text-white flex items-center justify-end px-1 uppercase space-x-2 animate-pulse'>
+        <div className='bg-gray-500 text-white flex items-center justify-end px-1 uppercase space-x-2 animate-pulse'>
             <p className='text-xs'>Latest Event</p>
             <CalendarIcon className='h-5 w-5'/>
         </div>

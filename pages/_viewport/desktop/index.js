@@ -56,7 +56,6 @@ const Home = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
       <Navigation/>
       <main className='pt-36'>
@@ -96,8 +95,8 @@ const Home = () => {
           </div>
           <div className='w-1/12'></div>
           {/* <div className='flex-1 pr-5 w-11/12 pl-24'> */}
-          <div className='flex-1 pr-5 w-11/12 max-w-7xl'>
-            <div className='grid grid-cols-4 gap-x-3 gap-y-10'>
+          <div className='flex-1 pr-5 w-11/12 max-w-7xl mx-auto'>
+            <div className='grid grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-10'>
               {videos?.length > 0 ? 
               <VideoCardMapPage videos={videos} loading={loading} hasMore={hasMore} setPageNumber={setPageNumber} />
               :

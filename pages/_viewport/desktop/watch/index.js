@@ -58,10 +58,10 @@ const WatchCurrentVideo = () => {
       <Navigation/>
       <main className='pt-20'>
         <div className='flex max-w-6xl mx-auto space-x-5'>
-            <section className='w-8/12'>
+            <section className='w-8/12 pl-4 xl:pl-0'>
               {!isLoading ? <CurrentVideoPlayer video={currentVideo} /> : <CurrentVideoPlayerSkeleton/>}
             </section>
-            <section className='w-4/12'>
+            <section className='w-4/12 pr-4 xl:pr-0'>
               {!isLoading ? <CurrentVideoPanel video={currentVideo} /> : <CurrrentVideoPanelSkeleton/>}
             </section>
         </div>
