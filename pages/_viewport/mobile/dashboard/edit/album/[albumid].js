@@ -28,6 +28,7 @@ const editAlbum = () => {
   const [albumOptionType, setAlbumOptionType] = useState('')
   const [editedAlbum, setEditedAlbum] = useState('')
   const [editedErrors, setEditedErrors] = useState(null)
+  const [editingAlbum, setEditingAlbum] = useState(false)
   
   
   function closeModal() {
@@ -79,6 +80,7 @@ const editAlbum = () => {
 
 
       const handleEditAlbum = () => {
+        setEditingAlbum(true)
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/album/${albumid}/`,
         {
             method: 'PATCH',
@@ -88,10 +90,12 @@ const editAlbum = () => {
         )
         .then((response) => response.json())
         .then((result) => {
+          setEditingAlbum(false)
           setIsOpen(false)
           setEditedAlbum(result)
         })
         .catch((error) => {
+          setEditingAlbum(false)
           setEditedErrors(error)
         });
     }
@@ -269,7 +273,7 @@ const editAlbum = () => {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleEditAlbum}
                     >
-                      Edit
+                      {editingAlbum ? "Editing..." : "Edit"}
                     </button>
                   </div>
                 </Dialog.Panel>

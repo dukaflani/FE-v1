@@ -22,7 +22,7 @@ const MyProducts = ({ product }) => {
   } 
 
 
-    const [ deleteProduct ] = useDeleteProductMutation()
+    const [ deleteProduct, { isLoading: deleteIsLoading } ] = useDeleteProductMutation()
 
     function closeModal() {
         setIsOpen(false)
@@ -86,18 +86,6 @@ const MyProducts = ({ product }) => {
                     <div className='text-sm font-semibold tracking-tight text-gray-800'>Description</div>
                     <div className="text-sm leading-4 tracking-tight text-gray-800 whitespace-pre-wrap line-clamp-1">{product?.description}</div>
                 </div>
-                {/* <div className='px-2 text-sm tracking-tight mt-2'>Colors</div>
-                <div className='flex space-x-1 px-2'>
-                    {colorOptions.map((colorOption, i) => (
-                        <div key={i} style={{backgroundColor: `${colorOption}`, opacity:0.8}} onClick={() => setActiveColor(i)} className='h-5 w-5 cursor-pointer text-gray-300 flex items-center justify-center border border-black'>{activeColor === i && <CheckIcon/>}</div>
-                    ))}
-                </div>
-                <div className='px-2 text-sm tracking-tight mt-2'>Sizes</div>
-                <div className='flex space-x-3 px-2'>
-                    {sizeOptions.map((sizeOption, i) => (
-                        <div  key={i} className={activeSize === i ? activeSizeStyles : regularSizeStyles} onClick={() => setActiveSize(i)}>{sizeOption}</div>
-                    ))}
-                </div> */}
             </div>
             <div className='grid grid-cols-2 border-t bg-gray-100 items-center justify-center cursor-pointer mt-3 uppercase text-xs tracking-wider font-semibold'>
               {currentUser == productOwner ? <Link href={`/dashboard/edit/product/${product?.id}`}>
@@ -166,7 +154,7 @@ const MyProducts = ({ product }) => {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteProduct}
                     >
-                      Yes, Delete!
+                      {deleteIsLoading ? "Deleting..." : "Yes, Delete!"}
                     </button>}
                   </div>
                 </Dialog.Panel>

@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import slugify from 'slugify'
+import { useRouter } from 'next/router'
 import { useAddGenreMutation } from '../redux/features/videos/videosApiSlice'
 import InputField from './reuseable-components/InputField'
 import TextAreaField from './reuseable-components/TextAreaField'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const GenreInfoInput = ({ setCurrentInput, currentInput }) => {
+    const router = useRouter()
     const [genreName, setGenreName] = useState('')
     const [genreOrigin, setGenreOrigin] = useState('')
     const [genreParent, setGenreParent] = useState('')
@@ -13,7 +15,7 @@ const GenreInfoInput = ({ setCurrentInput, currentInput }) => {
     const [createdGenre, setCreatedGenre] = useState(null)
     const [genreErrors, setgenreErrors] = useState(null)
     const [fieldErrors, setFieldErrors] = useState(null)
-    const [ addGenre ] = useAddGenreMutation()
+    const [ addGenre, { isLoading: addGenreLoading } ] = useAddGenreMutation()
 
     const genreSlug =  slugify(genreName, {lower: true})
 
@@ -34,6 +36,7 @@ const GenreInfoInput = ({ setCurrentInput, currentInput }) => {
                 setGenreOrigin('')
                 setGenreParent('')
                 setGenreDescription('')
+                router.push({ pathname: '/dashboard/upload', query: { item: 'video' } })
             } catch (error) {
                 setgenreErrors(error)
                 setTimeout(() => {
@@ -111,7 +114,7 @@ const GenreInfoInput = ({ setCurrentInput, currentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
                 />
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addGenreLoading}
                     title="Add Genre"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"

@@ -12,7 +12,7 @@ const MyAlbumsObject = ({ album }) => {
     const albumId = album?.id
     let [isOpen, setIsOpen] = useState(false)
     const [deleteAlbumError, setDeleteAlbumError] = useState(null)
-    const [ deleteAlbum ] = useDeleteAlbumMutation()
+    const [ deleteAlbum, { isLoading: deleteAlbumLoading } ] = useDeleteAlbumMutation()
 
 
     function closeModal() {
@@ -144,7 +144,7 @@ const MyAlbumsObject = ({ album }) => {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteAlbum}
                     >
-                      Yes, Delete!
+                      {deleteAlbumLoading ? "Deleting..." : "Yes, Delete!"}
                     </button>
                   </div>
                 </Dialog.Panel>

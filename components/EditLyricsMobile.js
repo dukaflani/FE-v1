@@ -14,7 +14,7 @@ const EditLyrics = ({ verse }) => {
     const [lyricsBody, setLyricsBody] = useState('')
     const [editedLyricsObject, setEditedLyricsObject] = useState('')
     const [editErrors, setEditErrors] = useState(null)
-    const [ editLyrics ] = useEditLyricsMutation()
+    const [ editLyrics, { isLoading: editIsLoading } ] = useEditLyricsMutation()
     const [fieldErrors, setFieldErrors] = useState('')
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const EditLyrics = ({ verse }) => {
         <div className='flex flex-col w-full'>
             <div className='shadow mb-5 flex  w-full bg-gray-50'>
                 <div className='w-11/12 flex flex-col pt-2 px-2 pb-1'>
-                    <div className='line-clamp-1 border-b mb-1 text-gray-800'>{verse?.type}</div>
+                    <div className='line-clamp-1 border-b mb-1 text-gray-800'>{verse?.type.replace(/_/g, "-")}</div>
                     <div className='line-clamp-1 text-sm text-gray-400'>{verse?.artist}</div>
                 </div>
                 <div onClick={openModal} className=' w-1/12 flex items-start justify-end px-3 py-2'>
@@ -153,7 +153,7 @@ const EditLyrics = ({ verse }) => {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleEditLyrics}
                     >
-                      Edit
+                      {editIsLoading ? "Editing..." : "Edit"}
                     </button>
                   </div>
                 </Dialog.Panel>

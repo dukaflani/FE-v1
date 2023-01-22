@@ -28,6 +28,7 @@ const EventInfoInput = () => {
     const [createdEvent, setCreatedEvent] = useState(null)
     const [errorMessage, setErrorMessage] = useState('')
     const [nanoId, setNanoId] = useState('')
+    const [addingEvent, setAddingEvent] = useState(false)
     const eventSlug = slugify(eventTitle, {lower: true})
     const { data: accessToken } = useFetchAccessTokenQuery()
     const { userProfile } = useSelector((state) => state.auth)
@@ -61,6 +62,7 @@ const EventInfoInput = () => {
 
 
     const handleAddEvent = () => {
+        setAddingEvent(true)
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/events/`,
         {
             method: 'POST',
@@ -71,9 +73,11 @@ const EventInfoInput = () => {
         .then((response) => response.json())
         .then((result) => {
             setCreatedEvent(result)
+            setAddingEvent(false)
             router.push("/dashboard/events")
         })
         .catch((error) => {
+            setAddingEvent(false)
             setErrorMessage(error)
         });
     }
@@ -176,7 +180,7 @@ const EventInfoInput = () => {
                     onClick={() => router.push({pathname: '/dashboard/events'})}
                 />
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addingEvent}
                     title="Add Event"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"

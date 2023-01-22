@@ -12,6 +12,7 @@ export default async (req, res) => {
         editAlbumTrackInfo.append("title", req.body.title)
         editAlbumTrackInfo.append("video", req.body.video)
         editAlbumTrackInfo.append("featuring", req.body.featuring)
+        editAlbumTrackInfo.append("album", req.body.album)
 
         if (access === false) {
             return res.status(401).json({

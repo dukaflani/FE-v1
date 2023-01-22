@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import slugify from 'slugify'
 import { nanoid } from 'nanoid'
 import { albumActions, albumTypes } from '../data/musicCollection'
-import { useFetchAccessTokenQuery, useFetchCreatedAlbumTracksListMutation, useFetchUserVideosQuery } from '../redux/features/videos/videosApiSlice'
+import { useAddAlbumTrackMutation, useFetchAccessTokenQuery, useFetchCreatedAlbumTracksListMutation, useFetchUserVideosQuery } from '../redux/features/videos/videosApiSlice'
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
 import SelectInputFieldWithKeys from './reuseable-components/SelectInputFieldWithKeys'
@@ -14,12 +14,15 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
     const { user } = useSelector((state) => state.auth)
     const currentUser = user?.info?.id
 
+
     const queryParams = {
         user: currentUser,
       }
 
     const { data: myVideos } = useFetchUserVideosQuery(queryParams)
-
+    const [ addAlbumTrack, { isLoading: addAlbumTrackLoading } ] = useAddAlbumTrackMutation()
+    const [ fetchCreatedAlbumTracksList ] = useFetchCreatedAlbumTracksListMutation()
+    
 
 
     const [albumTitle, setAlbumTitle] = useState("")
@@ -32,26 +35,30 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
     const [errorMessage, setErrorMessage] = useState('')
     const [missingValuesError, setMissingValuesError] = useState(false)
     const [nanoId, setNanoId] = useState('')
+    const [addingAlbum, setAddingAlbum] = useState(false)
 
     const [albumTrackTitle, setAlbumTrackTitle] = useState('')
-    const [albumTrackVideo, setAlbumTrackVideo] = useState('')
+    const [albumTrackVideo, setAlbumTrackVideo] = useState(1)
     const [albumTrackFeatures, setAlbumTrackFeatures] = useState('')
     const [createdAlbumTrack, setCreatedAlbumTrack] = useState(null)
     const [createdTracksList, setCreatedTracksList] = useState([])
     const [missingAlbumTrackTitle, setMissingAlbumTrackTitle] = useState(false)
     const [albumTrackCatchError, setAlbumTrackCatchError] = useState('')
+    const [errorMessage2, setErrorMessage2] = useState('')
+    const [errorMessage3, setErrorMessage3] = useState('')
+
 
     useEffect(() => {
         setNanoId(nanoid(16))
     }, [])
 
-    const [ fetchCreatedAlbumTracksList ] = useFetchCreatedAlbumTracksListMutation()
 
     const albumTitleSlug = slugify(albumTitle, {lower: true})
     const { data: accessToken } = useFetchAccessTokenQuery()
     const refreshToken = `JWT ${accessToken?.access}`
     const myHeaders = new Headers();
     myHeaders.append("Authorization", refreshToken);
+
 
     const albumInfo = new FormData();
     albumInfo.append("title", albumTitle);
@@ -68,13 +75,11 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
     albumTrackInfo.append("album", createdAlbum?.id);
     albumTrackInfo.append("video", albumTrackVideo);
     albumTrackInfo.append("featuring", albumTrackFeatures);
-
-    const createdAlbumId = {
-        "createdalbum_id": createdAlbum?.id,
-    }
+    
     
     const handleAddAlbum = () => {
         if (albumTitle) {
+            setAddingAlbum(true)
             fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/album/`,
             {
                 method: 'POST',
@@ -88,30 +93,43 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
                 setAlbumLink(" ")
                 setAlbumLinkTitle(" ")
                 setAlbumCoverImage(null)
+                setAddingAlbum(false)
             })
             .catch((error) => {
                 setErrorMessage(error)
+                setAddingAlbum(false)
                 setTimeout(() => {
                     setErrorMessage('')
                 }, 5000);
             });
         } else {
             setMissingValuesError(true)
+            setAddingAlbum(false)
             setTimeout(() => {
                 setMissingValuesError(false)
             }, 5000);
         }
     }
 
+    const newAlbumTrack = {
+        "title": albumTrackTitle,
+        "album": createdAlbum?.id,
+        "video": albumTrackVideo ? albumTrackVideo : 1,
+        "featuring": albumTrackFeatures,
+    }
+
+    const createdAlbumId = {
+        "createdalbum_id": createdAlbum?.id,
+    }
+    
+
     const handleAddAlbumTrack = async () => {
-        if (albumTrackTitle) {
+        if (albumTrackTitle != '') {
             try {
-                const resAlbumTrack = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/album-track/`, {method: 'POST', headers: myHeaders, body: albumTrackInfo})
-                const dataAlbumTrack = await resAlbumTrack.json();
-                setCreatedAlbumTrack(dataAlbumTrack)
+                setCreatedAlbumTrack(await addAlbumTrack(newAlbumTrack))
                 setCreatedTracksList(await fetchCreatedAlbumTracksList(createdAlbumId))
                 setAlbumTrackTitle(" ")
-                setAlbumTrackVideo(" ")
+                setAlbumTrackVideo(1)
                 setAlbumTrackFeatures("")  
             } catch (error) {
                 if (error) {
@@ -120,9 +138,9 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
                         setAlbumTrackCatchError('')
                     }, 5000);
                 }
-                setErrorMessage(error?.message);
-                setErrorMessage(error);
-            }
+                setErrorMessage2(error?.message);
+                setErrorMessage3(error);
+            } 
         } else {
             setMissingAlbumTrackTitle(true)
             setTimeout(() => {
@@ -130,6 +148,7 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
             }, 5000);
         }
     }
+
 
   return (
     <div className='p-2 bg-white shadow-md border-b mb-10'>
@@ -218,7 +237,7 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
                 />
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addingAlbum}
                     title="Create"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -251,7 +270,7 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
                         setPrimaryState={setAlbumTrackVideo}
                         mandatory={true}
                         name='track-video'
-                        data={myVideos?.data}
+                        data={myVideos?.data?.results}
                         selectTitle='Select a video'
                         fieldTitle="Related Video"
                         // helperText="helper"
@@ -277,7 +296,7 @@ const AlbumInfoInput = ({ setCurrentInput, currentInput }) => {
         </div>
         <div className='px-1 mt-2'>
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addAlbumTrackLoading}
                     title="Add Track"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"

@@ -205,7 +205,7 @@ const EditEvent = () => {
                 onClick={() => router.push("/dashboard/events")}
             />
             {eventUserId == currentUser && <ApiButtonWithSpinner
-                title='Edit'
+                title='Edit Event'
                 bgColor="bg-blue-500"
                 hoverColor="hover:bg-blue-400"
                 textColor="text-white"

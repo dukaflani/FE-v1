@@ -85,7 +85,7 @@ const Home = () => {
                   </div>
                   {/* <div className='text-sm'>Profile</div> */}
                 </li>
-                <li onClick={() => router.push('/dashboard/upload')} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
+                <li onClick={() => router.push({ pathname: '/dashboard/upload', query: { item: 'video' } })} className='cursor-pointer flex flex-col items-center justify-center animateIcon'>
                   <div>
                     {!true ? <CloudArrowUpIcon className="w-6 h-6"/> : <CloudArrowUpIconOutline className="w-6 h-6"/>}
                   </div>

@@ -31,7 +31,7 @@ const { data: streaminglinks } = useFetchStreamingLinksQuery(queryParams)
                         </div>
                     </div>
                     <div className='w-6/12 flex items-start justify-center flex-col pl-2'>
-                        <div className='text-sm font-semibold tracking-tight text-gray-800 line-clamp-1'>{!streaminglinks?.data[i]?.streaming_service ? 'Loading links' : streaminglinks?.data[i]?.streaming_service.replace(/-/g, " ")}</div>
+                        <div className='text-sm font-semibold tracking-tight text-gray-800 line-clamp-1'>{!streaminglinks?.data[i]?.streaming_service ? 'Loading links' : streaminglinks?.data[i]?.streaming_service.replace(/_/g, " ")}</div>
                         <div className='text-xs tracking-tight text-gray-800 w-48 truncate'>{!streaminglinks?.data[i]?.link ? 'no link found' : streaminglinks?.data[i]?.link}</div>
                     </div>
                     <div className='w-3/12 flex items-center justify-end pr-3'>

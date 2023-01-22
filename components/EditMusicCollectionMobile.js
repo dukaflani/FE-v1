@@ -15,13 +15,14 @@ const EditMusicCollection = ({ albumTrack }) => {
       }
 
     const { data: myVideos } = useFetchUserVideosQuery(queryParams)
-    const [ editAlbumTrack ] = useEditAlbumTrackMutation()
+    const [ editAlbumTrack, { isLoading: editAlbumLoading } ] = useEditAlbumTrackMutation()
 
     let [isOpen, setIsOpen] = useState(false)
     const [albumTrackTitle, setAlbumTrackTitle] = useState('')
     const [albumTrackVideo, setAlbumTrackVideo] = useState('')
     const [albumTrackFeatures, setAlbumTrackFeatures] = useState('')
     const [editedAlbumTrackObject, seteditedAlbumTrackObject] = useState('')
+    const [track_albumID, setTrack_albumID] = useState('')
     const [editErrors, setEditErrors] = useState(null)
     const [fieldErrors, setFieldErrors] = useState('')
 
@@ -29,6 +30,7 @@ const EditMusicCollection = ({ albumTrack }) => {
       setAlbumTrackTitle(albumTrack?.title)
       setAlbumTrackVideo(albumTrack?.video)
       setAlbumTrackFeatures(albumTrack?.featuring)
+      setTrack_albumID(albumTrack?.album)
     }, [albumTrack])
     
 
@@ -45,6 +47,7 @@ const EditMusicCollection = ({ albumTrack }) => {
         "title": albumTrackTitle,
         "video": albumTrackVideo,
         "featuring": albumTrackFeatures,
+        "album": track_albumID,
       }
 
       const handleEditAlbumTrack = async () => {
@@ -159,7 +162,7 @@ const EditMusicCollection = ({ albumTrack }) => {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleEditAlbumTrack}
                     >
-                      Edit
+                      {editAlbumLoading ? "Editing..." : "Edit"}
                     </button>
                   </div>
                 </Dialog.Panel>

@@ -11,7 +11,7 @@ const MySkizaTunesObject = ({ skiza }) => {
     let [isOpen, setIsOpen] = useState(false)
     const [deleteSkizaTuneError, setDeleteSkizaTuneError] = useState(null)
     const numOfSkizaTuneLinks = skiza?.skizatune_set?.length
-    const [ deleteSkizaTune ] = useDeleteSkizaTuneMutation()
+    const [ deleteSkizaTune, { isLoading: deleteSkizaTuneLoading } ] = useDeleteSkizaTuneMutation()
 
     function closeModal() {
         setIsOpen(false)
@@ -131,7 +131,7 @@ const MySkizaTunesObject = ({ skiza }) => {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteSkizaTune}
                     >
-                      Yes, Delete!
+                      {deleteSkizaTuneLoading ? "Deleting..." : "Yes, Delete!"}
                     </button>
                   </div>
                 </Dialog.Panel>

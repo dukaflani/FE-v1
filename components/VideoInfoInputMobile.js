@@ -151,7 +151,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
                     mandatory={true}
                     // placeholderText='Song title...'
                     title="YouTube Video ID"
-                    helperText=""
+                    helperText="Important: Remove any space infront of the ID after copy/paste"
                     // helperTextLink="here"
                     // onHelperTextLinkClick={() => setCurrentInput(6)}
                 />

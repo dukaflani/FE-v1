@@ -8,13 +8,11 @@ export default async (req, res) => {
 
 
 
-        const skizaTuneInfo = new FormData()
-        skizaTuneInfo.append("country", req.body.country)
-        skizaTuneInfo.append("carrier", req.body.carrier)
-        skizaTuneInfo.append("sms", req.body.sms)
-        skizaTuneInfo.append("code", req.body.code)
-        skizaTuneInfo.append("ussd", req.body.ussd)
-        skizaTuneInfo.append("skiza_tune", req.body.skiza_tune)
+        const albumTrackInfo = new FormData()
+        albumTrackInfo.append("title", req.body.title)
+        albumTrackInfo.append("album", req.body.album)
+        albumTrackInfo.append("video", req.body.video)
+        albumTrackInfo.append("featuring", req.body.featuring)
 
         if (access === false) {
             return res.status(401).json({
@@ -24,12 +22,12 @@ export default async (req, res) => {
         }
 
         try {
-            const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/skiza-tune/`, {
+            const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/album-track/`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `JWT ${access}`
                 },
-                body: skizaTuneInfo
+                body: albumTrackInfo
             });
             const data = await apiResponse.json();
 

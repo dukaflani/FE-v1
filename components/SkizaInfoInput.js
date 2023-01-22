@@ -15,8 +15,8 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
     const [addedSkizaTuneInfo, setAddedSkizaTuneInfo] = useState(null)
     const [skizaTuneInfoError, setSkizaTuneInfoError] = useState(false)
     const [skizaTuneInfoList, setSkizaTuneInfoList] = useState(null)
-    const [ addSkizaTune ] = useAddSkizaTuneMutation()
-    const [ addSkizaTuneInfo ] = useAddSkizaTuneInfoMutation()
+    const [ addSkizaTune, { isLoading: addSkizaLoading  } ] = useAddSkizaTuneMutation()
+    const [ addSkizaTuneInfo, { isLoading: addSkizaInfoLoading } ] = useAddSkizaTuneInfoMutation()
     const [ fetchCreatedSkizaTuneList ] = useFetchCreatedSkizaTuneListMutation()
 
     const createdSkizaTuneId = {
@@ -96,7 +96,7 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
                 />
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addSkizaLoading}
                     title="Create"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -179,7 +179,7 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
         </div>
         <div className='px-1 mt-2 flex items-center justify-start space-x-1'>
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addSkizaInfoLoading}
                     title="Add Skiza"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"

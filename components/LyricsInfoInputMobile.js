@@ -26,8 +26,8 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [addedVerse, setAddedVerse] = useState(null)
     const [verseError, setVerseError] = useState(false)
     const [versesList, setVersesList] = useState([])
-    const [ addLyrics ] = useAddLyricsMutation()
-    const [ addLyricsVerse ] = useAddLyricsVerseMutation()
+    const [ addLyrics, { isLoading: addLyricsLoading } ] = useAddLyricsMutation()
+    const [ addLyricsVerse, { isLoading: addLyricsVerseLoading } ] = useAddLyricsVerseMutation()
     const [ fetchCreatedLyricsVerses ] = useFetchCreatedLyricsVersesMutation()
     const [nanoId, setNanoId] = useState('')
     const { user } = useSelector((state) => state.auth)
@@ -211,7 +211,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
                 />
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addLyricsLoading}
                     title="Create"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -268,7 +268,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         </div>
         <div className='px-1 mt-2 flex items-center justify-start space-x-3'>
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addLyricsVerseLoading}
                     title="Add Lyrics"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -285,7 +285,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
             {[...Array(versesList?.data?.data?.length).keys()].map((service, i) => (
                 <div key={i} className='flex items-center justify-start hover:bg-gray-50 w-1/2 px-2 py-1 cursor-pointer'>
                     <div className='w-10/12'>
-                        <div className='text-base font-semibold tracking-tight text-gray-800'>{versesList?.data?.data[i]?.type}</div>
+                        <div className='text-base font-semibold tracking-tight text-gray-800'>{versesList?.data?.data[i]?.type.replace(/_/g, "-")}</div>
                         <div className='text-xs font-medium tracking-tight text-gray-800'>{versesList?.data?.data[i]?.artist}</div>
                         <div className='pr-5 text-ellipsis w-11/12 truncate text-xs text-gray-400'>{versesList?.data?.data[i]?.body}</div>
                     </div>

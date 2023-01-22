@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TrashIcon,  } from '@heroicons/react/24/outline'
+import { CheckIcon } from '@heroicons/react/24/outline'
 import { useAddStreamingLinksHolderMutation, useAddStreamingLinksMutation,
     useFetchCreatedStreamingLinksMutation,
  } from '../redux/features/videos/videosApiSlice'
@@ -16,8 +16,8 @@ const StreamingLinksInfoInput = ({ setCurrentInput, currentInput }) => {
     const [streamingLink, setStreamingLink] = useState("")
     const [createdStreamingLink, setCreatedStreamingLink] = useState({})
     const [creatredStreamingLinksList, setCreatredStreamingLinksList] = useState([])
-    const [ addStreamingLinksHolder ] = useAddStreamingLinksHolderMutation()
-    const [ addStreamingLinks ] = useAddStreamingLinksMutation()
+    const [ addStreamingLinksHolder, { isLoading: linksHolderLoading } ] = useAddStreamingLinksHolderMutation()
+    const [ addStreamingLinks, { isLoading: streamingLinkLoading } ] = useAddStreamingLinksMutation()
     const { user } = useSelector((state) => state.auth)
     const currentUser = user?.info?.id
     const linkHolderId = createdLink?.data?.data?.id
@@ -47,13 +47,13 @@ const StreamingLinksInfoInput = ({ setCurrentInput, currentInput }) => {
         setCreatedLink(await addStreamingLinksHolder(newStreamingLinksHolder));
     }
 
+
     const handleAddLinks = async () => {
         setCreatedStreamingLink(await addStreamingLinks(linksDetails));
         setCreatredStreamingLinksList(await fetchCreatedStreamingLinks(createdStreamingLinksHolderId))
         setStreamingService(" ")
         setStreamingLink(" ")
     }
-
 
 
   return (
@@ -79,7 +79,7 @@ const StreamingLinksInfoInput = ({ setCurrentInput, currentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
                 />
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={linksHolderLoading}
                     title="Create"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -119,7 +119,7 @@ const StreamingLinksInfoInput = ({ setCurrentInput, currentInput }) => {
         <div className='px-1 mt-2'>
             {createdLink && 
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={streamingLinkLoading}
                     title="Add Link"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -133,11 +133,11 @@ const StreamingLinksInfoInput = ({ setCurrentInput, currentInput }) => {
             {[...Array(creatredStreamingLinksList?.data?.data.length).keys()].map((service, i) => (
                 <div key={i} className='flex items-center justify-center hover:bg-gray-50 w-1/2 px-2 py-1'>
                     <div className='w-10/12'>
-                        <div className='text-base font-semibold tracking-tight text-gray-800'>{creatredStreamingLinksList?.data?.data[i].streaming_service}</div>
+                        <div className='text-base font-semibold tracking-tight text-gray-800'>{creatredStreamingLinksList?.data?.data[i].streaming_service?.replace(/_/g, " ")}</div>
                         <div className='pr-5 text-ellipsis w-11/12 truncate text-xs text-gray-400'>{creatredStreamingLinksList?.data?.data[i].link}</div>
                     </div>
                     <div className='flex items-center justify-end w-2/12'>
-                        {creatredStreamingLinksList?.data?.data[i].id && <TrashIcon className="h-8 w-8 hover:bg-red-200 p-1 text-red-600 rounded-full cursor-pointer"/>}
+                        {creatredStreamingLinksList?.data?.data[i].id && <CheckIcon className="h-8 w-8 hover:bg-red-200 p-1 text-blue-500 rounded-full cursor-pointer"/>}
                     </div>
                 </div>
             ))}

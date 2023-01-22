@@ -1,5 +1,6 @@
 import { useState, Fragment, useEffect } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
+import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import slugify from 'slugify'
 import { nanoid } from 'nanoid'
@@ -12,6 +13,7 @@ import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 
 const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
+    const router = useRouter()
     const [isOpen, setIsOpen] = useState(false)
     const [productTitle, setProductTitle] = useState("")
     const [currencySymbol, setCurrencySymbol] = useState("")
@@ -24,6 +26,7 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
     const { data: accessToken } = useFetchAccessTokenQuery()
     const [createdProduct, setCreatedProduct] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
+    const [addingProduct, setAddingProduct] = useState(false)
     const [nanoId, setNanoId] = useState('')
     const prodSlug = slugify(productTitle, {lower: true})
 
@@ -63,6 +66,7 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
       productInfo.append("url_id", nanoId);
 
       const handleAddProduct = () => {
+        setAddingProduct(true)
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/products/`,
         {
             method: 'POST',
@@ -73,6 +77,8 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
         .then((response) => response.json())
         .then((result) => {
             setCreatedProduct(result)
+            setAddingProduct(false)
+            router.push({ pathname: '/dashboard/products' })
             setProductTitle(" ")
             setLocalPrice(" ")
             setDollarPrice(" ")
@@ -194,7 +200,7 @@ const ProductInfoInput = ({ setCurrentInput, currentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/products'})}
                 />
                 <ApiButtonWithSpinner
-                    // loading={uploadingVideo}
+                    loading={addingProduct}
                     title="Add Product"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
