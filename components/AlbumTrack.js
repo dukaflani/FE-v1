@@ -35,11 +35,9 @@ const AlbumTrack = ({ track }) => {
             <div className='text-xs text-gray-400'>Loading tracks...</div>}
         </div>
         <div className='w-2/12 flex items-center justify-center'>
-          {track?.video ? (
-            <div onClick={() => handlePlayVideo(track?.youtube_id)} >< PlayPauseIcon className='h-5 w-5 text-blue-600 cursor-pointer' /></div> 
-          ) : (
-            <div>< PlayPauseIcon className='h-5 w-5 text-gray-100' /></div>
-          )}
+          {track?.video == 1 && <div>< PlayPauseIcon className='h-5 w-5 text-gray-100' /></div>}
+          {track?.video == null && <div>< PlayPauseIcon className='h-5 w-5 text-gray-100' /></div>}
+          {track?.video > 1 && <div onClick={() => handlePlayVideo(track?.youtube_id)} >< PlayPauseIcon className='h-5 w-5 text-blue-600 cursor-pointer' /></div>}
         </div>
     </div>
   )
