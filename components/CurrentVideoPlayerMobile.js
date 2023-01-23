@@ -211,7 +211,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     }
 
 
-    console.log("created comment:", commentErrors);
+    console.log("created comment 4 real:", createdComment);
     console.log("comment body:", commentBody);
     console.log("comment video:", video?.details?.id);
     console.log("comment user profile:", userProfileId);
@@ -223,7 +223,8 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             "video": video?.details?.id,
             "customuserprofile": userProfileId,
         }
-    
+
+
         const handleAddComment = async () => {
             if (commentBody && video?.details?.id && userProfileId) {
                 try {
@@ -241,6 +242,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 setFieldError('Please fill in all the fields')
             }
         }
+
 
         const handleAddCommentByEnterKey = async (e) => {
             if (e.key === 'Enter') {
