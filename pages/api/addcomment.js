@@ -40,7 +40,7 @@ export default async (req, res) => {
             }
         } catch (error) {
             return res.status(500).json({
-                error: 'Something went wrong when getting your data'
+                error: 'Something went wrong when getting your data here!'
             });
         }
         
