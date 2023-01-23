@@ -22,7 +22,7 @@ const [editedComment, setEditedComment] = useState(null)
 const [editCommentError, setEditCommentError] = useState(null)
 
 const [ editComment ] = useEditCommentMutation()
-const [ deleteComment ] = useDeleteCommentMutation()
+const [ deleteComment, { isLoading: deleteCommentLoading } ] = useDeleteCommentMutation()
 
 const { user } = useSelector((state) => state.auth)
 const currentUser = user?.info?.id
@@ -269,7 +269,7 @@ const videoUploadTime = formatDistanceStrict(
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleDeleteComment}
                     >
-                      Yes, Delete!
+                      {deleteCommentLoading ? "Deleting..." : " Yes, Delete!"}
                     </button>
                   </div>
                 </Dialog.Panel>

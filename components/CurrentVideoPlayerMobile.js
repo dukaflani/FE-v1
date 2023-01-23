@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import { useSelector } from 'react-redux';
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
 import { useRouter } from 'next/router';
 import ShowMoreText from "react-show-more-text";
+import { Menu, Transition, Dialog } from '@headlessui/react'
 import { formatDistanceStrict } from 'date-fns';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, ChevronDownIcon, XMarkIcon,
@@ -22,6 +23,7 @@ import LyricsPageMobile from './LyricsPageMobile';
 import SkizaTunesPageMobile from './SkizaTunesPageMobile';
 import AlbumPageMobile from './AlbumPageMobile';
 import EventsPageMobile from './EventsPageMobile';
+import TextAreaField from './reuseable-components/TextAreaField';
 
 
 
@@ -51,6 +53,8 @@ export const YouTubeIframe = () => {
 const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const router = useRouter()
     const { v, tab } = router.query
+    const [isOpenForComment, setIsOpenForComment] = useState(false)
+
     const [commentBody, setCommentBody] = useState('')
     const [createdComment, setCreatedComment] = useState(null)
     const [commentErrors, setCommentErrors] = useState(null)
@@ -207,6 +211,13 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     }
 
 
+    console.log("created comment:", commentErrors);
+    console.log("comment body:", commentBody);
+    console.log("comment video:", video?.details?.id);
+    console.log("comment user profile:", userProfileId);
+    console.log("comments:", comments);
+
+
           const newComment = {
             "body": commentBody,
             "video": video?.details?.id,
@@ -218,6 +229,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 try {
                     setCreatedComment(await addComment(newComment))
                     setCommentBody('')
+                    setIsOpenForComment(false)
                 } catch (error) {
                     setCommentErrors(error)
                     setTimeout(() => {
@@ -334,6 +346,14 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                     setLikeErrors(error)
                 }
             }
+        }
+
+        function closeCommentModal() {
+            setIsOpenForComment(false)
+        }
+        
+        function openCommentModal() {
+            setIsOpenForComment(true)
         }
       
 
@@ -563,16 +583,18 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                     onClick={() => router.push("/account/login")}
                 >
                 </div>}
-                <div className='flex-1 pr-2 bg-gray-200 rounded-full flex items-center justify-start'>
-                    <input 
+                <div onClick={openCommentModal} className='flex-1 py-1 px-2 bg-gray-200 rounded-full flex items-center justify-start'>
+                    <span>{user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} </span>
+                    {/* <input 
                         placeholder={user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} 
                         className='flex-1 text-sm rounded-full placeholder:text-sm bg-gray-200 border-transparent focus:border-transparent  focus:outline-none ring-transparent focus:ring-transparent py-1' 
                         type="text" 
-                        value={commentBody}
-                        onChange={(e) => setCommentBody(e.target.value)}
-                        onKeyDown={handleAddCommentByEnterKey}
-                    />
-                    {commentBody && <span onClick={handleAddComment} ><PaperAirplaneIcon className='h-5 w-5 text-blue-600'/></span>}
+                        // value={commentBody}
+                        // onChange={(e) => setCommentBody(e.target.value)}
+                        // onKeyDown={handleAddCommentByEnterKey}
+                        onClick={openCommentModal}
+                    /> */}
+                    {/* {commentBody && <span onClick={handleAddComment} ><PaperAirplaneIcon className={isLoading ? 'h-5 w-5 text-red-600' : 'h-5 w-5 text-blue-600'}/></span>} */}
                 </div>
                 </li>
                     <li  className='flex items-center justify-center space-x-2 w-full pl-2 pr-5'>
@@ -733,6 +755,69 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             </div>
         </nav>
     </div>   
+
+    {/* Input comment */}
+    <Transition appear show={isOpenForComment} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeCommentModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-md font-medium leading-6 text-gray-900"
+                  >
+                    Add Comment!
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <TextAreaField
+                        primaryState={commentBody}
+                        setPrimaryState={setCommentBody}
+                    />
+                  </div>
+
+                  <div className="mt-5 space-x-2">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      onClick={closeCommentModal}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={handleAddComment}
+                    >
+                      {isLoading ? "Adding Comment..." : "Add Comment"}
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </>
   )
 }
