@@ -25,8 +25,8 @@ export function middleware(req: NextRequest) {
   const originalPathName = req.nextUrl.pathname
   
   // Check the viewport
-  const viewport = device.type === 'mobile' ? 'mobile' : 'desktop'
-  // const viewport = 'mobile'
+  // const viewport = device.type === 'mobile' ? 'mobile' : 'desktop'
+  const viewport = 'mobile'
   
   //Update the expected url
   req.nextUrl.pathname = `_viewport/${viewport}${originalPathName}`
