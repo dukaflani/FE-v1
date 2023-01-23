@@ -211,11 +211,11 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     }
 
 
-    console.log("created comment 4 real:", createdComment);
-    console.log("comment body:", commentBody);
-    console.log("comment video:", video?.details?.id);
-    console.log("comment user profile:", userProfileId);
-    console.log("comments:", comments);
+    // console.log("created comment 4 real:", createdComment);
+    // console.log("comment body:", commentBody);
+    // console.log("comment video:", video?.details?.id);
+    // console.log("comment user profile:", userProfileId);
+    // console.log("comments:", comments);
 
 
           const newComment = {
@@ -243,25 +243,6 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             }
         }
 
-
-        const handleAddCommentByEnterKey = async (e) => {
-            if (e.key === 'Enter') {
-                if (commentBody && video?.details?.id && userProfileId) {
-                    try {
-                        setCreatedComment(await addComment(newComment))
-                        setCommentBody('')
-                    } catch (error) {
-                        setCommentErrors(error)
-                        setTimeout(() => {
-                            setCommentErrors(null)
-                        }, 5000);
-                    }
-                    
-                } else {
-                    setFieldError('Please fill in all the fields')
-                }
-            }
-          }
 
 
         const deletelikeInfo = {

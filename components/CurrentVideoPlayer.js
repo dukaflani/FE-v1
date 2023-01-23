@@ -119,13 +119,6 @@ const CurrentVideoPlayer = () => {
           let commentCount = numeral(commentCountRaw).format('0,0')
 
 
-          console.log("created comment:", commentErrors);
-          console.log("comment body:", commentBody);
-          console.log("comment video:", video?.details?.id);
-          console.log("comment user profile:", userProfileId);
-          console.log("comments:", comments);
-
-
 
           const newComment = {
             "body": commentBody,
