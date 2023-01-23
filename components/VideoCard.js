@@ -47,7 +47,7 @@ const VideoCard = ({ video }) => {
 
   return (
         <>
-        <article onClick={() => handleCurrentVideo(video?.youtube_id)} className='h-64 cursor-pointer'>
+        <article onClick={() => handleCurrentVideo(video?.youtube_id)} className={video?.id == 1 ? 'hidden' : 'h-64 cursor-pointer'}>
             <div className='h-4/6 relative rounded-md bg-gray-200'>
                 <Image 
                     src={!video?.thumbnail ? thumbnail : video?.thumbnail}

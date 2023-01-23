@@ -15,6 +15,7 @@ const AlbumTracksPage = () => {
       }
 
     const { data: album, isLoading } = useFetchAlbumQuery(queryParams)
+    console.log("album:", album?.data);
 
 
     const albumTrackParams = {
@@ -29,7 +30,7 @@ const AlbumTracksPage = () => {
     <div className='px-5'>
     <div className='text-sm uppercase tracking-tighter text-gray-800 font-semibold'>More from the {album?.data?.album_type}</div>
     <div className='text-sm mb-5 tracking-tighter text-gray-700'>Explore {album?.data?.title} the {album?.data?.album_type} from {video?.details?.stage_name}</div>
-        {album?.data?.id && <div className='p-2 bg-white border-b shadow-sm'>
+        {album?.data?.id > 1 && <div className='p-2 bg-white border-b shadow-sm'>
          <div className='mb-5'>
             <div className='flex mb-5'>
                 <div className='w-1/3'>
@@ -62,6 +63,7 @@ const AlbumTracksPage = () => {
         ))}
         </div>}
         {isLoading && <div className='text-sm tracking-tight leading-4 text-gray-800'>Loading music collection...</div>}
+        {album?.data?.id == 1 && <div className='text-sm tracking-tight leading-4 text-gray-800'>No album found...</div>}
     <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>&copy; {new Date().getFullYear()} {video?.details?.stage_name}</footer>
     </div>
   )

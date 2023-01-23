@@ -40,7 +40,7 @@ export const YouTubeIframe = () => {
 
     return (
         <div className='aspect-w-16 aspect-h-9 bg-black'>
-            <iframe src={`https://www.youtube.com/embed/${videoYoutubeId}?loop=1&modestbranding=1&color=white&playlist=${videoYoutubeId}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+           <iframe src={`https://www.youtube.com/embed/${videoYoutubeId}?loop=1&modestbranding=1&color=white&playlist=${videoYoutubeId}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
         </div>
     )
 }  
@@ -209,13 +209,6 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             setFanbaseErrors(error)
         }
     }
-
-
-    // console.log("created comment 4 real:", createdComment);
-    // console.log("comment body:", commentBody);
-    // console.log("comment video:", video?.details?.id);
-    // console.log("comment user profile:", userProfileId);
-    // console.log("comments:", comments);
 
 
           const newComment = {

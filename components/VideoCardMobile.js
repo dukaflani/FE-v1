@@ -47,7 +47,7 @@ const VideoCardMobile = ({ video }) => {
 
   return (
         <>
-        <article onClick={() => handleCurrentVideo(video?.youtube_id)} className='h-64 md:h-28 landscape:h-28 cursor-pointer md:flex landscape:flex md:w-10/12 landscape:w-10/12 md:mx-auto landscape:mx-auto md:mb-4 landscape:mb-4'>
+        <article onClick={() => handleCurrentVideo(video?.youtube_id)} className={video?.id == 1 ? 'hidden' : 'h-64 md:h-28 landscape:h-28 cursor-pointer md:flex landscape:flex md:w-10/12 landscape:w-10/12 md:mx-auto landscape:mx-auto md:mb-4 landscape:mb-4'}>
             <div className='h-4/6 md:h-full landscape:h-full md:w-4/12 landscape:w-4/12 relative md:rounded-md landscape:rounded-md bg-gray-200'>
                 <Image 
                     src={!video?.thumbnail ? thumbnail : video?.thumbnail}

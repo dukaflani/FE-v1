@@ -1,8 +1,10 @@
-import React from 'react'
+
 
 const SkizaTune = ({ skiza }) => {
+
+
   return (
-    <div className='mb-5 border-b pb-5'>
+    <div className={skiza?.skiza_tune == undefined ? 'hidden' : 'mb-5 border-b pb-5'}>
         <button disabled className='uppercase text-xs bg-gray-800 text-white px-0.5'>{skiza?.country ? skiza?.country : "No Skiza Tune Found"}</button>
         <div className='flex'>
             <div className='w-1/3 text-sm tracking-tight font-semibold text-gray-800'>Carrier</div>
