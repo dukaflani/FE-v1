@@ -2,7 +2,7 @@ import React from 'react'
 
 const CurrentVideoPlayerSkeleton = () => {
   return (
-    <article>
+    <article className='pt-20'>
         <div>
             <div className='w-full'>
                 <div className='aspect-w-16 aspect-h-9 bg-black'></div>
@@ -22,7 +22,7 @@ const CurrentVideoPlayerSkeleton = () => {
             </div>
             <div className='w-2/12 text-sm mt-4 bg-gray-300 p-2 rounded-full animate-pulse'></div>
             <hr className='my-1'/>
-            <div className='w-full flex items-center justify-center mt-3 space-x-3 mb-5 animate-pulse'>
+            {/* <div className='w-full flex items-center justify-center mt-3 space-x-3 mb-5 animate-pulse'>
                 <div className='w-1/12 flex items-center justify-center'>
                     <div className='relative h-12 w-12 rounded-full bg-gray-300'></div>
                 </div>
@@ -32,7 +32,7 @@ const CurrentVideoPlayerSkeleton = () => {
                 <div className='w-2/12 flex items-center justify-center'>
                     <button className='bg-gray-300 text-gray-300 uppercase text-sm p-2 font-semibold tracking-wider'>comment</button>
                 </div>
-            </div>
+            </div> */}
             <div className='mt-10'>
                 {/* <VideoComments/> */}
             </div>

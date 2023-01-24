@@ -56,7 +56,8 @@ const WatchCurrentVideo = () => {
         
       </Head>
       <Navigation/>
-      <main className='pt-20'>
+      {/* <main className='pt-20'> */}
+      <main className='scroll-smooth'>
         <div className='flex max-w-6xl mx-auto space-x-5'>
             <section className='w-8/12 pl-4 xl:pl-0'>
               {!isLoading ? <CurrentVideoPlayer video={currentVideo} /> : <CurrentVideoPlayerSkeleton/>}

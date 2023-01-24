@@ -14,6 +14,7 @@ import VideoComments from './VideoComments';
 import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
     useAddUnlikeMutation, useCurrentVideoObjectsCountQuery } from '../redux/features/videos/videosApiSlice';
+import MoreVideos from './MoreVideos';
 
 export const YouTubeIframe = () => {
     const router = useRouter()
@@ -233,7 +234,7 @@ const CurrentVideoPlayer = () => {
 
 
   return (
-    <article>
+    <article className='pt-20 scroll-smooth' id='currentVideo'>
         <div>
             <YouTubeIframe/>
             <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.details?.genre_title}</div>
@@ -305,42 +306,10 @@ const CurrentVideoPlayer = () => {
             </ShowMoreText>
                 </Linkify>
             </div>
-            <div className='w-full text-sm mt-4'>{commentCount}  {video?.details?.comment_count == 1 ? 'Comment' : 'Comments'}</div>
-            <hr className='mt-2 mb-10'/>
-            <div className='w-full flex items-center justify-center mt-3 space-x-3 mb-5'>
-                <div className='w-1/12 flex items-center justify-center'>
-                    <div className='relative h-12 w-12'>
-                        <Image
-                            src={userProfilePicture}
-                            layout="fill"
-                            objectFit='cover'
-                            className='rounded-full'
-                            />
-                    </div>
-                </div>
-                <div className='w-9/12 flex items-center justify-center'>
-                    <input 
-                        placeholder={user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} 
-                        className='w-full bg-transparent border-transparent border-2 border-b-gray-400 hover:border-b-gray-500 focus:border-b-gray-700 focus:border-x-transparent focus:border-t-transparent focus:outline-none ring-transparent focus:ring-transparent py-1' 
-                        type="text" 
-                        value={commentBody}
-                        onChange={(e) => setCommentBody(e.target.value)}
-                    />
-                </div>
-                <div className='w-2/12 flex items-center justify-center'>
-                    <ApiButtonWithSpinner
-                        loading={isLoading}
-                        title="COMMENT"
-                        onClick={handleAddComment}
-                        bgColor="bg-gray-800"
-                        hoverColor="hover:bg-gray-700"
-                        textColor="text-white"
-                    />
-                    {/* <button onClick={handleAddComment} className='bg-gray-800 text-white uppercase text-sm p-2 font-semibold tracking-wider'>Comment</button> */}
-                </div>
-            </div>
+            <div className='w-full text-sm font-bold tracking-tight text-gray-800 mt-4 uppercase'>More Videos:</div>
+            <hr className='mt-1 mb-10'/>
             <div className='mt-10 mb-36'>
-                <VideoComments videoId={video?.details?.id} />
+                <MoreVideos/>
             </div>
         </div>
     </article>

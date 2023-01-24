@@ -24,6 +24,8 @@ import SkizaTunesPageMobile from './SkizaTunesPageMobile';
 import AlbumPageMobile from './AlbumPageMobile';
 import EventsPageMobile from './EventsPageMobile';
 import TextAreaField from './reuseable-components/TextAreaField';
+import MoreVideosMobile from './MoreVideosMobile';
+import useFetchVideos from '../customHooks/useFetchVideos';
 
 
 
@@ -53,16 +55,12 @@ export const YouTubeIframe = () => {
 const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const router = useRouter()
     const { v, tab } = router.query
-    const [isOpenForComment, setIsOpenForComment] = useState(false)
 
-    const [commentBody, setCommentBody] = useState('')
-    const [createdComment, setCreatedComment] = useState(null)
-    const [commentErrors, setCommentErrors] = useState(null)
     const [fieldError, setFieldError] = useState('')
     const [likeErrors, setLikeErrors] = useState(null)
     const [linkCopied, setLinkCopied] = useState(false)
     const [showDescription, setShowDescription] = useState(false)
-    const [showComments, setShowComments] = useState(false)
+    const [showMoreVideos, setShowMoreVideos] = useState(false)
     const [showProfile, setShowProfile] = useState(false)
     const [fanbaseErrors, setFanbaseErrors] = useState(null)
     const [numberOfLikes, setNumberOfLikes] = useState('') 
@@ -96,10 +94,6 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         video_id: video?.details?.id ? video?.details?.id : 0,
     }
 
-    const queryVideoCommentsParams = {
-        video_id: video?.details?.id ? video?.details?.id : 0,
-    }
-
     const videoProfileQueryParams = {
         profile_id: currentVideoProfileId ? currentVideoProfileId : 0,
     }
@@ -108,22 +102,15 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     
     const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
     const {data: videoProfileLiked } = useProfileLikedQuery(videoProfileQueryParams)
-    const { data: comments } = useFetchCommentsQuery(queryVideoCommentsParams)
     const {data: isLiked } = useVideoLikedQuery(videoLikedQuery)
     const {data: isUnliked } = useVideoUnlikedQuery(videoLikedQuery)
     const {data: currentVideoObjectsCount } = useCurrentVideoObjectsCountQuery(videoObjectsCountQuery)
-    const [ addComment, { isLoading } ] = useAddCommentMutation()
     const [ deleteLike ] = useDeleteLikeMutation()
     const [ deleteUnlike ] = useDeleteUnlikeMutation()
     const [ addLike ] = useAddLikeMutation()  
     const [ addUnlike ] = useAddUnlikeMutation()
     const [ joinFanbase ] = useJoinFanbaseMutation() 
     const [ leaveFanbase ] = useLeaveFanbaseMutation()
-
-    // const is_liked = !!isLiked?.data[0]?.id
-    // const is_unliked = !!isUnliked?.data[0]?.id
-    // const is_loggedin = !!user?.info?.id
-    // const is_a_fan = !!videoProfileLiked?.data[0]?.id
 
 
     useEffect(() => {
@@ -160,9 +147,6 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     let view3 = numeral(view2).format('0,0')
     let viewsCountShort = ''
     view2 < 1000 || view2 % 10 === 0 ? viewsCountShort = numeral(view2).format('0a') :  viewsCountShort = numeral(view2).format('0.0a')
-          
-    const commentCountRaw = currentVideoObjectsCount?.data?.comment_count ? currentVideoObjectsCount?.data?.comment_count : 0
-    let commentCount = numeral(commentCountRaw).format('0,0')
 
     const timeOfVideoUpload = video?.details?.date ? video?.details?.date : new Date()
 
@@ -209,32 +193,6 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             setFanbaseErrors(error)
         }
     }
-
-
-          const newComment = {
-            "body": commentBody,
-            "video": video?.details?.id,
-            "customuserprofile": userProfileId,
-        }
-
-
-        const handleAddComment = async () => {
-            if (commentBody && video?.details?.id && userProfileId) {
-                try {
-                    setCreatedComment(await addComment(newComment))
-                    setCommentBody('')
-                    setIsOpenForComment(false)
-                } catch (error) {
-                    setCommentErrors(error)
-                    setTimeout(() => {
-                        setCommentErrors(null)
-                    }, 5000);
-                }
-                
-            } else {
-                setFieldError('Please fill in all the fields')
-            }
-        }
 
 
 
@@ -323,15 +281,22 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 }
             }
         }
-
-        function closeCommentModal() {
-            setIsOpenForComment(false)
-        }
-        
-        function openCommentModal() {
-            setIsOpenForComment(true)
-        }
       
+    const [pageNumber, setPageNumber] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
+    const [userId, setUserId] = useState('')
+    const [genreId, setGenreId] = useState('')
+    const [uniqueId, setUniqueId] = useState('')
+
+    const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, pageNumber, genreId, uniqueId)
+
+    const filteredVideoArr = videos.filter( filteredVideo =>  {
+        return filteredVideo?.youtube_id != v
+      })
+
+    const filteredVideoArr2 = filteredVideoArr.filter( filteredVideo2 =>  {
+        return filteredVideo2?.id != 1
+      })
 
 
 
@@ -433,34 +398,24 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                         </button>
                     </div>
                 </div>
-                <div onClick={() => setShowComments(true)} className='bg-gray-50 p-2 my-5 rounded-lg'>
-                    <p className='text-sm font-medium text-gray-800 tracking-tight'>Comments &nbsp; <span className='text-xs text-gray-600 font-normal tracking-tight'>{commentCount}</span></p>
+                <div onClick={() => setShowMoreVideos(true)} className='bg-gray-50 p-2 my-5 rounded-lg'>
+                    <p className='text-sm font-medium text-gray-800 tracking-tight'>More Videos:</p>
                     <div className='flex items-start'>
                         <div className='flex-1 pr-3 flex items-start space-x-2'>
-                            {is_loggedin && <div>
-                                {comments?.data?.length > 0  && <picture>
-                                    <img
-                                        src={comments?.data[0]?.avatar ? comments?.data[0]?.avatar : noAvatar}
-                                        alt={comments?.data[0]?.name ? comments?.data[0]?.name : '' }
-                                        className="h-7 w-7 rounded-full md:h-9 md:w-9 landscape:h-9 landscape:w-9 bg-gray-200"
-                                    />
-                                </picture>}
-                                {comments?.data?.length == 0  && <picture>
-                                    <img
-                                        src={userProfilePicture}
-                                        alt="Artist avatar"
-                                        className="h-7 w-7 rounded-full md:h-9 md:w-9 landscape:h-9 landscape:w-9 bg-gray-200"
-                                    />
-                                </picture>}
-                            </div>}
-                            {!is_loggedin && <div
-                                        className="h-7 w-7 rounded-full md:h-9 md:w-9 landscape:h-9 landscape:w-9 bg-gray-200"
-                                        onClick={() => router.push("/account/login")}
-                            >     
-                                </div>}
-                            {comments?.data?.length > 0 ? <div className='flex-1 line-clamp-2 text-xs leading-4 text-gray-900'>{comments?.data?.length > 0 ? comments?.data[0]?.body : ''}</div>
-                            :
-                            <span className='flex-1 bg-gray-200 rounded-full text-xs leading-4 text-gray-900 py-1 px-2'>{is_loggedin ? "Add Comment..." : "Login to Comment..."}</span>}
+                            <div>
+                            {filteredVideoArr2[0]?.thumbnail && <picture>
+                                <img
+                                    src={filteredVideoArr2[0]?.thumbnail}
+                                    alt="."
+                                    className="h-10 w-16 object-cover rounded-md md:h-14 md:w-24 landscape:h-14 landscape:w-24 bg-gray-200"
+                                />
+                            </picture>}
+                            </div>
+                            <div className='pt-1 flex-1'>
+                                <div className='line-clamp-1 text-sm leading-4 text-gray-800 font-semibold'>{filteredVideoArr2[0]?.title ? filteredVideoArr2[0]?.title : 'Loading...'}</div>
+                                <div className='line-clamp-1 text-xs leading-4 text-gray-600'>{filteredVideoArr2[0]?.stage_name}</div>
+                            </div>
+                            
                         </div>
                         <div>
                             <ChevronDownIcon className='h-4 w-4'/>
@@ -483,7 +438,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             </div>
         </div>
     </article>
-    {/* Vide Description */}
+    {/* Video Description */}
     <div className={showDescription ? 'bg-white p-2 fixed bottom-0 left-0 right-0 border-t rounded-t-lg h-[70%]' : 'hidden'}>
         <nav className='relative pt-10'>
             <div className='flex items-center justify-between px-2 border-b pb-2 absolute top-0 left-0 right-0'>
@@ -535,53 +490,27 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
             </div>
         </nav>
     </div>
-    {/* Video Comments */}
-    <div className={showComments ? 'bg-white p-2 fixed bottom-0 left-0 right-0 border-t rounded-t-lg h-[70%]' : 'hidden'}>
+    {/* More Videos */}
+    <div className={showMoreVideos ? 'bg-white p-2 fixed bottom-0 left-0 right-0 border-t rounded-t-lg h-[70%]' : 'hidden'}>
         <nav className='relative pt-10'>
-            <div className='flex items-center justify-between px-2 border-b pb-2 absolute top-0 left-0 right-0'>
-                <span className='font-medium tracking-tight'>Comments</span>
-                <span onClick={() => setShowComments(false)}>
+            <div className='flex items-center justify-between px-2 border-b pb-2 absolute top-0 left-0 right-0 z-50'>
+                <span className='font-medium tracking-tight'>More Videos</span>
+                <span onClick={() => setShowMoreVideos(false)}>
                     <XMarkIcon className='w-4 h-4'/>
                 </span>
             </div>
             <div className='max-h-[35rem] overflow-y-auto pb-20 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-5 pb-32 pt-5'>
-                <li className='w-full flex items-center justify-center space-x-2'>
-                {is_loggedin && <picture>
-                    <img
-                        src={userProfilePicture}
-                        alt={`${user?.info?.stage_name} profile picture`}
-                        className="h-10 w-10 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200"
-                    />
-                </picture>}
-                {!is_loggedin && <div
-                    className="h-10 w-10 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200"
-                    onClick={() => router.push("/account/login")}
-                >
-                </div>}
-                <div onClick={openCommentModal} className='flex-1 py-1 px-2 bg-gray-200 rounded-full flex items-center justify-start'>
-                    <span>{user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} </span>
-                    {/* <input 
-                        placeholder={user?.info ? user?.info?.stage_name ? `Comment as ${user?.info?.stage_name} ...` : `Comment as ${fullName}` : "Login to comment"} 
-                        className='flex-1 text-sm rounded-full placeholder:text-sm bg-gray-200 border-transparent focus:border-transparent  focus:outline-none ring-transparent focus:ring-transparent py-1' 
-                        type="text" 
-                        // value={commentBody}
-                        // onChange={(e) => setCommentBody(e.target.value)}
-                        // onKeyDown={handleAddCommentByEnterKey}
-                        onClick={openCommentModal}
-                    /> */}
-                    {/* {commentBody && <span onClick={handleAddComment} ><PaperAirplaneIcon className={isLoading ? 'h-5 w-5 text-red-600' : 'h-5 w-5 text-blue-600'}/></span>} */}
-                </div>
-                </li>
-                    <li  className='flex items-center justify-center space-x-2 w-full pl-2 pr-5'>
-                        <span className=" border-b w-full">{commentCount}  {commentCount == 1 ? 'Comment' : 'Comments'}</span>
-                    </li>
-                    <li  className='flex flex-col space-y-2 items-start justify-start space-x-2 w-full pl-2 pr-5'>
+                    <li  className='flex flex-col space-y-2 items-start justify-start space-x-2 w-full'>
                         <div className='w-full' >
                             <ul className="space-y-3 w-full">
                                 <li>
                                     <div>
-                                        <VideoCommentsMobile videoId={video?.details?.id} />
+                                        <MoreVideosMobile setShowMoreVideos={setShowMoreVideos} pageNumber={pageNumber} 
+                                        setPageNumber={setPageNumber} searchQuery={searchQuery} setSearchQuery={setSearchQuery} userId={userId}
+                                        setUserId={setUserId} genreId={genreId} setGenreId={setGenreId} uniqueId={uniqueId} setUniqueId={setUniqueId}
+                                        loading={loading} error={error} videos={videos} hasMore={hasMore}
+                                         />
                                     </div>
                                 </li>
                                 <li>
@@ -730,70 +659,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 </ul>
             </div>
         </nav>
-    </div>   
-
-    {/* Input comment */}
-    <Transition appear show={isOpenForComment} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeCommentModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-md font-medium leading-6 text-gray-900"
-                  >
-                    Add Comment!
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <TextAreaField
-                        primaryState={commentBody}
-                        setPrimaryState={setCommentBody}
-                    />
-                  </div>
-
-                  <div className="mt-5 space-x-2">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                      onClick={closeCommentModal}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={handleAddComment}
-                    >
-                      {isLoading ? "Adding Comment..." : "Add Comment"}
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+    </div>
     </>
   )
 }

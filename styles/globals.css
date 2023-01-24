@@ -7,6 +7,7 @@
 @layer base {
     body {
       @apply bg-gray-50;
+      /* @apply scroll-smooth; */
       /* @apply overflow-x-hidden; */
       @apply scrollbar-thin scrollbar-track-white scrollbar-thumb-gray-500 hover:scrollbar-thumb-gray-700;
     }

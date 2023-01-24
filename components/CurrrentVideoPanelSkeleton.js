@@ -2,7 +2,7 @@ import React from 'react'
 
 const CurrrentVideoPanelSkeleton = () => {
   return (
-    <div className='border animate-pulse'>
+    <div className='border animate-pulse mt-20'>
         <div className='flex py-4 border-b px-1 bg-white'>
             <div className='w-2/12 flex items-center justify-center'>
                 <div className='relative h-12 w-12 rounded-full bg-gray-300'></div>

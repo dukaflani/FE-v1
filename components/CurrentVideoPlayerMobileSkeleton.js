@@ -36,11 +36,12 @@ const CurrentVideoPlayerMobileSkeleton = () => {
                 </span>
             </span>
             <span className='bg-gray-300 p-2 rounded-lg animate-pulse'>
-                <span className='text-sm font-medium text-gray-800 tracking-tight'>Comments</span>
+            <span className='text-sm font-medium text-gray-800 tracking-tight'>More Videos:</span>
             <span className='flex items-center justify-center space-x-3'>
-                <span className='bg-gray-600 h-8 w-8 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10'></span>
+                <span className='bg-gray-400 h-10 w-16 rounded-md md:h-14 md:w-24 landscape:h-14 landscape:w-24'></span>
                 <span className='flex-1 flex flex-col items-start justify-center space-y-2'>
-                    <span className='bg-gray-600 animate-pulse p-1 w-6/12 rounded-full'></span>
+                    <span className='bg-gray-400 animate-pulse p-2 w-6/12 rounded-full'></span>
+                    <span className='bg-gray-400 animate-pulse p-1 w-3/12 rounded-full'></span>
                 </span>
                 <span className='flex items-center justify-center'>
                     <ChevronDownIcon className='h-4 w-4 text-gray-600'/>
