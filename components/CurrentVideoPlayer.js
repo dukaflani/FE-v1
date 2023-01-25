@@ -213,9 +213,9 @@ const CurrentVideoPlayer = () => {
 
   return (
     <>
-    <Head>
-        {/* <title>{`${headerTitle} | ${headerStageName} - Dukaflani`}</title> */}
-        {/* <meta name="title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} /> */}
+    {/* <Head>
+        <title>{`${headerTitle} | ${headerStageName} - Dukaflani`}</title>
+        <meta name="title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
 
@@ -232,7 +232,7 @@ const CurrentVideoPlayer = () => {
         <meta property="twitter:title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content={headerThumbnail} />  
-      </Head>
+      </Head> */}
 
 
         <article className='pt-20 scroll-smooth' id='currentVideo'>

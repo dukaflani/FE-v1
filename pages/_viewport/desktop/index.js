@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <SidebarNav>
-      {/* <Head>
+      <Head>
         <title>Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -46,17 +46,17 @@ const Home = () => {
         <meta property="og:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
         <meta property="og:title" content="Dukaflani — Home of Music Videos"/>
         <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="og:image" content="../../../public/media/dukaflani-default-og-poster.png"/>
+        {/* <meta property="og:image" content="../../../public/media/dukaflani-default-og-poster.png"/> */}
 
         
         <meta property="twitter:card" content="summary_large_image"/>
         <meta property="twitter:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
         <meta property="twitter:title" content="Dukaflani — Home of Music Videos"/>
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="twitter:image" content="../../../public/media/dukaflani-default-og-poster.png"/>
+        {/* <meta property="twitter:image" content="../../../public/media/dukaflani-default-og-poster.png"/> */}
 
         
-      </Head> */}
+      </Head>
       <Navigation/>
       <main className='pt-36'>
         <section>
