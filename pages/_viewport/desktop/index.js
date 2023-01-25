@@ -53,9 +53,7 @@ const Home = () => {
         <meta property="twitter:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
         <meta property="twitter:title" content="Dukaflani — Home of Music Videos"/>
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        {/* <meta property="twitter:image" content="../../../public/media/dukaflani-default-og-poster.png"/> */}
-
-        
+        <meta property="twitter:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/>
       </Head>
       <Navigation/>
       <main className='pt-36'>
