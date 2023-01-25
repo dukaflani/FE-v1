@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from "next/legacy/image";
 import { useSelector } from 'react-redux'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
@@ -12,6 +12,7 @@ const StreamingLinkCard = () => {
   }
 
 const { data: streaminglinks } = useFetchStreamingLinksQuery(queryParams)
+
 
 
   return (

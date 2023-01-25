@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import React from 'react'
 import AccountRegister from '../../../../components/AccountRegister'
 
 const register = () => {
@@ -26,7 +25,6 @@ const register = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
       </Head>
         <AccountRegister/>
     </div>

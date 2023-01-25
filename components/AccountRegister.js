@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
 import { roleChoices } from '../data/accountRoles';
 import logoLight from '../public/branding/dukaflani-white-logo-medium.png'
 import SelectInputField from './reuseable-components/SelectInputField'
@@ -12,7 +11,6 @@ import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const AccountRegister = () => {
     const router = useRouter()
-    const dispatch = useDispatch() 
     const [username, setUsername] = useState('')
     const [role, setRole] = useState('')
     const [firstName, setFirstName] = useState('')
@@ -42,7 +40,7 @@ const AccountRegister = () => {
     const handleRegister = async () => {
         if (username && password && email && firstName && lastName && brandName) {
             setRegisteredAccount(await accountRegister(newAccountInfo))
-            router.push("/account/login")
+            router.push({ pathname: '/account/login', query: { account: 'new', p1: 'profile', p2: 'settings' } })
         } else {
             setFieldsError(true)
             setTimeout(() => {

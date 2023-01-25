@@ -11,6 +11,7 @@ import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner';
 
 const LoginComponent = () => {
     const router = useRouter()
+    const { account, p1, p2 } = router.query
     // const emailRef = useRef()
     const errorRef = useRef()
     const [email, setEmail] = useState('')
@@ -58,8 +59,20 @@ const LoginComponent = () => {
         }
     }
 
+    let redirectURL = ' '
+
+    if (account == 'new') {
+        
+        redirectURL = `${p1}/${p2}`
+
+    } else {
+        
+        redirectURL = ' '
+
+    }
+
     if (isSuccess == true) {
-        router.push('/')
+        router.push({ pathname: `/${redirectURL}` })
       }
     
     
