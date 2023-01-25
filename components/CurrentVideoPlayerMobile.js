@@ -304,7 +304,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
 
   return (
     <>
-    <Head>
+    {/* <Head>
         <title>{`${headerTitle} | ${headerStageName} - Dukaflani`}</title>
         <meta name="title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -323,7 +323,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         <meta property="twitter:title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content={headerThumbnail} />  
-      </Head>
+      </Head> */}
 
 
 

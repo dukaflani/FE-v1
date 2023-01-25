@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <SidebarNav>
-      <Head>
+      {/* <Head>
         <title>Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -56,7 +56,7 @@ const Home = () => {
         <meta property="twitter:image" content="../../../public/media/dukaflani-default-og-poster.png"/>
 
         
-      </Head>
+      </Head> */}
       <Navigation/>
       <main className='pt-36'>
         <section>
