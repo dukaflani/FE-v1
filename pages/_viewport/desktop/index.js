@@ -46,7 +46,7 @@ const Home = () => {
         <meta property="og:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
         <meta property="og:title" content="Dukaflani — Home of Music Videos"/>
         <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        {/* <meta property="og:image" content="../../../public/media/dukaflani-default-og-poster.png"/> */}
+        <meta property="og:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/>
 
         
         <meta property="twitter:card" content="summary_large_image"/>
