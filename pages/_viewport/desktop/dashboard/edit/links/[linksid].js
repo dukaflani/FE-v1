@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useFetchStreamingLinksQuery, useFetchOneStreamingLinkQuery } from '../../../../../../redux/features/videos/videosApiSlice'
@@ -21,7 +20,7 @@ const numOfLinks = streamingLinks?.data?.length
 
   return (
     <SidebarNav>
-    <Head>
+    {/* <Head>
         <title>Edit Links | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Links | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -42,8 +41,7 @@ const numOfLinks = streamingLinks?.data?.length
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <Navigation/>
       <>
       <main className='flex flex-col items-center justify-center pt-20'>

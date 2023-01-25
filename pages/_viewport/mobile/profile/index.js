@@ -8,7 +8,7 @@ const index = () => {
 
   return (
     <SidebarNavMobile>
-        <Head>
+        {/* <Head>
         <title>Profile | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Profile | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -29,7 +29,7 @@ const index = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-      </Head>
+      </Head> */}
       <div>
       <NavigationMobile/>
         <>

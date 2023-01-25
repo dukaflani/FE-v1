@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -33,11 +32,10 @@ const CurrentVideo = () => {
   
   return (
     <SidebarNavMobile>
-      <Head>
+      {/* <Head>
         <title>Dukaflani</title>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favourite musicians." />
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <NavigationMobile/>
       <main className='pt-20'>
         <div className='flex max-w-6xl mx-auto space-x-5'>

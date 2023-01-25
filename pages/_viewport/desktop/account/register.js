@@ -4,7 +4,7 @@ import AccountRegister from '../../../../components/AccountRegister'
 const register = () => {
   return (
     <div className='w-7/12 mx-auto'>
-        <Head>
+        {/* <Head>
         <title>Register | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Register | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -25,7 +25,7 @@ const register = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-      </Head>
+      </Head> */}
         <AccountRegister/>
     </div>
   )

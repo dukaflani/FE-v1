@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useFetchOneSkizaTuneQuery, useFetchSkizaTuneLinksQuery } from '../../../../../../redux/features/videos/videosApiSlice'
@@ -22,7 +21,7 @@ const editSkiza = () => {
 
   return (
     <SidebarNav>
-      <Head>
+      {/* <Head>
         <title>Edit Skiza Tune | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Skiza Tune | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -42,9 +41,7 @@ const editSkiza = () => {
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
-        
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <Navigation/>
       <>
       <main className='flex flex-col items-center justify-center pt-20'>

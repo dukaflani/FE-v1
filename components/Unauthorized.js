@@ -11,7 +11,7 @@ const Unauthorized = () => {
   const router = useRouter()
   return (
     <SidebarNav>
-        <Head>
+        {/* <Head>
         <title>Unauthorized!</title>
         <meta name="title" content="Unauthorized!"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -31,9 +31,7 @@ const Unauthorized = () => {
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
-        
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <Navigation/>
       <div className='h-screen w-screen flex items-start justify-center pt-14'>
         <div className='relative w-3/12 h-4/6'>

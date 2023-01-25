@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import React from 'react'
 import Navigation from '../../../../components/Navigation'
 import ProfileSettingsComponent from '../../../../components/ProfileSettingsComponent'
 import SidebarNav from '../../../../components/SidebarNav'
@@ -7,7 +6,7 @@ import SidebarNav from '../../../../components/SidebarNav'
 const settings = () => {
   return (
     <SidebarNav>
-        <Head>
+        {/* <Head>
         <title>Profile Settings | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Profile Settings | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -28,8 +27,7 @@ const settings = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
         <>
             <Navigation/>
             <ProfileSettingsComponent/>

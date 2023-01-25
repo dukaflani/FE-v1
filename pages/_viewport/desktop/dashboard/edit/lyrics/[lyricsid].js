@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
@@ -30,7 +29,7 @@ const editLyrics = () => {
 
   return (
     <SidebarNav>
-    <Head>
+    {/* <Head>
         <title>Edit Lyrics | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Lyrics | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -50,9 +49,7 @@ const editLyrics = () => {
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
-        
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <Navigation/>
       <>
       <main className='flex flex-col items-center justify-center pt-20'>

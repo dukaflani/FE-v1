@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import Image from "next/legacy/image";
@@ -12,7 +11,7 @@ const UnauthorizedMobile = () => {
   const router = useRouter()
   return (
     <SidebarNavMobile>
-        <Head>
+        {/* <Head>
         <title>Unauthorized!</title>
         <meta name="title" content="Unauthorized!"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -33,8 +32,7 @@ const UnauthorizedMobile = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <NavigationMobile/>
       <div className='h-screen w-screen flex items-start justify-center pt-20'>
         {/* <div className='relative w-11/12 h-3/6 sm:w-5/12 sm:h-5/6  md:w-4/12 md:h-5/6 lg:w-4/12 lg:h-4/6'> */}

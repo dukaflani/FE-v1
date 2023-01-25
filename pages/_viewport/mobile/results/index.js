@@ -47,7 +47,7 @@ const lastVideoElementRef = useCallback(node => {
 
   return (
     <SidebarNavMobile>
-      <Head>
+      {/* <Head>
         <title>{searchTerm} — Home of Music Videos</title>
         <meta name="title" content={`${searchTerm} — Home of Music Videos`}/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -67,7 +67,7 @@ const lastVideoElementRef = useCallback(node => {
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
-      </Head>
+      </Head> */}
       <NavigationMobile setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
       <main className='pt-[3.7rem] md:pt-[5rem] landscape:pt-[5rem] pb-10'>
         <section className='flex'>

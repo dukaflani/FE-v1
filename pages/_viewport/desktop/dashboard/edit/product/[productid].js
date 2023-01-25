@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import SidebarNav from '../../../../../../components/SidebarNav'
 import Navigation from '../../../../../../components/Navigation'
@@ -7,7 +6,7 @@ import EditProduct from '../../../../../../components/EditProduct'
 const editProduct = () => {
   return (
     <SidebarNav>
-    <Head>
+    {/* <Head>
         <title>Edit Product | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Product | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -28,8 +27,7 @@ const editProduct = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <Navigation/>
       <>
       <main className='flex flex-col items-center justify-center pt-20'>

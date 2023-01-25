@@ -7,7 +7,7 @@ import BottomNavigationMobile from '../../../../../../components/BottomNavigatio
 const editProduct = () => {
   return (
     <SidebarNavMobile>
-    <Head>
+    {/* <Head>
         <title>Edit Product | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Product | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -28,7 +28,7 @@ const editProduct = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-      </Head>
+      </Head> */}
       <NavigationMobile/>
       <>
       <main className='flex flex-col items-center justify-center py-20'>

@@ -22,7 +22,7 @@ const editSkiza = () => {
 
   return (
     <SidebarNavMobile>
-      <Head>
+      {/* <Head>
         <title>Edit Skiza Tune | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Edit Skiza Tune | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -43,7 +43,7 @@ const editSkiza = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-      </Head>
+      </Head> */}
       <NavigationMobile/>
       <>
       <main className='flex flex-col items-center justify-center py-20'>

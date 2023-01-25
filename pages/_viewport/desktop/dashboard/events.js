@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
@@ -26,7 +25,7 @@ const events = () => {
 
   return (
     <SidebarNav>
-      <Head>
+      {/* <Head>
         <title>My Events | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="My Events | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -47,8 +46,7 @@ const events = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <Navigation/>
       <main className='pt-24'>
         <section className='flex'>

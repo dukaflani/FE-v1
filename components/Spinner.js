@@ -7,7 +7,7 @@ const Spinner = ({ loadingStatement }) => {
   const router = useRouter()
   return (
     <SidebarNav>
-        <Head>
+        {/* <Head>
         <title>Loading!</title>
         <meta name="title" content="Unauthorized!"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -28,7 +28,7 @@ const Spinner = ({ loadingStatement }) => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-      </Head>
+      </Head> */}
       <Navigation/>
       <div className='h-screen w-screen flex items-start justify-center'>
         <div className='relative w-screen h-screen flex flex-col items-center justify-center'>   

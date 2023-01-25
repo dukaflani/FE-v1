@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
@@ -61,7 +61,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
 
   return (
     <SidebarNav>
-      <Head>
+      {/* <Head>
         <title>Dashboard | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Dashboard | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -81,9 +81,8 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
-        
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      
+      </Head> */}
       <Navigation/>
       <main className='pt-24'>
         <section className='flex'>

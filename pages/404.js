@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import Image from "next/legacy/image";
 import { useRouter } from 'next/router'
@@ -10,7 +9,7 @@ const errorPage = () => {
 
   return (
     <>
-        <Head>
+        {/* <Head>
         <title>Page Not Found | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Page Not Found | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -31,8 +30,7 @@ const errorPage = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <div className='h-screen flex items-start justify-center'>
         <div className='relative w-5/12 h-4/6 pt-10'>
           <Image 

@@ -41,7 +41,7 @@ const FilterPage = () => {
 
   return (
     <SidebarNavMobile>
-      <Head>
+      {/* <Head>
         <title>{genre?.replace(/-/g, " ")} | Dukaflani — Home of Music Videos</title>
         <meta name="title" content={`${genre?.replace(/-/g, " ")} | Dukaflani — Home of Music Videos`} />
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -61,7 +61,7 @@ const FilterPage = () => {
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
-      </Head>
+      </Head> */}
       <NavigationMobile/>
       <main className='pt-[6.3rem] md:pt-[8rem] landscape:pt-[8rem] pb-10'>
         <section>

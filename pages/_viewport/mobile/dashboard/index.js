@@ -62,7 +62,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
 
   return (
     <SidebarNavMobile>
-      <Head>
+      {/* <Head>
         <title>Dashboard | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Dashboard | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -83,7 +83,7 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-      </Head>
+      </Head> */}
       <NavigationMobile/>
       <main className='pt-[3.7rem] md:pt-[5rem] landscape:pt-[5rem] pb-10'>
         <section className='flex'>

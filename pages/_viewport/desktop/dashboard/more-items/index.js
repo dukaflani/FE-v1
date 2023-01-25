@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
@@ -16,7 +16,7 @@ const moreItems = () => {
 
   return (
     <SidebarNav>
-      <Head>
+      {/* <Head>
         <title>More Items | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="More Items | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -37,8 +37,7 @@ const moreItems = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-        {/* // <link rel="icon" href="/dukaflani-blue-logo-small.png" /> */}
-      </Head>
+      </Head> */}
       <Navigation/>
       <main className='pt-24'>
         <section className='flex'>

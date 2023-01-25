@@ -7,7 +7,7 @@ import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 const settings = () => {
   return (
     <SidebarNavMobile>
-        <Head>
+        {/* <Head>
         <title>Profile Settings | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Profile Settings | Dukaflani — Home of Music Videos"/>
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
@@ -28,7 +28,7 @@ const settings = () => {
         <meta property="twitter:image" content="/media/dukaflani-default-og-poster.png"/>
 
         
-      </Head>
+      </Head> */}
         <>
             <NavigationMobile/>
             <ProfileSettingsComponentMobile/>
