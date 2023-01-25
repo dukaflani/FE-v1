@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import Image from "next/legacy/image";
@@ -10,7 +11,6 @@ import { FlagIcon, HandThumbDownIcon, HandThumbUpIcon, ShareIcon, StarIcon } fro
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn } from '@heroicons/react/24/solid'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 import noAvatar from '../public/media/noimage.webp'
-import VideoComments from './VideoComments';
 import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
     useAddUnlikeMutation, useCurrentVideoObjectsCountQuery } from '../redux/features/videos/videosApiSlice';
@@ -41,9 +41,6 @@ export const YouTubeIframe = () => {
 const CurrentVideoPlayer = () => {
     const router = useRouter()
     const { v, tab } = router.query
-    const [commentBody, setCommentBody] = useState('')
-    const [createdComment, setCreatedComment] = useState(null)
-    const [commentErrors, setCommentErrors] = useState(null)
     const [fieldError, setFieldError] = useState('')
     const [likeErrors, setLikeErrors] = useState(null)
     const [linkCopied, setLinkCopied] = useState(false)
@@ -119,30 +116,6 @@ const CurrentVideoPlayer = () => {
     const commentCountRaw = currentVideoObjectsCount?.data?.comment_count ? currentVideoObjectsCount?.data?.comment_count : 0
           let commentCount = numeral(commentCountRaw).format('0,0')
 
-
-
-          const newComment = {
-            "body": commentBody,
-            "video": video?.details?.id,
-            "customuserprofile": userProfileId,
-        }
-    
-        const handleAddComment = async () => {
-            if (commentBody && video?.details?.id && userProfileId) {
-                try {
-                    setCreatedComment(await addComment(newComment))
-                    setCommentBody('')
-                } catch (error) {
-                    setCommentErrors(error)
-                    setTimeout(() => {
-                        setCommentErrors(null)
-                    }, 5000);
-                }
-                
-            } else {
-                setFieldError('Please fill in all the fields')
-            }
-        }
 
 
         const deletelikeInfo = {
@@ -234,85 +207,109 @@ const CurrentVideoPlayer = () => {
 
 
   return (
-    <article className='pt-20 scroll-smooth' id='currentVideo'>
-        <div>
-            <YouTubeIframe/>
-            <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.details?.genre_title}</div>
-            <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.details?.title}</h1>
-            <div className='w-full flex flex-col items-start justify-between py-2 space-y-1'>
-                <div className='text-sm font-semibold tracking-tight text-gray-700'> {view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime && 'Added'} {videoUploadTime}</div>
-                <div className='flex justify-end items-center pr-5'>
-                    <div className="inline-flex rounded-md" role="group">
-                    {is_liked ? <button onClick={handleDeleteLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <Likebtn className="mr-2 w-5 h-5" /> 
-                        {numOfLikes}
-                    </button>
-                    :
-                    <button onClick={handleAddLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <HandThumbUpIcon className="mr-2 w-5 h-5" />
-                        {likesCount}
-                    </button>}
-                    {is_unliked ? <button onClick={handleDeleteUnlike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <Unlikebtn className="mr-2 w-5 h-5" />
-                        {unlikesCount}
-                    </button>
-                    :
-                    <button onClick={handleAddUnlike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <HandThumbDownIcon className="mr-2 w-5 h-5" />
-                        {numOfUnlikes}
-                    </button>}
-                    </div>
-                    <div className='ml-14'>
-                        <CopyToClipboard
-                            text={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${v}&tab=${tab}`}
-                            onCopy={() => setLinkCopied(true)}
-                        >
-                            <button type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                <ShareIcon className="mr-2 w-5 h-5" />
-                                {linkCopied ? "Copied" : "Share"}
+    <>
+    <Head>
+        <title>{`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`}</title>
+        <meta name="title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
+        <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
+
+        
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`} />
+        <meta property="og:title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
+        <meta property="og:image" content={video?.details?.thumbnail} />
+
+        
+        <meta property="twitter:card" content="summary_large_image"/>
+        <meta property="twitter:url" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`} />
+        <meta property="twitter:title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
+        <meta property="twitter:image" content={video?.details?.thumbnail} />  
+      </Head>
+
+
+        <article className='pt-20 scroll-smooth' id='currentVideo'>
+            <div>
+                <YouTubeIframe/>
+                <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.details?.genre_title}</div>
+                <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.details?.title}</h1>
+                <div className='w-full flex flex-col items-start justify-between py-2 space-y-1'>
+                    <div className='text-sm font-semibold tracking-tight text-gray-700'> {view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime && 'Added'} {videoUploadTime}</div>
+                    <div className='flex justify-end items-center pr-5'>
+                        <div className="inline-flex rounded-md" role="group">
+                        {is_liked ? <button onClick={handleDeleteLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            <Likebtn className="mr-2 w-5 h-5" /> 
+                            {numOfLikes}
+                        </button>
+                        :
+                        <button onClick={handleAddLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            <HandThumbUpIcon className="mr-2 w-5 h-5" />
+                            {likesCount}
+                        </button>}
+                        {is_unliked ? <button onClick={handleDeleteUnlike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            <Unlikebtn className="mr-2 w-5 h-5" />
+                            {unlikesCount}
+                        </button>
+                        :
+                        <button onClick={handleAddUnlike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            <HandThumbDownIcon className="mr-2 w-5 h-5" />
+                            {numOfUnlikes}
+                        </button>}
+                        </div>
+                        <div className='ml-14'>
+                            <CopyToClipboard
+                                text={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${v}&tab=${tab}`}
+                                onCopy={() => setLinkCopied(true)}
+                            >
+                                <button type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                    <ShareIcon className="mr-2 w-5 h-5" />
+                                    {linkCopied ? "Copied" : "Share"}
+                                </button>
+                            </CopyToClipboard>
+                        </div>
+                        <div className='ml-2'>
+                            <button type="button" className="inline-flex cursor-not-allowed items-center py-2 px-4 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                <StarIcon className="mr-2 w-5 h-5" />
+                                Vote
                             </button>
-                        </CopyToClipboard>
-                    </div>
-                    <div className='ml-2'>
-                        <button type="button" className="inline-flex cursor-not-allowed items-center py-2 px-4 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                            <StarIcon className="mr-2 w-5 h-5" />
-                            Vote
-                        </button>
-                    </div>
-                    <div className='ml-2'>
-                        <button type="button" className="inline-flex cursor-not-allowed items-center py-2 px-4 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                            <FlagIcon className="mr-2 w-5 h-5" />
-                            Report
-                        </button>
+                        </div>
+                        <div className='ml-2'>
+                            <button type="button" className="inline-flex cursor-not-allowed items-center py-2 px-4 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                <FlagIcon className="mr-2 w-5 h-5" />
+                                Report
+                            </button>
+                        </div>
                     </div>
                 </div>
+                <div className='w-full text-base leading-5 tracking-tight text-gray-700 flex mt-2'>
+                    <Linkify componentDecorator={(decoratedHref, decoratedText, key) => ( <a target="blank" className='text-blue-600 -mb-1 w-56 inline-block overflow-hidden overflow-ellipsis whitespace-nowrap'  href={decoratedHref} key={key}> {decoratedText} </a> )} >
+                    <ShowMoreText
+                        lines={1}
+                        more="Show more"
+                        less="Show less"
+                        className="content-css text-base leading-4 tracking-tight text-gray-600 whitespace-pre-wrap"
+                        anchorClass="text-xs tracking-tight uppercase text-blue-700 ml-1"
+                        expanded={false}
+                        truncatedEndingComponent={"... "}
+                    >
+                    {hashTags?.map((hashTag, i) => {
+                        return hashTag.match(hashTagRegex) ? (
+                            <div key={i}><span className='text-blue-600'>{hashTag}</span> {' '}</div>
+                        ) : hashTag + ' '
+                    })}
+                </ShowMoreText>
+                    </Linkify>
+                </div>
+                <div className='w-full text-sm font-bold tracking-tight text-gray-800 mt-4 uppercase'>More Videos:</div>
+                <hr className='mt-1 mb-10'/>
+                <div className='mt-10 mb-36'>
+                    <MoreVideos/>
+                </div>
             </div>
-            <div className='w-full text-base leading-5 tracking-tight text-gray-700 flex mt-2'>
-                <Linkify componentDecorator={(decoratedHref, decoratedText, key) => ( <a target="blank" className='text-blue-600 -mb-1 w-56 inline-block overflow-hidden overflow-ellipsis whitespace-nowrap'  href={decoratedHref} key={key}> {decoratedText} </a> )} >
-                <ShowMoreText
-                    lines={1}
-                    more="Show more"
-                    less="Show less"
-                    className="content-css text-base leading-4 tracking-tight text-gray-600 whitespace-pre-wrap"
-                    anchorClass="text-xs tracking-tight uppercase text-blue-700 ml-1"
-                    expanded={false}
-                    truncatedEndingComponent={"... "}
-                >
-                {hashTags?.map((hashTag, i) => {
-                    return hashTag.match(hashTagRegex) ? (
-                        <div key={i}><span className='text-blue-600'>{hashTag}</span> {' '}</div>
-                    ) : hashTag + ' '
-                })}
-            </ShowMoreText>
-                </Linkify>
-            </div>
-            <div className='w-full text-sm font-bold tracking-tight text-gray-800 mt-4 uppercase'>More Videos:</div>
-            <hr className='mt-1 mb-10'/>
-            <div className='mt-10 mb-36'>
-                <MoreVideos/>
-            </div>
-        </div>
-    </article>
+        </article>
+    </>
   )
 }
 

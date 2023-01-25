@@ -1,20 +1,19 @@
-import { useEffect, useState, Fragment } from 'react'
+import Head from 'next/head';
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
 import { useRouter } from 'next/router';
 import ShowMoreText from "react-show-more-text";
-import { Menu, Transition, Dialog } from '@headlessui/react'
 import { formatDistanceStrict } from 'date-fns';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, ChevronDownIcon, XMarkIcon,
 PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn, CheckBadgeIcon } from '@heroicons/react/24/solid'
 import noAvatar from '../public/media/noimage.webp'
-import VideoCommentsMobile from './VideoCommentsMobile';
-import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery, 
+import { useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
-    useAddUnlikeMutation, useCurrentVideoObjectsCountQuery, useFetchCommentsQuery, useFetchCurrentVideoProfileQuery, useProfileLikedQuery, useJoinFanbaseMutation, useLeaveFanbaseMutation } from '../redux/features/videos/videosApiSlice';
+    useAddUnlikeMutation, useCurrentVideoObjectsCountQuery, useFetchCurrentVideoProfileQuery, useProfileLikedQuery, useJoinFanbaseMutation, useLeaveFanbaseMutation } from '../redux/features/videos/videosApiSlice';
 import AdvertisementMobile from './AdvertisementMobile';
 import ItemsTabNavigationMobile from './ItemsTabNavigationMobile';
 import ProductCardMobile from './ProductCardMobile';
@@ -23,7 +22,6 @@ import LyricsPageMobile from './LyricsPageMobile';
 import SkizaTunesPageMobile from './SkizaTunesPageMobile';
 import AlbumPageMobile from './AlbumPageMobile';
 import EventsPageMobile from './EventsPageMobile';
-import TextAreaField from './reuseable-components/TextAreaField';
 import MoreVideosMobile from './MoreVideosMobile';
 import useFetchVideos from '../customHooks/useFetchVideos';
 
@@ -302,6 +300,32 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
 
   return (
     <>
+    <Head>
+        <title>{`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`}</title>
+        <meta name="title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
+        <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
+
+        
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`} />
+        <meta property="og:title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
+        <meta property="og:image" content={video?.details?.thumbnail} />
+
+        
+        <meta property="twitter:card" content="summary_large_image"/>
+        <meta property="twitter:url" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`} />
+        <meta property="twitter:title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
+        <meta property="twitter:image" content={video?.details?.thumbnail} />  
+      </Head>
+
+
+
+
+
+
     <article className='h-full mx-auto'>
         <div className='sticky top-0'>
             <YouTubeIframe/>
