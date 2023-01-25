@@ -214,8 +214,8 @@ const CurrentVideoPlayer = () => {
   return (
     <>
     <Head>
-        <title>{`${headerTitle} | ${headerStageName} - Dukaflani`}</title>
-        <meta name="title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
+        {/* <title>{`${headerTitle} | ${headerStageName} - Dukaflani`}</title> */}
+        {/* <meta name="title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} /> */}
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
 
