@@ -296,29 +296,33 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         return filteredVideo2?.id != 1
       })
 
+      const headerTitle = video?.details?.title ? video?.details?.title : ''
+      const headerStageName = video?.details?.stage_name ? video?.details?.stage_name : ''
+      const headerThumbnail = video?.details?.thumbnail
+      const headerUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`
 
 
   return (
     <>
     <Head>
-        <title>{`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`}</title>
-        <meta name="title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <title>{`${headerTitle} | ${headerStageName} - Dukaflani`}</title>
+        <meta name="title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
         <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
 
         
         <meta property="og:type" content="website"/>
-        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`} />
-        <meta property="og:title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <meta property="og:url" content={headerUrl} />
+        <meta property="og:title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
         <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="og:image" content={video?.details?.thumbnail} />
+        <meta property="og:image" content={headerThumbnail} />
 
         
         <meta property="twitter:card" content="summary_large_image"/>
-        <meta property="twitter:url" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`} />
-        <meta property="twitter:title" content={`${video?.details?.title} | ${video?.details?.stage_name} - Dukaflani`} />
+        <meta property="twitter:url" content={headerUrl} />
+        <meta property="twitter:title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
         <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="twitter:image" content={video?.details?.thumbnail} />  
+        <meta property="twitter:image" content={headerThumbnail} />  
       </Head>
 
 
