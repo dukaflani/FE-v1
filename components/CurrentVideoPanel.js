@@ -30,12 +30,11 @@ Modal.setAppElement("#__next")
 
 
 
-const CurrentVideoPanel = () => {
+const CurrentVideoPanel = ({ video }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const { v, tab } = router.query
     const { user } = useSelector((state) => state.auth)
-    const { video } = useSelector((state) => state.videos)
     const [modalOpen, setModalOpen] = useState(false)
     const [fanbaseErrors, setFanbaseErrors] = useState(null)
     let [isOpen, setIsOpen] = useState(false)
@@ -44,12 +43,12 @@ const CurrentVideoPanel = () => {
     const [totalFanBaseCount, setTotalFanBaseCount] = useState('')
 
     
-    const videoQueryParams = {
-        video_id: v,
-    }
+    // const videoQueryParams = {
+    //     video_id: v,
+    // }
     
-    const {data: currentvideo} = useCurrentVideoQuery(videoQueryParams)
-    const currentVideoProfileId = currentvideo?.data?.results[0]?.customuserprofile
+    // const {data: currentvideo} = useCurrentVideoQuery(videoQueryParams)
+    const currentVideoProfileId = video?.customuserprofile
     
     const videoProfileQueryParams = {
         profile_id: currentVideoProfileId ? currentVideoProfileId : 0,
@@ -92,7 +91,7 @@ const CurrentVideoPanel = () => {
 
 
     const joinDetails = {
-        "customuserprofile_id": currentvideo?.data?.results[0]?.customuserprofile
+        "customuserprofile_id": video?.customuserprofile
     }
 
     const leaveDetails = {
@@ -130,7 +129,7 @@ const CurrentVideoPanel = () => {
                 <div className='w-2/12 flex items-center justify-center'>
                     <div className='relative h-12 w-12'>
                         {!is_loggedin && <Image
-                            src={currentvideo?.data?.results[0]?.profile_avatar ? currentvideo?.data?.results[0]?.profile_avatar : noAvatar}
+                            src={video?.profile_avatar ? video?.profile_avatar : noAvatar}
                             layout="fill"
                             objectFit='cover'
                             className='rounded-full'
@@ -145,15 +144,15 @@ const CurrentVideoPanel = () => {
                 </div>
                 <div className='w-8/12 flex flex-col items-start justify-center'>
                     {!is_loggedin && <div className='flex space-x-1'>
-                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{currentvideo?.data?.results[0]?.stage_name ? currentvideo?.data?.results[0]?.stage_name : ''}</div>
-                        {currentvideo?.data?.results[0]?.verified && 
+                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{video?.stage_name ? video?.stage_name : ''}</div>
+                        {video?.verified && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
                         </span>
                         }
                     </div>}
                     {is_loggedin && <div className='flex space-x-1'>
-                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.data?.stage_name ? currentvideo?.data?.results[0]?.stage_name : ''}</div>
+                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.data?.stage_name ? video?.stage_name : ''}</div>
                         {videoProfile?.data?.is_verified == 'True' && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
@@ -249,7 +248,7 @@ const CurrentVideoPanel = () => {
                   overlay:{backgroundColor: "rgba(0, 0, 0, 0.3)", zIndex:'99999'}}}
           >
           <div className='bg-white shadow w-7/12 h-5/6'>
-            <ProfileModalContent setModalOpen={setModalOpen} info={currentvideo?.data?.results[0]} fanbase={fanbase2} />
+            <ProfileModalContent setModalOpen={setModalOpen} info={video} fanbase={fanbase2} />
           </div>
         </Modal>
 

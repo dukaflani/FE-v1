@@ -1,7 +1,4 @@
-import Head from 'next/head';
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import Image from "next/legacy/image";
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
 import { useRouter } from 'next/router';
@@ -9,39 +6,16 @@ import ShowMoreText from "react-show-more-text";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { FlagIcon, HandThumbDownIcon, HandThumbUpIcon, ShareIcon, StarIcon } from '@heroicons/react/24/outline'
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn } from '@heroicons/react/24/solid'
-import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
-import noAvatar from '../public/media/noimage.webp'
-import { useAddCommentMutation, useVideoLikedQuery, useVideoUnlikedQuery, 
+import { useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
     useAddUnlikeMutation, useCurrentVideoObjectsCountQuery } from '../redux/features/videos/videosApiSlice';
 import MoreVideos from './MoreVideos';
 
-export const YouTubeIframe = () => {
-    const router = useRouter()
-    const { v } = router.query
+  
 
-    const [videoYoutubeId, setVideoYoutubeId] = useState('')
-
-    useEffect(() => {
-        setVideoYoutubeId(v)
-    }, [v])
-    
-
-    return (
-            <div className='w-full'>
-                <div className='aspect-w-16 aspect-h-9 bg-black'>
-                 <iframe src={`https://www.youtube.com/embed/${videoYoutubeId}?loop=1&modestbranding=1&color=white&playlist=${videoYoutubeId}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-                </div>
-            </div>
-    )
-}    
-
-
-
-const CurrentVideoPlayer = () => {
+const CurrentVideoPlayer = ({ video }) => {
     const router = useRouter()
     const { v, tab } = router.query
-    const [fieldError, setFieldError] = useState('')
     const [likeErrors, setLikeErrors] = useState(null)
     const [linkCopied, setLinkCopied] = useState(false)
     const [numberOfLikes, setNumberOfLikes] = useState('') 
@@ -50,31 +24,23 @@ const CurrentVideoPlayer = () => {
     const [is_unliked, setIs_unliked] = useState(false)  
 
 
-    const { video } = useSelector((state) => state.videos)
-    const { user } = useSelector((state) => state.auth)
-    const fullName = `${user?.info?.first_name} ${user?.info?.last_name}`
 
-    const { userProfile } = useSelector((state) => state.auth)
-    const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
-    const userProfilePicture = userProfile?.info ? userProfile?.info[0]?.profile_avatar : noAvatar
-
-    const desc = video?.details?.description
+    const desc = video?.description
     const hashTags = desc?.split(' ')
     const hashTagRegex = /#[a-z0-9_]+/gi 
 
     const videoLikedQuery = {
-        video_id: video?.details?.id ? video?.details?.id : 0,
+        video_id: video?.id ? video?.id : 0,
     }
 
     const videoObjectsCountQuery = {
-        video_id: video?.details?.id ? video?.details?.id : 0,
+        video_id: video?.id ? video?.id : 0,
     }
 
 
     const {data: isLiked } = useVideoLikedQuery(videoLikedQuery)
     const {data: isUnliked } = useVideoUnlikedQuery(videoLikedQuery)
     const {data: currentVideoObjectsCount } = useCurrentVideoObjectsCountQuery(videoObjectsCountQuery)
-    const [ addComment, { isLoading } ] = useAddCommentMutation()
     const [ deleteLike ] = useDeleteLikeMutation()
     const [ deleteUnlike ] = useDeleteUnlikeMutation()
     const [ addLike ] = useAddLikeMutation()  
@@ -95,7 +61,7 @@ const CurrentVideoPlayer = () => {
      
 
 
-    const videoUploadTime = new Date(video?.details?.date).toDateString()
+    const videoUploadTime = new Date(video?.date).toDateString()
 
     // let likesCountRaw = currentVideoObjectsCount?.data?.like_count
     let likesCountRaw = numberOfLikes ? numberOfLikes : 0
@@ -127,11 +93,11 @@ const CurrentVideoPlayer = () => {
         }
 
         const likeVideoInfo = {
-            "video_id": video?.details?.id,
+            "video_id": video?.id,
         }
 
         const unlikeVideoInfo = {
-            "video_id": video?.details?.id,
+            "video_id": video?.id,
         }
 
 
@@ -204,42 +170,19 @@ const CurrentVideoPlayer = () => {
             }
         }
 
-        const headerTitle = video?.details?.title ? video?.details?.title : ''
-        const headerStageName = video?.details?.stage_name ? video?.details?.stage_name : ''
-        const headerThumbnail = video?.details?.thumbnail
-        const headerUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`
-
 
 
   return (
     <>
-    <Head>
-        <title>{`${headerTitle} | ${headerStageName} - Dukaflani`}</title>
-        <meta name="title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
-        <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
-
-        
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content={headerUrl} />
-        <meta property="og:title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
-        <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="og:image" content={headerThumbnail} />
-
-        
-        <meta property="twitter:card" content="summary_large_image"/>
-        <meta property="twitter:url" content={headerUrl} />
-        <meta property="twitter:title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
-        <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="twitter:image" content={headerThumbnail} />  
-      </Head>
-
-
         <article className='pt-20 scroll-smooth' id='currentVideo'>
             <div>
-                <YouTubeIframe/>
-                <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.details?.genre_title}</div>
-                <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.details?.title}</h1>
+                <div className='w-full'>
+                    <div className='aspect-w-16 aspect-h-9 bg-black'>
+                        <iframe src={`https://www.youtube.com/embed/${video?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    </div>
+                </div>
+                <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.genre_title}</div>
+                <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.title}</h1>
                 <div className='w-full flex flex-col items-start justify-between py-2 space-y-1'>
                     <div className='text-sm font-semibold tracking-tight text-gray-700'> {view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime && 'Added'} {videoUploadTime}</div>
                     <div className='flex justify-end items-center pr-5'>
