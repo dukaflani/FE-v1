@@ -30,7 +30,7 @@ Modal.setAppElement("#__next")
 
 
 
-const CurrentVideoPanel = ({ video }) => {
+const CurrentVideoPanel = ({ video, videoProfile }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const { v, tab } = router.query
@@ -40,7 +40,7 @@ const CurrentVideoPanel = ({ video }) => {
     let [isOpen, setIsOpen] = useState(false)
     const [is_loggedin, setIs_loggedin] = useState(false)
     const [is_a_fan, setIs_a_fan] = useState(false)
-    const [totalFanBaseCount, setTotalFanBaseCount] = useState('')
+    const [totalFanBaseCount, setTotalFanBaseCount] = useState(videoProfile?.fanbase_count)
 
     
     // const videoQueryParams = {
@@ -49,13 +49,12 @@ const CurrentVideoPanel = ({ video }) => {
     
     // const {data: currentvideo} = useCurrentVideoQuery(videoQueryParams)
     const currentVideoProfileId = video?.customuserprofile
-    
     const videoProfileQueryParams = {
         profile_id: currentVideoProfileId ? currentVideoProfileId : 0,
     }
     
     
-    const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
+    // const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
     const {data: videoProfileLiked } = useProfileLikedQuery(videoProfileQueryParams)
     // const is_loggedin = !!user?.info?.id
     // const is_a_fan = !!videoProfileLiked?.data[0]?.id
@@ -63,8 +62,8 @@ const CurrentVideoPanel = ({ video }) => {
     useEffect(() => {
         setIs_loggedin(!!user?.info?.id)
         setIs_a_fan(!!videoProfileLiked?.data[0]?.id)
-        setTotalFanBaseCount(videoProfile?.data?.fanbase_count)
-    }, [user?.info?.id, videoProfileLiked?.data[0]?.id, videoProfile?.data?.fanbase_count])
+        // setTotalFanBaseCount(videoProfile?.fanbase_count)
+    }, [user?.info?.id, videoProfileLiked?.data[0]?.id])
     
 
 
@@ -135,7 +134,7 @@ const CurrentVideoPanel = ({ video }) => {
                             className='rounded-full'
                             />}
                         {is_loggedin && <Image
-                            src={videoProfile?.data?.profile_avatar ? videoProfile?.data?.profile_avatar : noAvatar}
+                            src={videoProfile?.profile_avatar ? videoProfile?.profile_avatar : noAvatar}
                             layout="fill"
                             objectFit='cover'
                             className='rounded-full'
@@ -152,8 +151,8 @@ const CurrentVideoPanel = ({ video }) => {
                         }
                     </div>}
                     {is_loggedin && <div className='flex space-x-1'>
-                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.data?.stage_name ? video?.stage_name : ''}</div>
-                        {videoProfile?.data?.is_verified == 'True' && 
+                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.stage_name ? video?.stage_name : ''}</div>
+                        {videoProfile?.is_verified == 'True' && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
                         </span>
