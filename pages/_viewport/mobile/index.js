@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { HomeIcon, RectangleGroupIcon, UserCircleIcon, CloudArrowUpIcon } from '@heroicons/react/24/solid'
 import { HomeIcon as HomeOutline, RectangleGroupIcon as RGOutline, 
@@ -36,25 +35,6 @@ const Home = () => {
 
   return (
     <SidebarNavMobile>
-      <Head>
-        <title>Dukaflani — Home of Music Videos</title>
-        <meta name="title" content="Dukaflani — Home of Music Videos"/>
-        <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
-
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
-        <meta property="og:title" content="Dukaflani — Home of Music Videos"/>
-        <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="og:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/>
-
-        
-        <meta property="twitter:card" content="summary_large_image"/>
-        <meta property="twitter:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
-        <meta property="twitter:title" content="Dukaflani — Home of Music Videos"/>
-        <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="twitter:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/>
-      </Head>
       <NavigationMobile/>
       <main className='pt-[6.3rem] md:pt-[8rem] landscape:pt-[8rem] pb-10'>
         <section>

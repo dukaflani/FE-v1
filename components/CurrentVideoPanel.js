@@ -43,26 +43,17 @@ const CurrentVideoPanel = ({ video, videoProfile }) => {
     const [totalFanBaseCount, setTotalFanBaseCount] = useState(videoProfile?.fanbase_count)
 
     
-    // const videoQueryParams = {
-    //     video_id: v,
-    // }
-    
-    // const {data: currentvideo} = useCurrentVideoQuery(videoQueryParams)
     const currentVideoProfileId = video?.customuserprofile
     const videoProfileQueryParams = {
         profile_id: currentVideoProfileId ? currentVideoProfileId : 0,
     }
     
     
-    // const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
     const {data: videoProfileLiked } = useProfileLikedQuery(videoProfileQueryParams)
-    // const is_loggedin = !!user?.info?.id
-    // const is_a_fan = !!videoProfileLiked?.data[0]?.id
 
     useEffect(() => {
         setIs_loggedin(!!user?.info?.id)
         setIs_a_fan(!!videoProfileLiked?.data[0]?.id)
-        // setTotalFanBaseCount(videoProfile?.fanbase_count)
     }, [user?.info?.id, videoProfileLiked?.data[0]?.id])
     
 

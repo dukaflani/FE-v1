@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import Linkify from 'react-linkify';
@@ -7,13 +6,12 @@ import { useRouter } from 'next/router';
 import ShowMoreText from "react-show-more-text";
 import { formatDistanceStrict } from 'date-fns';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, ChevronDownIcon, XMarkIcon,
-PaperAirplaneIcon } from '@heroicons/react/24/outline'
+import { HandThumbDownIcon, HandThumbUpIcon, ShareIcon, FlagIcon, StarIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { HandThumbDownIcon as Unlikebtn, HandThumbUpIcon as Likebtn, ShareIcon as Sharebtn, CheckBadgeIcon } from '@heroicons/react/24/solid'
 import noAvatar from '../public/media/noimage.webp'
 import { useVideoLikedQuery, useVideoUnlikedQuery, 
     useDeleteLikeMutation, useDeleteUnlikeMutation, useAddLikeMutation, 
-    useAddUnlikeMutation, useCurrentVideoObjectsCountQuery, useFetchCurrentVideoProfileQuery, useProfileLikedQuery, useJoinFanbaseMutation, useLeaveFanbaseMutation } from '../redux/features/videos/videosApiSlice';
+    useAddUnlikeMutation, useCurrentVideoObjectsCountQuery, useProfileLikedQuery, useJoinFanbaseMutation, useLeaveFanbaseMutation } from '../redux/features/videos/videosApiSlice';
 import AdvertisementMobile from './AdvertisementMobile';
 import ItemsTabNavigationMobile from './ItemsTabNavigationMobile';
 import ProductCardMobile from './ProductCardMobile';
@@ -23,38 +21,15 @@ import SkizaTunesPageMobile from './SkizaTunesPageMobile';
 import AlbumPageMobile from './AlbumPageMobile';
 import EventsPageMobile from './EventsPageMobile';
 import MoreVideosMobile from './MoreVideosMobile';
-import useFetchVideos from '../customHooks/useFetchVideos';
-
-
-
-export const YouTubeIframe = () => {
-    const router = useRouter()
-    const { v } = router.query
-
-    const [videoYoutubeId, setVideoYoutubeId] = useState('')
-
-    useEffect(() => {
-        setVideoYoutubeId(v)
-    }, [v])
-    
-
-    return (
-        <div className='aspect-w-16 aspect-h-9 bg-black'>
-           <iframe src={`https://www.youtube.com/embed/${videoYoutubeId}?loop=1&modestbranding=1&color=white&playlist=${videoYoutubeId}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-        </div>
-    )
-}  
+import useFetchVideos from '../customHooks/useFetchVideos';  
 
 
 
 
-
-
-const CurrentVideoPlayer = ({ navbarVisisble }) => {
+const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
     const router = useRouter()
     const { v, tab } = router.query
 
-    const [fieldError, setFieldError] = useState('')
     const [likeErrors, setLikeErrors] = useState(null)
     const [linkCopied, setLinkCopied] = useState(false)
     const [showDescription, setShowDescription] = useState(false)
@@ -67,29 +42,23 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     const [is_unliked, setIs_unliked] = useState(false) 
     const [is_loggedin, setIs_loggedin] = useState(false)
     const [is_a_fan, setIs_a_fan] = useState(false)
-    const [totalFanBaseCount, setTotalFanBaseCount] = useState('')
+    const [totalFanBaseCount, setTotalFanBaseCount] = useState(videoProfile?.fanbase_count)
 
 
-    const { video } = useSelector((state) => state.videos)
     const { user } = useSelector((state) => state.auth)
-    const fullName = `${user?.info?.first_name} ${user?.info?.last_name}`
+    const currentVideoProfilePic = video?.profile_avatar ? video?.profile_avatar : noAvatar
+    const currentVideoProfileId = video?.customuserprofile
 
-    const { userProfile } = useSelector((state) => state.auth)
-    const userProfileId = userProfile?.info ? userProfile?.info[0]?.id : 0
-    const userProfilePicture = userProfile?.info ? userProfile?.info[0]?.profile_avatar : noAvatar
-    const currentVideoProfilePic = video?.details?.profile_avatar ? video?.details?.profile_avatar : noAvatar
-    const currentVideoProfileId = video?.details?.customuserprofile
-
-    const desc = video?.details?.description
+    const desc = video?.description
     const hashTags = desc?.split(' ')
     const hashTagRegex = /#[a-z0-9_]+/gi 
 
     const videoLikedQuery = {
-        video_id: video?.details?.id ? video?.details?.id : 0,
+        video_id: video?.id ? video?.id : 0,
     }
 
     const videoObjectsCountQuery = {
-        video_id: video?.details?.id ? video?.details?.id : 0,
+        video_id: video?.id ? video?.id : 0,
     }
 
     const videoProfileQueryParams = {
@@ -97,8 +66,6 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     }
 
     
-    
-    const {data: videoProfile} = useFetchCurrentVideoProfileQuery(videoProfileQueryParams)
     const {data: videoProfileLiked } = useProfileLikedQuery(videoProfileQueryParams)
     const {data: isLiked } = useVideoLikedQuery(videoLikedQuery)
     const {data: isUnliked } = useVideoUnlikedQuery(videoLikedQuery)
@@ -118,14 +85,12 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         setIs_unliked(!!isUnliked?.data[0]?.id)
         setIs_loggedin(!!user?.info?.id)
         setIs_a_fan(!!videoProfileLiked?.data[0]?.id)
-        setTotalFanBaseCount(videoProfile?.data?.fanbase_count)
     }, [currentVideoObjectsCount?.data?.like_count, currentVideoObjectsCount?.data?.unlike_count, 
-        isLiked?.data[0]?.id, isUnliked?.data[0]?.id, user?.info?.id, videoProfileLiked?.data[0]?.id, 
-        videoProfile?.data?.fanbase_count])
+        isLiked?.data[0]?.id, isUnliked?.data[0]?.id, user?.info?.id, videoProfileLiked?.data[0]?.id])
     
 
 
-    const videoUploadTime = new Date(video?.details?.date).toDateString()
+    const videoUploadTime = new Date(video?.date).toDateString()
 
     // let likesCountRaw = currentVideoObjectsCount?.data?.like_count
     let likesCountRaw = numberOfLikes ? numberOfLikes : 0
@@ -146,7 +111,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
     let viewsCountShort = ''
     view2 < 1000 || view2 % 10 === 0 ? viewsCountShort = numeral(view2).format('0a') :  viewsCountShort = numeral(view2).format('0.0a')
 
-    const timeOfVideoUpload = video?.details?.date ? video?.details?.date : new Date()
+    const timeOfVideoUpload = video?.date ? video?.date : new Date()
 
     const fanbaseCountRaw = totalFanBaseCount ? totalFanBaseCount : 0
     let fanbaseCountShort = ''
@@ -164,7 +129,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
 
 
     const joinDetails = {
-    "customuserprofile_id": video?.details?.customuserprofile
+    "customuserprofile_id": video?.customuserprofile
     }
 
     const leaveDetails = {
@@ -203,11 +168,11 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         }
 
         const likeVideoInfo = {
-            "video_id": video?.details?.id,
+            "video_id": video?.id,
         }
 
         const unlikeVideoInfo = {
-            "video_id": video?.details?.id,
+            "video_id": video?.id,
         }
 
 
@@ -296,56 +261,25 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
         return filteredVideo2?.id != 1
       })
 
-      const headerTitle = video?.details?.title ? video?.details?.title : ''
-      const headerStageName = video?.details?.stage_name ? video?.details?.stage_name : ''
-      const headerThumbnail = video?.details?.thumbnail
-      const headerUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${video?.details?.youtube_id}&tab=links`
 
 
   return (
     <>
-    {/* <Head>
-        <title>{`${headerTitle} | ${headerStageName} - Dukaflani`}</title>
-        <meta name="title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
-        <meta name="description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
-
-        
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content={headerUrl} />
-        <meta property="og:title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
-        <meta property="og:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="og:image" content={headerThumbnail} />
-
-        
-        <meta property="twitter:card" content="summary_large_image"/>
-        <meta property="twitter:url" content={headerUrl} />
-        <meta property="twitter:title" content={`${headerTitle} | ${headerStageName} - Dukaflani`} />
-        <meta property="twitter:description" content="Home of music videos, products and merchandise promoted by your favorite musicians."/>
-        <meta property="twitter:image" content={headerThumbnail} />  
-      </Head> */}
-
-
-
-
-
-
     <article className='h-full mx-auto'>
         <div className='sticky top-0'>
-            <YouTubeIframe/>
-            {!navbarVisisble && <ItemsTabNavigationMobile/>}
-            <div>
-                
+            <div className='aspect-w-16 aspect-h-9 bg-black'>
+                <iframe src={`https://www.youtube.com/embed/${video?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
             </div>
+            {!navbarVisisble && <ItemsTabNavigationMobile/>}
         </div>
         <div className='bg-white pb-10'>
             <AdvertisementMobile/>
             <div className='px-2'>
-                <div onClick={() => setShowDescription(true)} className='tracking-tight font-semibold text-gray-800 text-base md:text-lg landscape:text-lg line-clamp-2 pr-3 pt-2 leading-4'>{video?.details?.title}</div>
+                <div onClick={() => setShowDescription(true)} className='tracking-tight font-semibold text-gray-800 text-base md:text-lg landscape:text-lg line-clamp-2 pr-3 pt-2 leading-4'>{video?.title}</div>
                 <div onClick={() => setShowDescription(true)} className='text-xs space-x-2 text-gray-600'>
                     <span>{viewsCountShort} {viewsCountShort == 1 ? "view" : "views"}</span>
                     <span>{videoUploadTimeShort}</span>
-                    <span className='uppercase text-blue-500'>{video?.details?.genre_title}</span>
+                    <span className='uppercase text-blue-500'>{video?.genre_title}</span>
                     <span className='font-semibold text-gray-700'>more...</span>
                 </div>
                 <div className='flex items-center space-x-1 my-2 md:my-3 landscape:my-3'>
@@ -353,20 +287,20 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                     {currentVideoProfilePic && <picture>
                         <img
                             src={!currentVideoProfilePic ? noAvatar : currentVideoProfilePic}
-                            alt={video?.details?.stage_name}
+                            alt={video?.stage_name}
                             className="h-8 w-8 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200"
                         />
                     </picture>}
                     </div>
                     {!is_loggedin && <div onClick={() => router.push("/account/login")} className='flex-1 flex items-center'>
-                        <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.details?.stage_name}</div>
-                        {video?.details?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
+                        <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.stage_name}</div>
+                        {video?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
                         {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>Login to view fanbase</div>}
                         {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>{fanbaseCountShort}</div>}
                     </div>}
                     {is_loggedin && <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
-                        <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.details?.stage_name}</div>
-                        {video?.details?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
+                        <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.stage_name}</div>
+                        {video?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
                         {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>Login to view fanbase</div>}
                         {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>{fanbaseCountShort}</div>}
                     </div>}
@@ -455,7 +389,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 {
                 {
                     "links" : <StreamingLinksMobile/>,
-                    "product" : <ProductCardMobile title={video?.details?.title} />,
+                    "product" : <ProductCardMobile title={video?.title} />,
                     "lyrics" : <LyricsPageMobile/>,
                     "skiza" : <SkizaTunesPageMobile/>,
                     "album" : <AlbumPageMobile/>,
@@ -567,16 +501,16 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                 {currentVideoProfilePic && <picture>
                         <img
                             src={!currentVideoProfilePic ? noAvatar : currentVideoProfilePic}
-                            alt={video?.details?.stage_name}
+                            alt={video?.stage_name}
                             className="h-10 w-10 rounded-full md:h-10 md:w-10 landscape:h-10 landscape:w-10 bg-gray-200"
                         />
                     </picture>}
                 <div className='flex-1 flex items-start justify-center flex-col'>
                     <div className='flex'>
-                        <span className='text-base font-medium tracking-tight text-gray-800'>{videoProfile?.data?.stage_name}</span>
-                        {videoProfile?.data?.is_verified == 'True' && <CheckBadgeIcon className='h-6 w-6 text-blue-500 pb-2 -ml-0.5'/>}
+                        <span className='text-base font-medium tracking-tight text-gray-800'>{videoProfile?.stage_name}</span>
+                        {videoProfile?.is_verified == 'True' && <CheckBadgeIcon className='h-6 w-6 text-blue-500 pb-2 -ml-0.5'/>}
                     </div>
-                   <span className='text-sm tracking-tight text-gray-600 -mt-1'>{videoProfile?.data?.nationality.split(",")[1]}</span>
+                   <span className='text-sm tracking-tight text-gray-600 -mt-1'>{videoProfile?.nationality.split(",")[1]}</span>
                 </div>
                 </li>
                     <li  className='flex items-center justify-center space-x-2 w-full pl-2 pr-5'>
@@ -590,7 +524,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                         <span className='text-base font-bold text-gray-800 tracking-tight'>About</span>
                                     </div>
                                     <div>
-                                        <span className='text-xs text-gray-500 tracking-tight'>Member Since {new Date(videoProfile?.data?.date).toDateString()}</span>
+                                        <span className='text-xs text-gray-500 tracking-tight'>Member Since {new Date(videoProfile?.date).toDateString()}</span>
                                     </div>
                                     <div>
                                     <ShowMoreText
@@ -602,7 +536,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                         expanded={false}
                                         truncatedEndingComponent={"... "}
                                     >
-                                        {videoProfile?.data?.about}
+                                        {videoProfile?.about}
                                     </ShowMoreText>
                                     </div>
                                 </li>
@@ -616,7 +550,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                                     <span className='text-xs text-gray-500 tracking-tight'>Videos</span>
                                                 </div>
                                                 <div>
-                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.data?.video_count).format('0,0')}</p>
+                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.video_count).format('0,0')}</p>
                                                 </div>
                                             </div>
                                             <div>
@@ -624,7 +558,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                                     <span className='text-xs text-gray-500 tracking-tight'>Products</span>
                                                 </div>
                                                 <div>
-                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.data?.product_count).format('0,0')}</p>
+                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.product_count).format('0,0')}</p>
                                                 </div>
                                             </div>
                                             <div>
@@ -632,7 +566,7 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                                     <span className='text-xs text-gray-500 tracking-tight'>Events</span>
                                                 </div>
                                                 <div>
-                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.data?.events_count).format('0,0')}</p>
+                                                    <p className='leading-4 tracking-tight'>{numeral(videoProfile?.events_count).format('0,0')}</p>
                                                 </div>
                                             </div>
                                     </div>
@@ -645,37 +579,37 @@ const CurrentVideoPlayer = ({ navbarVisisble }) => {
                                         <span className='text-xs text-gray-500 tracking-tight'>Management</span>
                                     </div>
                                     <div>
-                                        <p className='leading-4 tracking-tight'>{videoProfile?.data?.management}</p>
+                                        <p className='leading-4 tracking-tight'>{videoProfile?.management}</p>
                                     </div>
                                     <div>
                                         <span className='text-xs text-gray-500 tracking-tight'>Contact</span>
                                     </div>
                                     <div>
-                                        <p className='leading-4 tracking-tight'>{videoProfile?.data?.booking_contact}</p>
+                                        <p className='leading-4 tracking-tight'>{videoProfile?.booking_contact}</p>
                                     </div>
                                     <div>
                                         <span className='text-xs text-gray-500 tracking-tight'>Email</span>
                                     </div>
                                     <div>
-                                        <p className='leading-4 tracking-tight mb-3'>{videoProfile?.data?.booking_email}</p>
+                                        <p className='leading-4 tracking-tight mb-3'>{videoProfile?.booking_email}</p>
                                     </div>
                                     <div>
                                         <span className='text-base font-bold text-gray-800 tracking-tight'>Social Media</span>
                                     </div>
-                                    {videoProfile?.data?.facebook && <a href={videoProfile?.data?.facebook} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.data?.facebook}</p>
+                                    {videoProfile?.facebook && <a href={videoProfile?.facebook} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.facebook}</p>
                                     </a>}
-                                    {videoProfile?.data?.twitter && <a href={videoProfile?.data?.twitter} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.twitter}</p>
+                                    {videoProfile?.twitter && <a href={videoProfile?.twitter} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.twitter}</p>
                                     </a>}
-                                    {videoProfile?.data?.instagram && <a href={videoProfile?.data?.instagram} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.instagram}</p>
+                                    {videoProfile?.instagram && <a href={videoProfile?.instagram} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.instagram}</p>
                                     </a>}
-                                    {videoProfile?.data?.tiktok && <a href={videoProfile?.data?.tiktok} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.tiktok}</p>
+                                    {videoProfile?.tiktok && <a href={videoProfile?.tiktok} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.tiktok}</p>
                                     </a>}
-                                   {videoProfile?.data?.youtube_channel && <a href={videoProfile?.data?.youtube_channel} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.data?.youtube_channel}</p>
+                                   {videoProfile?.youtube_channel && <a href={videoProfile?.youtube_channel} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.youtube_channel}</p>
                                     </a>}
                                 </li>
                                 <li>
