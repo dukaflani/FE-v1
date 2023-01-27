@@ -9,7 +9,7 @@ const settings = () => {
       <Head>
         <title>Profile Settings | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Profile Settings | Dukaflani — Home of Music Videos"/>
-        <meta name="description" content=""Entrepreneurs In Music Sell Their Products Here""/>
+        <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>
         <>
