@@ -9,7 +9,7 @@ const login = () => {
       <Head>
         <title>Login | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="Login | Dukaflani — Home of Music Videos"/>
-        <meta name="description" content=""Entrepreneurs In Music Sell Their Products Here  STREAMING LINKS  MERCHANDISE  LYRICS  SKIZA TUNES  ALBUMS  EVENTS  VIDEOS""/>
+        <meta name="description" content=""Entrepreneurs In Music Sell Their Products Here STREAMING LINKS MERCHANDISE LYRICS SKIZA TUNES ALBUMS EVENTS VIDEOS""/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
        </Head>
       <div className='max-w-md h-4/6 bg-white shadow mx-2'>

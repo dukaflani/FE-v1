@@ -19,7 +19,7 @@ const moreItems = () => {
       <Head>
         <title>More Items | Dukaflani — Home of Music Videos</title>
         <meta name="title" content="More Items | Dukaflani — Home of Music Videos"/>
-        <meta name="description" content=""Entrepreneurs In Music Sell Their Products Here  STREAMING LINKS  MERCHANDISE  LYRICS  SKIZA TUNES  ALBUMS  EVENTS  VIDEOS""/>
+        <meta name="description" content=""Entrepreneurs In Music Sell Their Products Here STREAMING LINKS MERCHANDISE LYRICS SKIZA TUNES ALBUMS EVENTS VIDEOS""/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>
       <Navigation/>
