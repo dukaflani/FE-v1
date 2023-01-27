@@ -9,16 +9,16 @@ const SignInRequestBottomBar = () => {
 
   return (
     <div className='flex flex-col items-center justify-center fixed bottom-0 left-0 right-0 bg-white border-t shadow-inner p-5 z-50'>
-        <div className='font-medium'>Dukaflani: Home of Music Videos</div>
-        <div>Login to like videos, vote, buy merchandise or to join your favourite artist's fanbase</div>
+        <div className='font-semibold'>Entrepreneurs In Music Sell Their Products Here</div>
+        <div className='uppercase text-sm py-2'>Streaming Links | Merchandise | Lyrics | Skiza Tunes | Albums | Events | Videos</div>
         <div className='pt-1 space-x-2'>
             <Button
-                title='Login'
-                onClick={() => dispatch(toggleSignInModalOpen(true))}
+                title='Register Now'
+                onClick={() => router.push({ pathname: '/account/register' })}
             />
             <Button
-                title='Register'
-                onClick={() => router.push({ pathname: '/account/register' })}
+                title='Click to Login'
+                onClick={() => dispatch(toggleSignInModalOpen(true))}
             />
         </div>
     </div>

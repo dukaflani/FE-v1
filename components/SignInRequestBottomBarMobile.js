@@ -7,17 +7,16 @@ const SignInRequestBottomBar = () => {
 
   return (
     <div className='flex flex-col items-center justify-center fixed bottom-0 left-0 right-0 bg-white border-t shadow-inner p-5 z-50'>
-        <div className='font-medium'>Dukaflani</div>
-        <div className='font-medium text-sm'>Home of Music Videos</div>
-        <div className='text-xs'>Login to like videos, vote, buy merchandise or to join your favourite artist's fanbase</div>
+        <div className='font-semibold text-sm'>Entrepreneurs In Music Sell Their Products Here</div>
+        <div className='uppercase py-2 text-xs'>Streaming Links | Merchandise | Lyrics | Skiza Tunes | Albums | Events | Videos</div>
         <div className='pt-1 space-x-2'>
             <Button
-                title='Login'
-                onClick={() => router.push({pathname: '/account/login'})}
+                title='Register Now'
+                onClick={() => router.push({ pathname: '/account/register' })}
             />
             <Button
-                title='Register'
-                onClick={() => router.push({ pathname: '/account/register' })}
+                title='Click to Login'
+                onClick={() => router.push({pathname: '/account/login'})}
             />
         </div>
     </div>
