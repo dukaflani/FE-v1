@@ -37,7 +37,7 @@ const WatchCurrentVideo = ({ currentVideo, videoProfile }) => {
       <Head>
           <title>{`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`}</title>
           <meta name="title" content={`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`} />
-          <meta name="description" content="Home of music videos, products and merchandise from your favorite musicians."/>
+          <meta name="description" content="Entrepreneurs In Music Sell Their Products Here.  STREAMING LINKS | MERCHANDISE | LYRICS | SKIZA TUNES | ALBUMS | EVENTS | VIDEOS"/>
           <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>
 
