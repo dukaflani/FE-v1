@@ -68,7 +68,7 @@ const ProductCard = ({ title }) => {
                 </div>
             </div>
             <a href={whatsappLink} target="_blank" rel="noopener">
-                <div style={{backgroundColor:'#25D366'}} className='flex items-center justify-center p-2 cursor-pointer mt-3 text-white uppercase text-xs tracking-wider font-semibold'>order on whatsapp</div>
+                <div style={{backgroundColor:'#25D366'}} className='flex items-center justify-center p-2 cursor-pointer mt-3 text-white uppercase text-xs tracking-wider font-semibold'>order now on whatsapp</div>
             </a>
         </div>)}
         <footer className='text-xs flex items-center justify-center pt-5 pb-2 text-gray-500'>{product?.data?.sold_by && "Sold by"} {product?.data?.sold_by}</footer>
