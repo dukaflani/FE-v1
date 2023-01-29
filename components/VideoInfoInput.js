@@ -59,7 +59,7 @@ const VideoInfoInput = ({ currentInput, setCurrentInput, videoTitle, setVideoTit
     const videoInfo = new FormData();
     videoInfo.append("title", videoTitle);
     videoInfo.append("song_title", songTitle);
-    videoInfo.append("youtube_id", youtubeVideoId);
+    videoInfo.append("youtube_id", youtubeVideoId.trim());
     videoInfo.append("description", videoDescription);
     videoInfo.append("slug", videoSlug);
     videoInfo.append("thumbnail", thumbnail);
