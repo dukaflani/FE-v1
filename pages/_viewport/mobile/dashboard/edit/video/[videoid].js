@@ -8,8 +8,8 @@ const editVideo = () => {
   return (
     <SidebarNavMobile>
     <Head>
-        <title>Edit Video | Dukaflani — Home of Music Videos</title>
-        <meta name="title" content="Edit Video | Dukaflani — Home of Music Videos"/>
+        <title>Edit Video | Dukaflani — Buy From Musicians</title>
+        <meta name="title" content="Edit Video | Dukaflani — Buy From Musicians"/>
         <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>

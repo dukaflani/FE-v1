@@ -17,8 +17,8 @@ const moreItems = () => {
   return (
     <SidebarNav>
       <Head>
-        <title>More Items | Dukaflani — Home of Music Videos</title>
-        <meta name="title" content="More Items | Dukaflani — Home of Music Videos"/>
+        <title>More Items | Dukaflani — Buy From Musicians</title>
+        <meta name="title" content="More Items | Dukaflani — Buy From Musicians"/>
         <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>

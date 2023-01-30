@@ -34,7 +34,7 @@ const CurrentVideo = () => {
     <SidebarNav>
       {/* <Head>
         <title>Dukaflani</title>
-        <meta name="description" content="Home of music videos, products and merchandise promoted by your favourite musicians." />
+        <meta name="description" content="Entrepreneurs In Music Sell Their Products Here, products and merchandise promoted by your favourite musicians." />
       </Head> */}
       <Navigation/>
       <main className='pt-20'>

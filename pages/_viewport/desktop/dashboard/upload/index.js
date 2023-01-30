@@ -39,8 +39,8 @@ const uploadPage = () => {
   return (
     <SidebarNav>
       <Head>
-        <title>Upload Page | Dukaflani — Home of Music Videos</title>
-        <meta name="title" content="Upload Page | Dukaflani — Home of Music Videos"/>
+        <title>Upload Page | Dukaflani — Buy From Musicians</title>
+        <meta name="title" content="Upload Page | Dukaflani — Buy From Musicians"/>
         <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>

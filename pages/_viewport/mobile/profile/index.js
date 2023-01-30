@@ -9,8 +9,8 @@ const index = () => {
   return (
     <SidebarNavMobile>
       <Head>
-        <title>Profile | Dukaflani — Home of Music Videos</title>
-        <meta name="title" content="Profile | Dukaflani — Home of Music Videos"/>
+        <title>Profile | Dukaflani — Buy From Musicians</title>
+        <meta name="title" content="Profile | Dukaflani — Buy From Musicians"/>
         <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>

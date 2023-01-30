@@ -21,8 +21,8 @@ const numOfLinks = streamingLinks?.data?.length
   return (
     <SidebarNav>
     <Head>
-        <title>Edit Links | Dukaflani — Home of Music Videos</title>
-        <meta name="title" content="Edit Links | Dukaflani — Home of Music Videos"/>
+        <title>Edit Links | Dukaflani — Buy From Musicians</title>
+        <meta name="title" content="Edit Links | Dukaflani — Buy From Musicians"/>
         <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>

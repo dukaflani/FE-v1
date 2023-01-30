@@ -10,8 +10,8 @@ const errorPage = () => {
   return (
     <>
       <Head>
-        <title>Page Not Found | Dukaflani — Home of Music Videos</title>
-        <meta name="title" content="Page Not Found | Dukaflani — Home of Music Videos"/>
+        <title>Page Not Found | Dukaflani — Buy From Musicians</title>
+        <meta name="title" content="Page Not Found | Dukaflani — Buy From Musicians"/>
         <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>

@@ -73,7 +73,7 @@ const AccountRegister = () => {
                                     />
                             </div>
                         </div>
-                        <div className='pt-1 pb-10 text-xs text-white'>Welcome to Dukaflani. Home of Music Videos</div>
+                        <div className='pt-1 pb-10 text-xs text-white'>Welcome to Dukaflani. Entrepreneurs In Music Sell Their Products Here</div>
                         <div className='text-white font-extrabold tracking-wider uppercase pb-2'>Dukaflani Accounts</div>
                         <div className='text-white font-medium pb-1 tracking-wide'>&bull; User Account</div>
                         <div className='text-white text-xs'>A user account will allow you to watch videos, like, comment, share, vote, join artist fanbase and make purchases from your favourite artists</div>

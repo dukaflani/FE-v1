@@ -48,8 +48,8 @@ const lastVideoElementRef = useCallback(node => {
   return (
     <SidebarNavMobile>
       <Head>
-        <title>{searchTerm} — Home of Music Videos</title>
-        <meta name="title" content={`${searchTerm} — Home of Music Videos`}/>
+        <title>{searchTerm} — Entrepreneurs In Music Sell Their Products Here</title>
+        <meta name="title" content={`${searchTerm} — Entrepreneurs In Music Sell Their Products Here`}/>
         <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>
