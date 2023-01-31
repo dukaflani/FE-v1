@@ -32,14 +32,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
         <meta property="og:title" content="Dukaflani — Buy From Musicians"/>
         <meta property="og:description" content="Entrepreneurs In Music Sell Their Products Here"/>
-        <meta property="og:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/>
+        {/* <meta property="og:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/> */}
 
         
         <meta property="twitter:card" content="summary_large_image"/>
         <meta property="twitter:url" content={process.env.NEXT_PUBLIC_NEXT_URL} />
         <meta property="twitter:title" content="Dukaflani — Buy From Musicians"/>
         <meta property="twitter:description" content="Entrepreneurs In Music Sell Their Products Here"/>
-        <meta property="twitter:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/>
+        {/* <meta property="twitter:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/> */}
       </Head>
       <Provider store={store}>
         <Component {...pageProps} />
