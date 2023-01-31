@@ -34,30 +34,12 @@ const WatchCurrentVideo = ({ currentVideo, videoProfile }) => {
   
   return (
     <>
-      <Head>
-        <title>{`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`}</title>
-        <meta name="title" content={`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`} />
-        <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
-        <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
-
-        
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${currentVideo?.results[0]?.youtube_id}&tab=links`} />
-        <meta property="og:title" content={`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`} />
-        <meta property="og:description" content="Entrepreneurs In Music Sell Their Products Here"/>
-        <meta 
-            property="og:image" 
-            content={`${process.env.NEXT_PUBLIC_NEXT_URL}/api/og?stage_name=${currentVideo?.results[0]?.stage_name}&fanbase_count=${videoProfile?.fanbase_count}&song_title=${currentVideo?.results[0]?.song_title}&video_title=${currentVideo?.results[0]?.title}&avatar=${currentVideo?.results[0]?.profile_avatar}`} />
-
-        
-        <meta property="twitter:card" content="summary_large_image"/>
-        <meta property="twitter:url" content={`${process.env.NEXT_PUBLIC_NEXT_URL}/watch?v=${currentVideo?.results[0]?.youtube_id}&tab=links`} />
-        <meta property="twitter:title" content={`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`} />
-        <meta property="twitter:description" content="Entrepreneurs In Music Sell Their Products Here"/>
-        <meta 
-            property="twitter:image" 
-            content={`${process.env.NEXT_PUBLIC_NEXT_URL}/api/og?stage_name=${currentVideo?.results[0]?.stage_name}&fanbase_count=${videoProfile?.fanbase_count}&song_title=${currentVideo?.results[0]?.song_title}&video_title=${currentVideo?.results[0]?.title}&avatar=${currentVideo?.results[0]?.profile_avatar}`} />
-      </Head>
+      {/* <Head>
+          <title>{`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`}</title>
+          <meta name="title" content={`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`} />
+          <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
+          <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
+      </Head> */}
 
       <SidebarNavMobile>
         <div ref={mobileWatchNavbarRef}>
