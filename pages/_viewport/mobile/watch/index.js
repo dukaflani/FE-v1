@@ -34,12 +34,12 @@ const WatchCurrentVideo = ({ currentVideo, videoProfile }) => {
   
   return (
     <>
-      {/* <Head>
+      <Head>
           <title>{`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`}</title>
           <meta name="title" content={`${currentVideo?.results[0]?.title} | ${currentVideo?.results[0]?.stage_name} - Dukaflani`} />
           <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
           <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
-      </Head> */}
+      </Head>
 
       <SidebarNavMobile>
         <div ref={mobileWatchNavbarRef}>
