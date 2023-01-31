@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-    <Head>
+    {/* <Head>
         <title>Dukaflani — Buy From Musicians</title>
         <meta name="title" content="Dukaflani — Buy From Musicians"/>
         <meta name="description" content="Entrepreneurs In Music Sell Their Products Here"/>
@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="twitter:title" content="Dukaflani — Buy From Musicians"/>
         <meta property="twitter:description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta property="twitter:image" content="https://dukaflani-user-uploads.s3.ap-south-1.amazonaws.com/branding/dukaflani-social-media-cover-potrait.png"/>
-      </Head>
+      </Head> */}
       <Provider store={store}>
         <Component {...pageProps} />
       </Provider>
