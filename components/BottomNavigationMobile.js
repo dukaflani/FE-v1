@@ -81,8 +81,11 @@ const BottomNavigationMobile = () => {
 
             {!accessToken && <div onClick={() => router.push({ pathname: '/account/login' })} className='max-h-48 overflow-y-auto pb-14 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-3'>
-                    <li>
-                        <span>Login to upload</span>
+                    <li className='flex items-center justify-center space-x-2'>
+                        <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
+                            <ArrowLeftOnRectangleIcon className='h-5 w-5'/>
+                        </span>
+                        <span>Login to upload. Click here!!!</span>
                     </li>
                 </ul>
             </div>}
