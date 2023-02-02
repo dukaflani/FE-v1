@@ -78,7 +78,7 @@ const BottomNavigationMobile = () => {
                     <XMarkIcon className='w-4 h-4'/>
                 </span>
             </div>
-            <div className='max-h-48 overflow-y-auto pb-14 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
+            {accessToken && <div className='max-h-48 overflow-y-auto pb-14 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-3'>
                     <li onClick={() => {
                             router.push({pathname: '/dashboard/upload', query: {item: 'video'}});
@@ -144,7 +144,7 @@ const BottomNavigationMobile = () => {
                         <span>Add an Event</span>
                     </li>
                 </ul>
-            </div>
+            </div>}
         </nav>
     </div>
 
@@ -159,7 +159,7 @@ const BottomNavigationMobile = () => {
             </div>
             <div className='max-h-48 overflow-y-auto pb-14 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-3'>
-                    <li onClick={() => {
+                    {accessToken && <li onClick={() => {
                         router.push('/profile/settings');
                         setShowOptions(false);
                         }} className='flex items-center justify-center space-x-2'>
@@ -167,8 +167,8 @@ const BottomNavigationMobile = () => {
                             <UserCircleIcon className='h-5 w-5'/>
                         </span>
                         <span>Profile Settings</span>
-                    </li>
-                    <li onClick={() => {
+                    </li>}
+                    {accessToken && <li onClick={() => {
                         router.push('/user/settings');
                         setShowOptions(false);
                         }} className='flex items-center justify-center space-x-2'>
@@ -176,7 +176,7 @@ const BottomNavigationMobile = () => {
                             <Cog8ToothIcon className='h-5 w-5'/>
                         </span>
                         <span>User Settings</span>
-                    </li>
+                    </li>}
                     <li onClick={() => setShowOptions(false)} className='flex items-center justify-center space-x-2 text-gray-300'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <MoonIcon className='h-5 w-5'/>
