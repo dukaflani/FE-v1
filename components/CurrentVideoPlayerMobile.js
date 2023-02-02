@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
+import YouTube from 'react-youtube';
 import { useRouter } from 'next/router';
 import ShowMoreText from "react-show-more-text";
 import { formatDistanceStrict } from 'date-fns';
@@ -262,13 +263,26 @@ const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
       })
 
 
+      const opts = {
+        height: '100%',
+        width: '100%',
+        playerVars: {
+          loop: 1,
+          playlist: video?.youtube_id,
+          modestbranding: 1,
+          color: 'white'
+        },
+      };
+
+
 
   return (
     <>
     <article className='h-full mx-auto'>
         <div className='sticky top-0'>
             <div className='aspect-w-16 aspect-h-9 bg-black'>
-                <iframe src={`https://www.youtube.com/embed/${video?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                <YouTube videoId={video?.youtube_id} opts={opts}/>
+                {/* <iframe src={`https://www.youtube.com/embed/${video?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe> */}
             </div>
             {!navbarVisisble && <ItemsTabNavigationMobile/>}
         </div>

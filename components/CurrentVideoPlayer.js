@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Linkify from 'react-linkify';
 import numeral from 'numeral';
+import YouTube from 'react-youtube';
 import { useRouter } from 'next/router';
 import ShowMoreText from "react-show-more-text";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -171,6 +172,20 @@ const CurrentVideoPlayer = ({ video }) => {
         }
 
 
+        const opts = {
+            height: '100%',
+            width: '100%',
+            playerVars: {
+              loop: 1,
+              playlist: video?.youtube_id,
+              modestbranding: 1,
+              color: 'white'
+            },
+          };
+
+        
+
+
 
   return (
     <>
@@ -178,7 +193,8 @@ const CurrentVideoPlayer = ({ video }) => {
             <div>
                 <div className='w-full'>
                     <div className='aspect-w-16 aspect-h-9 bg-black'>
-                        <iframe src={`https://www.youtube.com/embed/${video?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                        <YouTube videoId={video?.youtube_id} opts={opts}/>
+                        {/* <iframe src={`https://www.youtube.com/embed/${video?.youtube_id}?loop=1&modestbranding=1&color=white&playlist=${video?.youtube_id}`} title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe> */}
                     </div>
                 </div>
                 <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.genre_title}</div>

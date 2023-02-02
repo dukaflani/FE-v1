@@ -33,6 +33,7 @@
     "react-show-more-text": "^1.6.1",
     "react-sidebar": "^3.0.2",
     "react-tooltip": "^4.5.1",
+    "react-youtube": "^10.1.0",
     "slugify": "^1.6.5"
   },
   "devDependencies": {
