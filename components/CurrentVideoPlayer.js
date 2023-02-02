@@ -184,8 +184,10 @@ const CurrentVideoPlayer = ({ video }) => {
                 <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.genre_title}</div>
                 <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.title}</h1>
                 <div className='w-full flex flex-col items-start justify-between py-2 space-y-1'>
-                    <div className='text-sm font-semibold tracking-tight text-gray-700'> {view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime && 'Added'} {videoUploadTime}</div>
-                    <div className='flex justify-end items-center pr-5'>
+                    <div className='hidden'> {view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime && 'Added'} {videoUploadTime}</div>
+                    <div className='text-sm font-semibold tracking-tight text-gray-700'>{videoUploadTime && 'Added'} {videoUploadTime}</div>
+                    {/* <div className='flex justify-end items-center pr-5'> */}
+                    <div className='hidden'>
                         <div className="inline-flex rounded-md" role="group">
                         {is_liked ? <button onClick={handleDeleteLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             <Likebtn className="mr-2 w-5 h-5" /> 

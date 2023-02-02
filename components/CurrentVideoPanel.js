@@ -149,15 +149,16 @@ const CurrentVideoPanel = ({ video, videoProfile }) => {
                         </span>
                         }
                     </div>}
-                    {!is_loggedin && <div className='mx-1 text-sm tracking-tight text-gray-600'>Login to view fanbase</div>}
-                    {is_loggedin && <div className='mx-1 text-sm tracking-tight text-gray-600'>Fanbase {numOfFanbase}</div>}
+                    <div className='mx-1 text-sm tracking-tight text-gray-600'>Artist</div>
+                    {!is_loggedin && <div className='hidden'>Login to view fanbase</div>}
+                    {is_loggedin && <div className='hidden'>Fanbase {numOfFanbase}</div>}
                 </div>
-                {is_loggedin && <div className='w-2/12 flex items-center justify-center'>
+                {is_loggedin && <div className='w-2/12 hidden items-center justify-center'>
                     {is_a_fan ? <button onClick={handleLeave} className='uppercase p-1 border border-gray-700 text-gray-800 font-semibold tracking-wider text-xs'>Leave</button> 
                     : 
                     <button onClick={handleJoin} className='uppercase p-1 bg-gray-800 text-white font-semibold tracking-wider text-xs'>Join</button>}
                  </div>}
-                {!is_loggedin && <div className='w-2/12 flex items-center justify-center'>
+                {!is_loggedin && <div className='w-2/12 hidden items-center justify-center'>
                     <button onClick={() => dispatch(toggleSignInModalOpen(true))} className='uppercase p-1 bg-gray-800 text-white font-semibold tracking-wider text-xs'>Login</button>
                 </div>}
             </div>

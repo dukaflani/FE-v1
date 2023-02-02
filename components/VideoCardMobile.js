@@ -96,7 +96,8 @@ const VideoCardMobile = ({ video }) => {
                                     </div>
                                 )}
                             </div>
-                            <div className='text-gray-600 text-sm -mt-1 tracking-tighter'>{!true && <span className='text-xs bg-rose-600 text-white mr-1'>SHOP</span>}{view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime}</div>
+                            <div className='hidden'>{!true && <span className='text-xs bg-rose-600 text-white mr-1'>SHOP</span>}{view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime}</div>
+                            <div className='text-gray-600 text-sm -mt-1 tracking-tighter'>{!true && <span className='text-xs bg-rose-600 text-white mr-1'>SHOP</span>}{videoUploadTime}</div>
                         </div>
                     </div>
                 </div>
