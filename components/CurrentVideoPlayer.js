@@ -183,27 +183,26 @@ const CurrentVideoPlayer = ({ video }) => {
                 </div>
                 <div className='w-full uppercase text-sm text-blue-600 pt-2'>{video?.genre_title}</div>
                 <h1 className='w-full font-semibold leading-4 text-gray-800 tracking-tight text-xl pt-1 pb-2'>{video?.title}</h1>
-                <div className='w-full flex flex-col items-start justify-between py-2 space-y-1'>
+                <div className='w-full flex items-start justify-between'>
                     <div className='hidden'> {view3} {view3 == 1 ? 'view' : 'views'} &bull; {videoUploadTime && 'Added'} {videoUploadTime}</div>
-                    <div className='text-sm font-semibold tracking-tight text-gray-700'>{videoUploadTime && 'Added'} {videoUploadTime}</div>
-                    {/* <div className='flex justify-end items-center pr-5'> */}
-                    <div className='hidden'>
+                    <div className='text-sm pt-2 font-semibold tracking-tight text-gray-700'>{videoUploadTime && 'Added'} {videoUploadTime}</div>
+                    <div className='flex justify-center items-center pr-5'>
                         <div className="inline-flex rounded-md" role="group">
-                        {is_liked ? <button onClick={handleDeleteLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                        {is_liked ? <button onClick={handleDeleteLike} type="button" className="hidden items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             <Likebtn className="mr-2 w-5 h-5" /> 
                             {numOfLikes}
                         </button>
                         :
-                        <button onClick={handleAddLike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                        <button onClick={handleAddLike} type="button" className="hidden items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             <HandThumbUpIcon className="mr-2 w-5 h-5" />
                             {likesCount}
                         </button>}
-                        {is_unliked ? <button onClick={handleDeleteUnlike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                        {is_unliked ? <button onClick={handleDeleteUnlike} type="button" className="hidden items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             <Unlikebtn className="mr-2 w-5 h-5" />
                             {unlikesCount}
                         </button>
                         :
-                        <button onClick={handleAddUnlike} type="button" className="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                        <button onClick={handleAddUnlike} type="button" className="hidden items-center py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             <HandThumbDownIcon className="mr-2 w-5 h-5" />
                             {numOfUnlikes}
                         </button>}
@@ -219,13 +218,13 @@ const CurrentVideoPlayer = ({ video }) => {
                                 </button>
                             </CopyToClipboard>
                         </div>
-                        <div className='ml-2'>
+                        <div className='ml-2 hidden'>
                             <button type="button" className="inline-flex cursor-not-allowed items-center py-2 px-4 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                 <StarIcon className="mr-2 w-5 h-5" />
                                 Vote
                             </button>
                         </div>
-                        <div className='ml-2'>
+                        <div className='ml-2 hidden'>
                             <button type="button" className="inline-flex cursor-not-allowed items-center py-2 px-4 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                 <FlagIcon className="mr-2 w-5 h-5" />
                                 Report
