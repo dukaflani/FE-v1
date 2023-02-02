@@ -9,7 +9,7 @@ import { TvIcon as TvSolid, RectangleGroupIcon as RGSolid } from '@heroicons/rea
 import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import MyVideosMobile from '../../../../components/MyVideosMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
-import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
+// import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
 import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
 
 const dashboard = () => {
@@ -17,13 +17,13 @@ const dashboard = () => {
   const { user } = useSelector((state) => state.auth)
   const currentUser = user?.info?.id
 
-  const queryParams = {
-    user: currentUser
-  }
+  // const queryParams = {
+  //   user: currentUser
+  // }
 
-const { data: profile } = useFetchUserProfileQuery(queryParams) 
-const userProfile = profile?.data[0] ? profile?.data[0] : null
-const userRole = userProfile?.role
+// const { data: profile } = useFetchUserProfileQuery(queryParams) 
+// const userProfile = profile?.data[0] ? profile?.data[0] : null
+// const userRole = userProfile?.role
 
 const [pageNumber, setPageNumber] = useState('')
 const [searchQuery, setSearchQuery] = useState('')
@@ -55,9 +55,9 @@ const { loading, error, videos, hasMore } = useFetchVideos(searchQuery, userId, 
     if (node) observer.current.observe(node)
   }, [ loading, hasMore ])
 
-    if (userRole != 'ARTIST') {
-      return  <UnauthorizedMobile/> 
-    }
+    // if (userRole != 'ARTIST') {
+    //   return  <UnauthorizedMobile/> 
+    // }
 
 
   return (

@@ -7,7 +7,7 @@ import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import MyProductsMobile from '../../../../components/MyProductsMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import { useFetchUserProductsQuery, useFetchUserProfileQuery } from '../../../../redux/features/videos/videosApiSlice'
-import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
+// import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
 import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
 
 const products = () => {
@@ -20,14 +20,14 @@ const products = () => {
     }
 
     const { data: userProducts, isLoading } = useFetchUserProductsQuery(queryParams)
-    const { data: profile } = useFetchUserProfileQuery(queryParams) 
+    // const { data: profile } = useFetchUserProfileQuery(queryParams) 
     const numOfProducts = userProducts?.data?.length
-    const userProfile = profile?.data[0] ? profile?.data[0] : null
-    const userRole = userProfile?.role
+    // const userProfile = profile?.data[0] ? profile?.data[0] : null
+    // const userRole = userProfile?.role
 
-    if (userRole != 'ARTIST') {
-      return  <UnauthorizedMobile/> 
-    }
+    // if (userRole != 'ARTIST') {
+    //   return  <UnauthorizedMobile/> 
+    // }
 
 
   return (

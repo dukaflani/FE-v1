@@ -5,9 +5,9 @@ import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, Rec
 import SidebarNavMobile from '../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../components/NavigationMobile'
 import MoreItemsWrapperMobile from '../../../../../components/MoreItemsWrapperMobile'
-import { useSelector } from 'react-redux'
-import { useFetchUserProfileQuery } from '../../../../../redux/features/videos/videosApiSlice'
-import UnauthorizedMobile from '../../../../../components/UnauthorizedMobile'
+// import { useSelector } from 'react-redux'
+// import { useFetchUserProfileQuery } from '../../../../../redux/features/videos/videosApiSlice'
+// import UnauthorizedMobile from '../../../../../components/UnauthorizedMobile'
 import BottomNavigationMobile from '../../../../../components/BottomNavigationMobile'
 
 
@@ -18,20 +18,20 @@ const moreItems = () => {
     const [videoTitle, setVideoTitle] = useState('')
     const [currentInput, setCurrentInput] = useState(0)
 
-    const { user } = useSelector((state) => state.auth)
-    const currentUser = user?.info?.id
+    // const { user } = useSelector((state) => state.auth)
+    // const currentUser = user?.info?.id
 
-    const userProfileQueryParams = {
-      user: currentUser,
-    }
+    // const userProfileQueryParams = {
+    //   user: currentUser,
+    // }
 
-    const { data: profile } = useFetchUserProfileQuery(userProfileQueryParams) 
-    const userProfile = profile?.data[0] ? profile?.data[0] : null
-    const userRole = userProfile?.role
+    // const { data: profile } = useFetchUserProfileQuery(userProfileQueryParams) 
+    // const userProfile = profile?.data[0] ? profile?.data[0] : null
+    // const userRole = userProfile?.role
 
-    if (userRole != 'ARTIST') {
-      return  <UnauthorizedMobile/> 
-    }
+    // if (userRole != 'ARTIST') {
+    //   return  <UnauthorizedMobile/> 
+    // }
 
 
 

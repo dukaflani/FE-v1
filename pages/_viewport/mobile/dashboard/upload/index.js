@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import { TvIcon, BuildingStorefrontIcon, TicketIcon, ChevronDoubleRightIcon, RectangleGroupIcon } from '@heroicons/react/24/outline'
 import SidebarNavMobile from '../../../../../components/SidebarNavMobile'
 import NavigationMobile from '../../../../../components/NavigationMobile'
 import UploadVideoMobile from '../../../../../components/UploadVideoMobile'
-import UnauthorizedMobile from '../../../../../components/UnauthorizedMobile'
-import { useFetchUserProfileQuery } from '../../../../../redux/features/videos/videosApiSlice'
+// import UnauthorizedMobile from '../../../../../components/UnauthorizedMobile'
+// import { useFetchUserProfileQuery } from '../../../../../redux/features/videos/videosApiSlice'
 import BottomNavigationMobile from '../../../../../components/BottomNavigationMobile'
 
 
@@ -18,18 +18,18 @@ const uploadPage = () => {
     const [videoTitle, setVideoTitle] = useState('')
     const [currentInput, setCurrentInput] = useState(0)
 
-    const { user } = useSelector((state) => state.auth)
-    const currentUser = user?.info?.id
+    // const { user } = useSelector((state) => state.auth)
+    // const currentUser = user?.info?.id
 
-    const queryParams = {
-      user: currentUser,
-    }
+    // const queryParams = {
+    //   user: currentUser,
+    // }
 
-    const { data: profile } = useFetchUserProfileQuery(queryParams) 
-    const userProfile = profile?.data[0] ? profile?.data[0] : null
+    // const { data: profile } = useFetchUserProfileQuery(queryParams) 
+    // const userProfile = profile?.data[0] ? profile?.data[0] : null
 
 
-    const userRole = userProfile?.role
+    // const userRole = userProfile?.role
 
     // if (userRole != 'ARTIST') {
     //   return  <UnauthorizedMobile/> 

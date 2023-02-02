@@ -7,7 +7,7 @@ import SidebarNavMobile from '../../../../components/SidebarNavMobile'
 import MyEventsMobile from '../../../../components/MyEventsMobile'
 import NavigationMobile from '../../../../components/NavigationMobile'
 import { useFetchEventsQuery, useFetchUserProfileQuery } from '../../../../redux/features/videos/videosApiSlice'
-import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
+// import UnauthorizedMobile from '../../../../components/UnauthorizedMobile'
 import BottomNavigationMobile from '../../../../components/BottomNavigationMobile'
 
 const events = () => {
@@ -19,20 +19,20 @@ const events = () => {
       user_id: currentUser
       }
 
-      const userProfileQueryParams = {
-        user: currentUser,
-      }
+      // const userProfileQueryParams = {
+      //   user: currentUser,
+      // }
 
 
   const { data: events, isLoading } = useFetchEventsQuery(queryParams)
   const numOfEvents = events?.data?.length
-  const { data: profile } = useFetchUserProfileQuery(userProfileQueryParams) 
-  const userProfile = profile?.data[0] ? profile?.data[0] : null
-    const userRole = userProfile?.role
+  // const { data: profile } = useFetchUserProfileQuery(userProfileQueryParams) 
+  // const userProfile = profile?.data[0] ? profile?.data[0] : null
+    // const userRole = userProfile?.role
 
-    if (userRole != 'ARTIST') {
-      return  <UnauthorizedMobile/> 
-    }
+    // if (userRole != 'ARTIST') {
+    //   return  <UnauthorizedMobile/> 
+    // }
 
   
 
