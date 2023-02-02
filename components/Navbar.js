@@ -4,14 +4,14 @@ import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import { Menu, Transition, Dialog } from '@headlessui/react'
-import { MagnifyingGlassIcon, ShoppingCartIcon, BellIcon, Bars3Icon, EllipsisVerticalIcon, MoonIcon, PowerIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, ShoppingCartIcon, BellIcon, Bars3Icon, EllipsisVerticalIcon, MoonIcon, PowerIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 import { setUserProfile } from '../redux/features/auth/authSlice'
 import { togglesideNavOpen } from '../redux/features/navigation/navigationSlice'
 import logoLight from '../public/branding/dukaflani-blue-black-logo-large.png'
 import { useFetchUserProfileQuery, useLogoutMutation } from '../redux/features/videos/videosApiSlice'
 import noAvatar from '../public/media/noimage.webp'
 
-const Navbar = ({ myAvatar, searchTerm }) => {
+const Navbar = ({ myAvatar, searchTerm, accessToken }) => {
   const [navSearchTerm, setNavSearchTerm] = useState('')
   const [logoutError, setLogoutError] = useState('')
   const router = useRouter()
@@ -146,7 +146,7 @@ const Navbar = ({ myAvatar, searchTerm }) => {
                     </button>
                   )}
                 </Menu.Item>
-                <Menu.Item onClick={handleLogout}>
+              {accessToken ? <Menu.Item onClick={handleLogout}>
                   {({ active }) => (
                     <button
                       className={`${
@@ -168,6 +168,29 @@ const Navbar = ({ myAvatar, searchTerm }) => {
                     </button>
                   )}
                 </Menu.Item>
+                :
+                <Menu.Item onClick={() => router.push({ pathname: '/account/login' })}>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? 'bg-gray-100 text-gray-800' : 'text-gray-800'
+                      } group flex w-full items-center px-2 py-2 text-sm`}
+                    >
+                      {active ? (
+                        <ArrowLeftOnRectangleIcon
+                          className="mr-2 h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <ArrowLeftOnRectangleIcon
+                          className="mr-2 h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      )}
+                      Login
+                    </button>
+                  )}
+                </Menu.Item>}
               </div>
             </Menu.Items>
           </Transition>

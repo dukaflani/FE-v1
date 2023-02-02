@@ -44,9 +44,9 @@ const userAvatar = userProfile?.info ? userProfile?.info[0]?.profile_avatar : nu
 
   return (
     <>
-        <Navbar myAvatar={userAvatar} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-        {!isLoading && !accessToken  && <SignInRequestBottomBar/>}
-        {!isLoading && errorCode == "token_not_valid"  && <SignInRequestBottomBar/>}
+        <Navbar myAvatar={userAvatar} setSearchTerm={setSearchTerm} searchTerm={searchTerm} accessToken={accessToken} />
+        {/* {!isLoading && !accessToken  && <SignInRequestBottomBar/>} */}
+        {/* {!isLoading && errorCode == "token_not_valid"  && <SignInRequestBottomBar/>} */}
         <Modal 
           isOpen={signInModalOpen}
           style={{content:{backgroundColor:'transparent', border:'none', display:'flex', alignItems:'center', justifyContent:'center'}, 

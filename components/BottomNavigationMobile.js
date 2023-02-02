@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { HomeIcon, RectangleGroupIcon, UserCircleIcon, 
     ChevronUpDownIcon, CloudArrowUpIcon, XMarkIcon, 
     VideoCameraIcon, LinkIcon, ShoppingBagIcon, MicrophoneIcon,
-MusicalNoteIcon, TicketIcon, Cog8ToothIcon, MoonIcon, ArrowRightOnRectangleIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
+MusicalNoteIcon, TicketIcon, Cog8ToothIcon, MoonIcon, DevicePhoneMobileIcon, ArrowLeftOnRectangleIcon, PowerIcon } from '@heroicons/react/24/outline'
 import { HomeIcon as HomeSolid, RectangleGroupIcon as RectangleSolid, UserCircleIcon as UserSolid } from '@heroicons/react/24/solid'
-import { useLogoutMutation } from '../redux/features/videos/videosApiSlice'
+import { useLogoutMutation, useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 
 const BottomNavigationMobile = () => {
     const [showUploadLinks, setShowUploadLinks] = useState(false)
@@ -20,6 +20,7 @@ const BottomNavigationMobile = () => {
     const newDestination = "/" + splitDestinationArray.toString().replace(/,/g, "/")
 
     const [ logout, { isSuccess } ] = useLogoutMutation()
+    const { data: accessToken } = useFetchAccessTokenQuery()
 
     const handleLogout = async () => {
         try {
@@ -182,12 +183,19 @@ const BottomNavigationMobile = () => {
                         </span>
                         <span>Dark Mode</span>
                     </li>
-                    <li onClick={handleLogout} className='flex items-center justify-center space-x-2'>
+                    {accessToken ? <li onClick={handleLogout} className='flex items-center justify-center space-x-2'>
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
-                            <ArrowRightOnRectangleIcon className='h-5 w-5'/>
+                            <PowerIcon className='h-5 w-5'/>
                         </span>
                         <span>Logout</span>
                     </li>
+                    :
+                    <li onClick={() => router.push({ pathname: '/account/login' })} className='flex items-center justify-center space-x-2'>
+                        <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
+                            <ArrowLeftOnRectangleIcon className='h-5 w-5'/>
+                        </span>
+                        <span>Login</span>
+                    </li>}
                 </ul>
             </div>
         </nav>
