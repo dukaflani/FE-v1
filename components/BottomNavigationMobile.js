@@ -78,6 +78,16 @@ const BottomNavigationMobile = () => {
                     <XMarkIcon className='w-4 h-4'/>
                 </span>
             </div>
+
+            {!accessToken && <div onClick={() => router.push({ pathname: '/account/login' })} className='max-h-48 overflow-y-auto pb-14 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
+                <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-3'>
+                    <li>
+                        <span>Login to upload</span>
+                    </li>
+                </ul>
+            </div>}
+
+
             {accessToken && <div className='max-h-48 overflow-y-auto pb-14 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-3'>
                     <li onClick={() => {
