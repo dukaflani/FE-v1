@@ -179,7 +179,8 @@ const CurrentVideoPlayer = ({ video }) => {
               loop: 1,
               playlist: video?.youtube_id,
               modestbranding: 1,
-              color: 'white'
+              color: 'white',
+              autoplay: 1
             },
           };
 
