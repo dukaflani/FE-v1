@@ -277,7 +277,7 @@ const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
             <div className='px-2'>
                 <div onClick={() => setShowDescription(true)} className='tracking-tight font-semibold text-gray-800 text-base md:text-lg landscape:text-lg line-clamp-2 pr-3 pt-2 leading-4'>{video?.title}</div>
                 <div onClick={() => setShowDescription(true)} className='text-xs space-x-2 text-gray-600'>
-                    <span>{viewsCountShort} {viewsCountShort == 1 ? "view" : "views"}</span>
+                    <span className='hidden'>{viewsCountShort} {viewsCountShort == 1 ? "view" : "views"}</span>
                     <span>{videoUploadTimeShort}</span>
                     <span className='uppercase text-blue-500'>{video?.genre_title}</span>
                     <span className='font-semibold text-gray-700'>more...</span>
@@ -295,42 +295,42 @@ const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
                     {!is_loggedin && <div onClick={() => router.push("/account/login")} className='flex-1 flex items-center'>
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.stage_name}</div>
                         {video?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
-                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>Login to view fanbase</div>}
-                        {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>{fanbaseCountShort}</div>}
+                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>Login to view fanbase</div>}
+                        {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>{fanbaseCountShort}</div>}
                     </div>}
                     {is_loggedin && <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.stage_name}</div>
                         {video?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
-                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>Login to view fanbase</div>}
-                        {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>{fanbaseCountShort}</div>}
+                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>Login to view fanbase</div>}
+                        {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>{fanbaseCountShort}</div>}
                     </div>}
-                    {is_loggedin && <div>
+                    {is_loggedin && <div className='hidden'>
                         {is_a_fan ? <button onClick={handleLeave} className='uppercase text-xs tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>leave</button>
                         :
                         <button onClick={handleJoin}  className='uppercase text-xs bg-gray-800 text-white tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>Join</button>}
                         </div>}
-                    {!is_loggedin && <div>
+                    {!is_loggedin && <div className='hidden'>
                         <button onClick={() => router.push("/account/login")} className='uppercase text-xs bg-gray-800 text-white tracking-tight font-semibold p-1 border border-gray-800 rounded-lg'>Login</button>
                         </div>}
                 </div>
                 <div className='flex space-x-3 overflow-x-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <div className='flex justify-end items-center'>
                     <div className="inline-flex rounded-md" role="group">
-                    {is_liked ? <button onClick={handleDeleteLike} type="button" className="inline-flex items-center py-1 px-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    {is_liked ? <button onClick={handleDeleteLike} type="button" className="hidden items-center py-1 px-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                         <Likebtn className="mr-2 w-4 h-4 md:w-5 md:h-5 landscape:w-5 landscape:h-5" /> 
                         {numOfLikes}
                     </button>
                     :
-                    <button onClick={handleAddLike} type="button" className="inline-flex items-center py-1 px-2 text-xs md:text-sm landscape:text-sm font-medium text-gray-900 bg-gray-50 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <button onClick={handleAddLike} type="button" className="hidden items-center py-1 px-2 text-xs md:text-sm landscape:text-sm font-medium text-gray-900 bg-gray-50 rounded-l-lg border-r border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                         <HandThumbUpIcon className="mr-2 w-4 h-4 md:w-5 md:h-5 landscape:w-5 landscape:h-5" />
                         {likesCount}
                     </button>}
-                    {is_unliked ? <button onClick={handleDeleteUnlike} type="button" className="inline-flex items-center py-1 px-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    {is_unliked ? <button onClick={handleDeleteUnlike} type="button" className="hidden items-center py-1 px-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                         <Unlikebtn className="mr-2 w-4 h-4 md:w-5 md:h-5 landscape:w-5 landscape:h-5" />
                         {unlikesCount}
                     </button>
                     :
-                    <button onClick={handleAddUnlike} type="button" className="inline-flex items-center py-1 px-2 text-xs md:text-sm landscape:text-sm font-medium text-gray-900 bg-gray-50 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <button onClick={handleAddUnlike} type="button" className="hidden items-center py-1 px-2 text-xs md:text-sm landscape:text-sm font-medium text-gray-900 bg-gray-50 rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                         <HandThumbDownIcon className="mr-2 w-4 h-4 md:w-5 md:h-5 landscape:w-5 landscape:h-5" />
                         {numOfUnlikes}
                     </button>}
@@ -347,13 +347,13 @@ const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
                         </CopyToClipboard>
                     </div>
                 </div>
-                    <div>
+                    <div className='hidden'>
                         <button type="button" className="inline-flex items-center py-1.5 md:py-1 landscape:py-1 px-2 text-xs md:text-sm landscape:text-sm font-medium text-gray-300 bg-gray-50 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             <StarIcon className="mr-2 w-4 h-4 md:w-5 md:h-5 landscape:w-5 landscape:h-5" />
                             Vote
                         </button>
                     </div>
-                    <div>
+                    <div className='hidden'>
                         <button type="button" className="inline-flex items-center py-1.5 md:py-1 landscape:py-1 px-2 text-xs md:text-sm landscape:text-sm font-medium text-gray-300 bg-gray-50 rounded-lg border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             <FlagIcon className="mr-2 w-4 h-4 md:w-5 md:h-5 landscape:w-5 landscape:h-5" />
                             Report
@@ -412,11 +412,11 @@ const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
             <div className='max-h-[35rem] overflow-y-auto pb-20 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'>
                 <ul className='flex flex-col items-start justify-center mx-auto max-w-sm text-sm space-y-5 pb-32 pt-5'>
                     <li  className='flex items-center justify-evenly w-full'>
-                        <div className="flex flex-col items-center">
+                        <div className="hidden flex-col items-center">
                             <span className="text-sm font-bold leading-4 tracking-tight text-gray-800 line-clamp-3">{view3}</span>
                             <span className="text-gray-600 text-xs line-clamp-1">{view3 == 1 ? 'View' : 'Views'}</span>
                         </div>
-                        <div className="flex flex-col items-center">
+                        <div className="hidden flex-col items-center">
                             <span className="text-sm font-bold leading-4 tracking-tight text-gray-800 line-clamp-3">{likesCountLong ? likesCountLong : 0}</span>
                             <span className="text-gray-600 text-xs line-clamp-1">{likesCountLong == 1 ? "Like" : "Likes"}</span>
                         </div>
