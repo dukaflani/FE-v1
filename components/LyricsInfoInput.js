@@ -1,6 +1,7 @@
+import FormData from 'form-data'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useAddLyricsMutation, useAddLyricsVerseMutation, useFetchCreatedLyricsVersesMutation } from '../redux/features/videos/videosApiSlice'
+import { useAddLyricsMutation, useAddLyricsVerseMutation, useFetchAccessTokenQuery, useFetchCreatedLyricsVersesMutation } from '../redux/features/videos/videosApiSlice'
 import slugify from 'slugify'
 import { nanoid } from 'nanoid'
 import { verseChoices } from '../data/verses'
@@ -10,6 +11,8 @@ import TextAreaField from './reuseable-components/TextAreaField'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
+    const [addingLyrics, setAddingLyrics] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [lyricsTitle, setLyricsTitle] = useState('')
     const [mainVocals, setMainVocals] = useState('')
     const [bgVocals, setBgVocals] = useState('')
@@ -18,6 +21,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [songWriter, setSongWriter] = useState('')
     const [instrumentPlayer, setInstrumentPlayer] = useState('')
     const [execProducer, setExecProducer] = useState('')
+
     const [verseType, setVerseType] = useState('')
     const [verseVocals, setVerseVocals] = useState('')
     const [lyricsBody, setLyricsBody] = useState('')
@@ -29,10 +33,12 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [ addLyrics, { isLoading: addLyricsLoading } ] = useAddLyricsMutation()
     const [ addLyricsVerse, { isLoading: addLyricsVerseLoading } ] = useAddLyricsVerseMutation()
     const [ fetchCreatedLyricsVerses ] = useFetchCreatedLyricsVersesMutation()
+    const { data: accessToken } = useFetchAccessTokenQuery()
     const [nanoId, setNanoId] = useState('')
     const { user } = useSelector((state) => state.auth)
     const currentUser = user?.info?.id
     const lyricsSlug = slugify(lyricsTitle, {lower: true})
+
 
     useEffect(() => {
         setNanoId(nanoid(16))
@@ -55,14 +61,14 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         "type": verseType,
         "artist": verseVocals,
         "body": lyricsBody,
-        "lyrics": createdLyrics?.data?.data?.id,
+        "lyrics": createdLyrics?.id,
     }
 
     const createdLyricsId = {
-        "newLyrics_id": createdLyrics?.data?.data?.id,
+        "newLyrics_id": createdLyrics?.id,
       }
 
-    const handleAddLyrics = async () => {
+    const handleAddLyrics1 = async () => {
         if (lyricsTitle && mainVocals && audioProducer && videoDirector) {
             setCreatedLyrics(await addLyrics(newLyrics))
         } else {
@@ -71,7 +77,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
                 setFieldsError(false)
             }, 5000);
         }
-        if (createdLyrics) {
+        if (createdLyrics?.id) {
             setLyricsTitle('')
             setMainVocals('')
             setBgVocals('')
@@ -83,13 +89,70 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         }
     }
 
+
+
+    const refreshToken = `JWT ${accessToken?.access}`
+
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", refreshToken);
+
+    const lyricsInfo = new FormData()
+    lyricsInfo.append("title", lyricsTitle)
+    lyricsInfo.append("vocals", mainVocals)
+    lyricsInfo.append("bgvs", bgVocals)
+    lyricsInfo.append("audio", audioProducer)
+    lyricsInfo.append("director", videoDirector)
+    lyricsInfo.append("writer", songWriter)
+    lyricsInfo.append("instruments", instrumentPlayer)
+    lyricsInfo.append("producer", execProducer)
+    lyricsInfo.append("slug", lyricsSlug)
+    lyricsInfo.append("url_id", nanoId)
+
+
+    const lyricsVerseInfo = new FormData()
+    lyricsVerseInfo.append("type", verseType)
+    lyricsVerseInfo.append("artist", verseVocals)
+    lyricsVerseInfo.append("body", lyricsBody)
+    lyricsVerseInfo.append("lyrics", createdLyrics?.id)
+
+
+    const handleAddLyrics = () => {
+        setAddingLyrics(true)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/lyrics/`,
+        {
+            method: 'POST',
+            headers: myHeaders,
+            body: lyricsInfo,
+        }
+        )
+        .then((response) => response.json())
+        .then((result) => {
+            setCreatedLyrics(result)
+            setAddingLyrics(false)
+            setMainVocals('')
+            setBgVocals('')
+            setAudioProducer('')
+            setVideoDirector('')
+            setSongWriter('')
+            setInstrumentPlayer('')
+            setExecProducer('')
+        })
+        .catch((error) => {
+            setErrorMessage(error)
+        });
+    }
+
+
+
+
     console.log("lyrics title dukaflani.com:", lyricsTitle)
     console.log("lyrics mani vocals dukaflani.com:", mainVocals)
     console.log("lyrics audio producer dukaflani.com:", audioProducer)
     console.log("lyrics video director dukaflani.com:", videoDirector)
-    console.log("created lyrics dukaflani.com:", createdLyrics)
-    console.log("add lyrics loading dukaflani.com:", addLyricsLoading)
+    console.log("created lyrics dukaflani.com:", createdLyrics?.id)
+    console.log("add lyrics loading dukaflani.com:", addingLyrics)
     console.log("add lyrics-verse loading dukaflani.com:", addLyricsVerseLoading)
+    console.log("added verse dukaflani.com:", addedVerse)
 
 
     
@@ -111,8 +174,8 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
 
   return (
     <div className='p-2 bg-white shadow-md border-b mb-10'>
-        {createdLyrics?.data?.data?.id && <div className='text-gray-700 font-medium tracking-tighter text-basse'>{`Add verses to " ${lyricsTitle} " below`}</div>}
-        {!createdLyrics?.data?.data?.id &&
+        {createdLyrics?.id && <div className='text-gray-700 font-medium tracking-tighter text-basse'>{`Add verses to " ${lyricsTitle} " below`}</div>}
+        {!createdLyrics?.id &&
         <>   
         <div className='grid grid-cols-2 gap-x-3 w-full'> 
         <div className='p-1 w-full'>
@@ -221,7 +284,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
                 />
                 <ApiButtonWithSpinner
-                    loading={addLyricsLoading}
+                    loading={addingLyrics}
                     title="Create"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -232,7 +295,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         </div>
         </>
         }
-        {createdLyrics?.data?.data?.id && 
+        {createdLyrics?.id && 
         <>
         <div className='my-5 space-y-2'>
             <div className='flex space-x-2'>
