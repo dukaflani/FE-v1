@@ -157,7 +157,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         .then((result) => {
             setAddedVerse(result)
             setAddingLyricsVerse(false)
-            setVersesList(fetchCreatedLyricsVerses(createdLyricsId))
+            setVersesList(prevVerses => prevVerses.push(result))
             setVerseVocals('')
             setLyricsBody('')
         })
