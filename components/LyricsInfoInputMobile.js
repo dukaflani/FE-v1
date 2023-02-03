@@ -1,6 +1,6 @@
+import FormData from 'form-data'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useAddLyricsMutation, useAddLyricsVerseMutation, useFetchCreatedLyricsVersesMutation } from '../redux/features/videos/videosApiSlice'
+import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 import slugify from 'slugify'
 import { nanoid } from 'nanoid'
 import { verseChoices } from '../data/verses'
@@ -10,6 +10,8 @@ import TextAreaField from './reuseable-components/TextAreaField'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
+    const [addingLyrics, setAddingLyrics] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [lyricsTitle, setLyricsTitle] = useState('')
     const [mainVocals, setMainVocals] = useState('')
     const [bgVocals, setBgVocals] = useState('')
@@ -18,6 +20,8 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [songWriter, setSongWriter] = useState('')
     const [instrumentPlayer, setInstrumentPlayer] = useState('')
     const [execProducer, setExecProducer] = useState('')
+
+    const [addingLyricsVerse, setAddingLyricsVerse] = useState(false)
     const [verseType, setVerseType] = useState('')
     const [verseVocals, setVerseVocals] = useState('')
     const [lyricsBody, setLyricsBody] = useState('')
@@ -26,53 +30,53 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [addedVerse, setAddedVerse] = useState(null)
     const [verseError, setVerseError] = useState(false)
     const [versesList, setVersesList] = useState([])
-    const [ addLyrics, { isLoading: addLyricsLoading } ] = useAddLyricsMutation()
-    const [ addLyricsVerse, { isLoading: addLyricsVerseLoading } ] = useAddLyricsVerseMutation()
-    const [ fetchCreatedLyricsVerses ] = useFetchCreatedLyricsVersesMutation()
+    const [errorMessageVerse, setErrorMessageVerse] = useState('')
+    const { data: accessToken } = useFetchAccessTokenQuery()
     const [nanoId, setNanoId] = useState('')
-    const { user } = useSelector((state) => state.auth)
-    const currentUser = user?.info?.id
     const lyricsSlug = slugify(lyricsTitle, {lower: true})
 
     useEffect(() => {
         setNanoId(nanoid(16))
     }, [])
 
-    const newLyrics = {
-        "title": lyricsTitle,
-        "vocals": mainVocals,
-        "bgvs": bgVocals,
-        "audio": audioProducer,
-        "director": videoDirector,
-        "writer": songWriter,
-        "instruments": instrumentPlayer,
-        "producer": execProducer,
-        "slug": lyricsSlug,
-        "url_id": nanoId,
-    }
+    const refreshToken = `JWT ${accessToken?.access}`
 
-    const newLyricsVerse = {
-        "type": verseType,
-        "artist": verseVocals,
-        "body": lyricsBody,
-        "lyrics": createdLyrics?.data?.data?.id,
-    }
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", refreshToken);
 
-    const createdLyricsId = {
-        "newLyrics_id": createdLyrics?.data?.data?.id,
-      }
+    const lyricsInfo = new FormData()
+    lyricsInfo.append("title", lyricsTitle)
+    lyricsInfo.append("vocals", mainVocals)
+    lyricsInfo.append("bgvs", bgVocals)
+    lyricsInfo.append("audio", audioProducer)
+    lyricsInfo.append("director", videoDirector)
+    lyricsInfo.append("writer", songWriter)
+    lyricsInfo.append("instruments", instrumentPlayer)
+    lyricsInfo.append("producer", execProducer)
+    lyricsInfo.append("slug", lyricsSlug)
+    lyricsInfo.append("url_id", nanoId)
 
-    const handleAddLyrics = async () => {
-        if (lyricsTitle && mainVocals && audioProducer && videoDirector) {
-            setCreatedLyrics(await addLyrics(newLyrics))
-        } else {
-            setFieldsError(true)
-            setTimeout(() => {
-                setFieldsError(false)
-            }, 5000);
+
+    const lyricsVerseInfo = new FormData()
+    lyricsVerseInfo.append("type", verseType)
+    lyricsVerseInfo.append("artist", verseVocals)
+    lyricsVerseInfo.append("body", lyricsBody)
+    lyricsVerseInfo.append("lyrics", createdLyrics?.id)
+
+
+    const handleAddLyrics = () => {
+        setAddingLyrics(true)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/lyrics/`,
+        {
+            method: 'POST',
+            headers: myHeaders,
+            body: lyricsInfo,
         }
-        if (createdLyrics) {
-            setLyricsTitle('')
+        )
+        .then((response) => response.json())
+        .then((result) => {
+            setCreatedLyrics(result)
+            setAddingLyrics(false)
             setMainVocals('')
             setBgVocals('')
             setAudioProducer('')
@@ -80,23 +84,33 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
             setSongWriter('')
             setInstrumentPlayer('')
             setExecProducer('')
-        }
+        })
+        .catch((error) => {
+            setErrorMessage(error)
+        });
     }
 
-    const handleAddLyricsVerse = async () => {
-        if (verseVocals && lyricsBody && verseType != ' ') {
-            setAddedVerse(await addLyricsVerse(newLyricsVerse))
-            setVersesList(await fetchCreatedLyricsVerses(createdLyricsId))
+    const handleAddLyricsVerse = () => {
+        setAddingLyricsVerse(true)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/lyrics-verse/`,
+        {
+            method: 'POST',
+            headers: myHeaders,
+            body: lyricsVerseInfo,
+        }
+        )
+        .then((response) => response.json())
+        .then((result) => {
+            setAddedVerse(result)
+            setAddingLyricsVerse(false)
+            setVersesList(prevVerses => [result, ...prevVerses])
             setVerseVocals('')
             setLyricsBody('')
-        } else {
-            setVerseError(true)
-            setTimeout(() => {
-                setVerseError(false)
-            }, 5000);
-        }
+        })
+        .catch((error) => {
+            setErrorMessageVerse(error)
+        });
     }
-
 
 
   return (
@@ -211,7 +225,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
                 />
                 <ApiButtonWithSpinner
-                    loading={addLyricsLoading}
+                    loading={addingLyrics}
                     title="Create"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -268,7 +282,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         </div>
         <div className='px-1 mt-2 flex items-center justify-start space-x-3'>
                 <ApiButtonWithSpinner
-                    loading={addLyricsVerseLoading}
+                    loading={addingLyricsVerse}
                     title="Add Lyrics"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -282,12 +296,12 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         <br/>
         {addedVerse && 
         <div className='px-2 mb-5'>
-            {[...Array(versesList?.data?.data?.length).keys()].map((service, i) => (
+            {[...Array(versesList?.length).keys()].map((service, i) => (
                 <div key={i} className='flex items-center justify-start hover:bg-gray-50 w-1/2 px-2 py-1 cursor-pointer'>
                     <div className='w-10/12'>
-                        <div className='text-base font-semibold tracking-tight text-gray-800'>{versesList?.data?.data[i]?.type.replace(/_/g, "-")}</div>
-                        <div className='text-xs font-medium tracking-tight text-gray-800'>{versesList?.data?.data[i]?.artist}</div>
-                        <div className='pr-5 text-ellipsis w-11/12 truncate text-xs text-gray-400'>{versesList?.data?.data[i]?.body}</div>
+                        <div className='text-base font-semibold tracking-tight text-gray-800'>{versesList[i]?.type.replace(/_/g, "-")}</div>
+                        <div className='text-xs font-medium tracking-tight text-gray-800'>{versesList[i]?.artist}</div>
+                        <div className='pr-5 text-ellipsis w-11/12 truncate text-xs text-gray-400'>{versesList[i]?.body}</div>
                     </div>
                 </div>
             ))}

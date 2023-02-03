@@ -11,7 +11,6 @@ import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [addingLyrics, setAddingLyrics] = useState(false)
-    const [addingLyricsVerse, setAddingLyricsVerse] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [lyricsTitle, setLyricsTitle] = useState('')
     const [mainVocals, setMainVocals] = useState('')
@@ -21,7 +20,8 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [songWriter, setSongWriter] = useState('')
     const [instrumentPlayer, setInstrumentPlayer] = useState('')
     const [execProducer, setExecProducer] = useState('')
-
+    
+    const [addingLyricsVerse, setAddingLyricsVerse] = useState(false)
     const [verseType, setVerseType] = useState('')
     const [verseVocals, setVerseVocals] = useState('')
     const [lyricsBody, setLyricsBody] = useState('')
