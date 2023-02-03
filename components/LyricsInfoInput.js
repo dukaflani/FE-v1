@@ -12,6 +12,7 @@ import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
 const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [addingLyrics, setAddingLyrics] = useState(false)
+    const [addingLyricsVerse, setAddingLyricsVerse] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [lyricsTitle, setLyricsTitle] = useState('')
     const [mainVocals, setMainVocals] = useState('')
@@ -30,6 +31,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     const [addedVerse, setAddedVerse] = useState(null)
     const [verseError, setVerseError] = useState(false)
     const [versesList, setVersesList] = useState([])
+    const [errorMessageVerse, setErrorMessageVerse] = useState('')
     const [ addLyrics, { isLoading: addLyricsLoading } ] = useAddLyricsMutation()
     const [ addLyricsVerse, { isLoading: addLyricsVerseLoading } ] = useAddLyricsVerseMutation()
     const [ fetchCreatedLyricsVerses ] = useFetchCreatedLyricsVersesMutation()
@@ -142,6 +144,28 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         });
     }
 
+    const handleAddLyricsVerse = () => {
+        setAddingLyricsVerse(true)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/lyrics-verse/`,
+        {
+            method: 'POST',
+            headers: myHeaders,
+            body: lyricsVerseInfo,
+        }
+        )
+        .then((response) => response.json())
+        .then((result) => {
+            setAddedVerse(result)
+            setAddingLyricsVerse(false)
+            setVersesList(fetchCreatedLyricsVerses(createdLyricsId))
+            setVerseVocals('')
+            setLyricsBody('')
+        })
+        .catch((error) => {
+            setErrorMessageVerse(error)
+        });
+    }
+
 
 
 
@@ -151,12 +175,12 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
     console.log("lyrics video director dukaflani.com:", videoDirector)
     console.log("created lyrics dukaflani.com:", createdLyrics?.id)
     console.log("add lyrics loading dukaflani.com:", addingLyrics)
-    console.log("add lyrics-verse loading dukaflani.com:", addLyricsVerseLoading)
+    console.log("add lyrics-verse loading dukaflani.com:", addingLyricsVerse)
     console.log("added verse dukaflani.com:", addedVerse)
 
 
     
-    const handleAddLyricsVerse = async () => {
+    const handleAddLyricsVerseXXX = async () => {
         if (verseVocals && lyricsBody && verseType != ' ') {
             setAddedVerse(await addLyricsVerse(newLyricsVerse))
             setVersesList(await fetchCreatedLyricsVerses(createdLyricsId))
@@ -341,7 +365,7 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         </div>
         <div className='px-1 mt-2 flex items-center justify-start space-x-3'>
                 <ApiButtonWithSpinner
-                    loading={addLyricsVerseLoading}
+                    loading={addingLyricsVerse}
                     title="Add Lyrics"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
