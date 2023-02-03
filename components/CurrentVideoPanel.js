@@ -134,7 +134,7 @@ const CurrentVideoPanel = ({ video, videoProfile }) => {
                 </div>
                 <div className='w-8/12 flex flex-col items-start justify-center'>
                     {!is_loggedin && <div className='flex space-x-1'>
-                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{video?.stage_name ? video?.stage_name : ''}</div>
+                        <div className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{video?.stage_name ? video?.stage_name : ''}</div>
                         {video?.verified && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
@@ -142,7 +142,7 @@ const CurrentVideoPanel = ({ video, videoProfile }) => {
                         }
                     </div>}
                     {is_loggedin && <div className='flex space-x-1'>
-                        <div onClick={() => setModalOpen(true)} className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.stage_name ? video?.stage_name : ''}</div>
+                        <div className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{videoProfile?.stage_name ? video?.stage_name : ''}</div>
                         {videoProfile?.is_verified == 'True' && 
                         <span>
                             <CheckBadgeIcon className="w-4 h-4 text-blue-600" />
