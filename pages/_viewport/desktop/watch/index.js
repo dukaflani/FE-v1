@@ -34,7 +34,9 @@ const WatchCurrentVideo = ({ currentVideo, videoProfile }) => {
         <meta property="og:description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta 
             property="og:image" 
-            content={`${process.env.NEXT_PUBLIC_NEXT_URL}/api/og?stage_name=${currentVideo?.results[0]?.stage_name}&fanbase_count=${videoProfile?.fanbase_count}&song_title=${currentVideo?.results[0]?.song_title}&video_title=${currentVideo?.results[0]?.title}&avatar=${currentVideo?.results[0]?.profile_avatar}`} />
+            // content={`${process.env.NEXT_PUBLIC_NEXT_URL}/api/og?stage_name=${currentVideo?.results[0]?.stage_name}&fanbase_count=${videoProfile?.fanbase_count}&song_title=${currentVideo?.results[0]?.song_title}&video_title=${currentVideo?.results[0]?.title}&avatar=${currentVideo?.results[0]?.profile_avatar}`} />
+            content={currentVideo?.results[0]?.thumbnail} 
+             />
 
         
         <meta property="twitter:card" content="summary_large_image"/>
@@ -43,7 +45,9 @@ const WatchCurrentVideo = ({ currentVideo, videoProfile }) => {
         <meta property="twitter:description" content="Entrepreneurs In Music Sell Their Products Here"/>
         <meta 
             property="twitter:image" 
-            content={`${process.env.NEXT_PUBLIC_NEXT_URL}/api/og?stage_name=${currentVideo?.results[0]?.stage_name}&fanbase_count=${videoProfile?.fanbase_count}&song_title=${currentVideo?.results[0]?.song_title}&video_title=${currentVideo?.results[0]?.title}&avatar=${currentVideo?.results[0]?.profile_avatar}`} />
+            // content={`${process.env.NEXT_PUBLIC_NEXT_URL}/api/og?stage_name=${currentVideo?.results[0]?.stage_name}&fanbase_count=${videoProfile?.fanbase_count}&song_title=${currentVideo?.results[0]?.song_title}&video_title=${currentVideo?.results[0]?.title}&avatar=${currentVideo?.results[0]?.profile_avatar}`} />
+            content={currentVideo?.results[0]?.thumbnail} 
+            />
       </Head>
       
       <SidebarNav>
