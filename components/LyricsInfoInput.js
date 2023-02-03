@@ -83,6 +83,16 @@ const LyricsInfoInput = ({ currentInput, setCurrentInput }) => {
         }
     }
 
+    console.log("lyrics title dukaflani.com:", lyricsTitle)
+    console.log("lyrics mani vocals dukaflani.com:", mainVocals)
+    console.log("lyrics audio producer dukaflani.com:", audioProducer)
+    console.log("lyrics video director dukaflani.com:", videoDirector)
+    console.log("created lyrics dukaflani.com:", createdLyrics)
+    console.log("add lyrics loading dukaflani.com:", addLyricsLoading)
+    console.log("add lyrics-verse loading dukaflani.com:", addLyricsVerseLoading)
+
+
+    
     const handleAddLyricsVerse = async () => {
         if (verseVocals && lyricsBody && verseType != ' ') {
             setAddedVerse(await addLyricsVerse(newLyricsVerse))
