@@ -6,19 +6,17 @@ import { verseChoices } from '../data/verses'
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
 import TextAreaField from './reuseable-components/TextAreaField'
-import { useEditLyricsMutation, useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
+import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 
 const EditLyrics = ({ verse }) => {
     let [isOpen, setIsOpen] = useState(false)
-    const [editingLyrics, setEditingLyrics] = useState(false)
     const [verseType, setVerseType] = useState('')
     const [verseVocals, setVerseVocals] = useState('')
     const [lyricsBody, setLyricsBody] = useState('')
     const [editedLyricsObject, setEditedLyricsObject] = useState('')
     const [editErrors, setEditErrors] = useState(null)
+    const [editingLyrics, setEditingLyrics] = useState(false)
     const { data: accessToken } = useFetchAccessTokenQuery()
-    const [ editLyrics, { isLoading: editIsLoading } ] = useEditLyricsMutation()
-    const [fieldErrors, setFieldErrors] = useState('')
 
     useEffect(() => {
       setVerseType(verse?.type)
@@ -35,30 +33,6 @@ const EditLyrics = ({ verse }) => {
         setIsOpen(true)
       }
 
-
-      const editedLyrics = {
-        "lyricVerse_id": verse?.id,
-        "type": verseType,
-        "artist": verseVocals,
-        "body": lyricsBody,
-      }
-
-      const handleEditLyricsXX = async () => {
-        if (verseType && verseVocals && lyricsBody && verse?.id) {
-            try {
-              setEditedLyricsObject(await editLyrics(editedLyrics))
-                setIsOpen(false)
-            } catch (error) {
-              setEditErrors(error)
-                setTimeout(() => {
-                  setEditErrors(null)
-                }, 5000);
-            }
-            
-        } else {
-          setFieldErrors('Please fill in all the fields')
-        }
-    }
 
     const refreshToken = `JWT ${accessToken?.access}`
 

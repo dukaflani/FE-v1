@@ -1,11 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import FormData from 'form-data'
+import { Fragment, useEffect, useState } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
 import { verseChoices } from '../data/verses'
 import InputField from './reuseable-components/InputField'
 import SelectInputField from './reuseable-components/SelectInputField'
 import TextAreaField from './reuseable-components/TextAreaField'
-import { useEditLyricsMutation } from '../redux/features/videos/videosApiSlice'
+import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 
 const EditLyrics = ({ verse }) => {
     let [isOpen, setIsOpen] = useState(false)
@@ -14,8 +15,8 @@ const EditLyrics = ({ verse }) => {
     const [lyricsBody, setLyricsBody] = useState('')
     const [editedLyricsObject, setEditedLyricsObject] = useState('')
     const [editErrors, setEditErrors] = useState(null)
-    const [ editLyrics, { isLoading: editIsLoading } ] = useEditLyricsMutation()
-    const [fieldErrors, setFieldErrors] = useState('')
+    const [editingLyricsVerse, setEditingLyricsVerse] = useState(false)
+    const { data: accessToken } = useFetchAccessTokenQuery()
 
     useEffect(() => {
       setVerseType(verse?.type)
@@ -33,28 +34,37 @@ const EditLyrics = ({ verse }) => {
       }
 
 
-      const editedLyrics = {
-        "lyricVerse_id": verse?.id,
-        "type": verseType,
-        "artist": verseVocals,
-        "body": lyricsBody,
-      }
+      const refreshToken = `JWT ${accessToken?.access}`
 
-      const handleEditLyrics = async () => {
-        if (verseType && verseVocals && lyricsBody && verse?.id) {
-            try {
-              setEditedLyricsObject(await editLyrics(editedLyrics))
-                setIsOpen(false)
-            } catch (error) {
-              setEditErrors(error)
-                setTimeout(() => {
-                  setEditErrors(null)
-                }, 5000);
-            }
-            
-        } else {
-          setFieldErrors('Please fill in all the fields')
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", refreshToken);
+  
+      const editLyricVerseInfo = new FormData()
+      editLyricVerseInfo.append("type", verseType)
+      editLyricVerseInfo.append("artist", verseVocals)
+      editLyricVerseInfo.append("body", lyricsBody)
+  
+      const handleEditLyrics = () => {
+        setEditingLyricsVerse(true)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/lyrics-verse/${verse?.id}/`,
+        {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: editLyricVerseInfo,
         }
+        )
+        .then((response) => response.json())
+        .then((result) => {
+            setEditedLyricsObject(result)
+            setEditingLyricsVerse(false)
+            setIsOpen(false)
+        })
+        .catch((error) => {
+          setEditErrors(error)
+          setTimeout(() => {
+            setEditErrors(null)
+          }, 5000);
+        });
     }
 
 
@@ -153,7 +163,7 @@ const EditLyrics = ({ verse }) => {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleEditLyrics}
                     >
-                      {editIsLoading ? "Editing..." : "Edit"}
+                      {editingLyricsVerse ? "Editing..." : "Edit"}
                     </button>
                   </div>
                 </Dialog.Panel>
