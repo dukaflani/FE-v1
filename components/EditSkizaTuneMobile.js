@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
 import InputField from './reuseable-components/InputField'
-import { useEditSkizaTuneMutation } from '../redux/features/videos/videosApiSlice'
+import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 
 const EditSkizaTune = ({ skizaLink }) => {
     let [isOpen, setIsOpen] = useState(false)
@@ -17,7 +17,7 @@ const EditSkizaTune = ({ skizaLink }) => {
     const { data: accessToken } = useFetchAccessTokenQuery()
     const [editingSkizaTune, setEditingSkizaTune] = useState(false)
 
-    
+
     useEffect(() => {
       setCountry(skizaLink?.country)
       setCarrier(skizaLink?.carrier)
