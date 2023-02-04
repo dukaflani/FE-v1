@@ -394,19 +394,19 @@ const CurrentVideoPanel = ({ video, videoProfile }) => {
                                         </div>
                                         <div className='flex flex-col space-y-4'>
                                             {videoProfile?.facebook && <a href={videoProfile?.facebook} rel="noopener" target="_blank">
-                                            <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.facebook != 'null' && videoProfile?.facebook}</p>
+                                            <p className='leading-4 tracking-tight text-blue-500 w-48 truncate'>{videoProfile?.facebook != 'null' && videoProfile?.facebook}</p>
                                             </a>}
                                             {videoProfile?.twitter && <a href={videoProfile?.twitter} rel="noopener" target="_blank">
-                                                <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.twitter != 'null' && videoProfile?.twitter}</p>
+                                                <p className='leading-4 tracking-tight text-blue-500 w-48 truncate'>{videoProfile?.twitter != 'null' && videoProfile?.twitter}</p>
                                             </a>}
                                             {videoProfile?.instagram && <a href={videoProfile?.instagram} rel="noopener" target="_blank">
-                                                <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.instagram != 'null' && videoProfile?.instagram}</p>
+                                                <p className='leading-4 tracking-tight text-blue-500 w-48 truncate'>{videoProfile?.instagram != 'null' && videoProfile?.instagram}</p>
                                             </a>}
                                             {videoProfile?.tiktok && <a href={videoProfile?.tiktok} rel="noopener" target="_blank">
-                                                <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.tiktok != 'null' && videoProfile?.tiktok}</p>
+                                                <p className='leading-4 tracking-tight text-blue-500 w-48 truncate'>{videoProfile?.tiktok != 'null' && videoProfile?.tiktok}</p>
                                             </a>}
                                             {videoProfile?.youtube_channel && <a href={videoProfile?.youtube_channel} rel="noopener" target="_blank">
-                                                <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.youtube_channel != 'null' && videoProfile?.youtube_channel}</p>
+                                                <p className='leading-4 tracking-tight text-blue-500 w-48 truncate'>{videoProfile?.youtube_channel != 'null' && videoProfile?.youtube_channel}</p>
                                             </a>}
                                         </div>
                                     </li>
