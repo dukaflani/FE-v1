@@ -85,7 +85,7 @@ const BottomNavigationMobile = () => {
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <ArrowLeftOnRectangleIcon className='h-5 w-5'/>
                         </span>
-                        <span>Login to upload. Click here!!!</span>
+                        <span>Login/Register to upload. Click here!!!</span>
                     </li>
                 </ul>
             </div>}
@@ -207,7 +207,7 @@ const BottomNavigationMobile = () => {
                         <span className='flex flex-col items-center justify-center p-3 rounded-full bg-gray-100'>
                             <ArrowLeftOnRectangleIcon className='h-5 w-5'/>
                         </span>
-                        <span>Login</span>
+                        <span>Login/Register</span>
                     </li>}
                 </ul>
             </div>

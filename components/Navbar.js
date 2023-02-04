@@ -187,7 +187,7 @@ const Navbar = ({ myAvatar, searchTerm, accessToken }) => {
                           aria-hidden="true"
                         />
                       )}
-                      Login
+                      Login/Register
                     </button>
                   )}
                 </Menu.Item>}
