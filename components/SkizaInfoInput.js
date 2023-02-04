@@ -1,5 +1,6 @@
+import FormData from 'form-data'
 import { useState } from 'react'
-import { useAddSkizaTuneInfoMutation, useAddSkizaTuneMutation, useFetchCreatedSkizaTuneListMutation } from '../redux/features/videos/videosApiSlice'
+import { useFetchAccessTokenQuery } from '../redux/features/videos/videosApiSlice'
 import InputField from './reuseable-components/InputField'
 import ApiButtonWithSpinner from './reuseable-components/ApiButtonWithSpinner'
 
@@ -14,66 +15,90 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
     const [skizaTuneError, setSkizaTuneError] = useState(false)
     const [addedSkizaTuneInfo, setAddedSkizaTuneInfo] = useState(null)
     const [skizaTuneInfoError, setSkizaTuneInfoError] = useState(false)
-    const [skizaTuneInfoList, setSkizaTuneInfoList] = useState(null)
-    const [ addSkizaTune, { isLoading: addSkizaLoading  } ] = useAddSkizaTuneMutation()
-    const [ addSkizaTuneInfo, { isLoading: addSkizaInfoLoading } ] = useAddSkizaTuneInfoMutation()
-    const [ fetchCreatedSkizaTuneList ] = useFetchCreatedSkizaTuneListMutation()
+    const [skizaTuneInfoList, setSkizaTuneInfoList] = useState([])
+    const { data: accessToken } = useFetchAccessTokenQuery()
+    const [creatingSkizaTune, setCreatingSkizaTune] = useState(false)
+    const [addingSkizaTunes, setAddingSkizaTunes] = useState(false)
+    const [createSkizaError, setCreateSkizaError] = useState('')
+    const [errorMessageSkizaDetail, setErrorMessageSkizaDetail] = useState('')
 
-    const createdSkizaTuneId = {
-        "skizatune_id": addedSkizaTune?.data?.data?.id,
-    }
 
-    const newSkizaTune = {
-        "title": skizaTitle,
-    }
 
-    const newSkizaTuneInfo = {
-        "country": country,
-        "carrier": carrier,
-        "code": code,
-        "sms": sms,
-        "ussd": ussd,
-        "skiza_tune": addedSkizaTune?.data?.data?.id,
-    }
+    const refreshToken = `JWT ${accessToken?.access}`
 
-    const handleAddSkizaTune = async () => {
-        if (skizaTitle) {
-            setAddedSkizaTune(await addSkizaTune(newSkizaTune))
-        } else {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", refreshToken);
+
+
+    const skizaTunesInfo = new FormData()
+    skizaTunesInfo.append("title", skizaTitle)
+
+    const skizaTuneDetails = new FormData()
+    skizaTuneDetails.append("country", country)
+    skizaTuneDetails.append("carrier", carrier)
+    skizaTuneDetails.append("sms", sms)
+    skizaTuneDetails.append("code", code)
+    skizaTuneDetails.append("ussd", ussd)
+    skizaTuneDetails.append("skiza_tune", addedSkizaTune?.id)
+
+
+    const handleAddSkizaTune = () => {
+        setCreatingSkizaTune(true)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/skiza-tunes/`,
+        {
+            method: 'POST',
+            headers: myHeaders,
+            body: skizaTunesInfo,
+        }
+        )
+        .then((response) => response.json())
+        .then((result) => {
+            setAddedSkizaTune(result)
+            setCreatingSkizaTune(false)
+        })
+        .catch((error) => {
             setSkizaTuneError(true)
+            setCreateSkizaError(error)
             setTimeout(() => {
                 setSkizaTuneError(false)
             }, 5000);
-        }
+        });
     }
 
-    const handleAddSkizaTuneInfo = async () => {
-        if (country && carrier) {
-            setAddedSkizaTuneInfo(await addSkizaTuneInfo(newSkizaTuneInfo))
-            setSkizaTuneInfoList(await fetchCreatedSkizaTuneList(createdSkizaTuneId))
-            if (addedSkizaTuneInfo?.data?.data?.id !== null) {
-                setCountry('')
-                setCode('')
-                setSms('')
-                setCarrier('')
-                setUssd('')
-            } 
-        }else {
-            setSkizaTuneInfoError(true)
-            setTimeout(() => {
-                setSkizaTuneInfoError(false)
-            }, 5000);
-        }
 
+    const handleAddSkizaTuneInfo = () => {
+        setAddingSkizaTunes(true)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/skiza-tune/`,
+        {
+            method: 'POST',
+            headers: myHeaders,
+            body: skizaTuneDetails,
+        }
+        )
+        .then((response) => response.json())
+        .then((result) => {
+            setAddedSkizaTuneInfo(result)
+            setAddingSkizaTunes(false)
+            setSkizaTuneInfoList(prevSkizaTunes => [result, ...prevSkizaTunes])
+            setCountry('')
+            setCode('')
+            setSms('')
+            setCarrier('')
+            setUssd('')
+        })
+        .catch((error) => {
+            setErrorMessageSkizaDetail(error)
+        });
     }
+
 
 
 
 
   return (
     <div className='p-2 bg-white shadow-md border-b mb-10'>
-        {addedSkizaTune?.data?.data?.id && <div className='text-gray-700 font-medium tracking-tighter text-basse'>{`Add instructions to " ${skizaTitle} " below`}</div>}
-        {!addedSkizaTune?.data?.data?.id &&
+        {addedSkizaTune?.id && <div className='text-gray-700 font-medium tracking-tighter text-basse'>{`Add instructions to " ${skizaTitle} " below`}</div>}
+        {!addedSkizaTune?.id &&
         <>
         <div className='p-1 mb-4 flex flex-col space-y-1'>
         <InputField
@@ -96,7 +121,7 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
                     onClick={() => router.push({pathname: '/dashboard/upload', query: {item: 'video'}})}
                 />
                 <ApiButtonWithSpinner
-                    loading={addSkizaLoading}
+                    loading={creatingSkizaTune}
                     title="Create"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -107,7 +132,7 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
         </div>
         </>
         }
-        {addedSkizaTune?.data?.data?.id && 
+        {addedSkizaTune?.id && 
         <>
         <div className='my-5 space-y-2'>
             <div className='flex space-x-2'>
@@ -179,7 +204,7 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
         </div>
         <div className='px-1 mt-2 flex items-center justify-start space-x-1'>
                 <ApiButtonWithSpinner
-                    loading={addSkizaInfoLoading}
+                    loading={addingSkizaTunes}
                     title="Add Skiza"
                     bgColor="bg-blue-500"
                     hoverColor="hover:bg-blue-400"
@@ -192,14 +217,14 @@ const SkizaInfoInput = ({ currentInput, setCurrentInput }) => {
         }
         <br/>
         <div className='px-2 mb-5'>
-            {[...Array(skizaTuneInfoList?.data?.data?.length).keys()].map((service, i) => (
+            {[...Array(skizaTuneInfoList?.length).keys()].map((service, i) => (
                 <div key={i} className='flex items-center justify-start hover:bg-gray-50 w-1/2 px-2 py-1 cursor-pointer'>
                     <div className='w-10/12'>
-                        <div className='text-base font-semibold tracking-tight text-gray-800'>{skizaTuneInfoList?.data?.data[i]?.country}</div>
-                        <div className='text-xs font-medium tracking-tight text-gray-800'>{skizaTuneInfoList?.data?.data[i]?.carrier}</div>
-                        <div className='text-xs font-medium tracking-tight text-gray-800'>{skizaTuneInfoList?.data?.data[i]?.sms}</div>
-                        <div className='pr-5 text-ellipsis w-11/12 truncate text-xs text-gray-400'>{skizaTuneInfoList?.data?.data[i]?.code}</div>
-                        <div className='pr-5 text-ellipsis w-11/12 truncate text-xs text-gray-400'>{skizaTuneInfoList?.data?.data[i]?.ussd}</div>
+                        <div className='text-base font-semibold tracking-tight text-gray-800'>{skizaTuneInfoList[i]?.country}</div>
+                        <div className='text-xs font-medium tracking-tight text-gray-800'>{skizaTuneInfoList[i]?.carrier}</div>
+                        <div className='text-xs font-medium tracking-tight text-gray-800'>{skizaTuneInfoList[i]?.sms}</div>
+                        <div className='pr-5 text-ellipsis w-11/12 truncate text-xs text-gray-400'>{skizaTuneInfoList[i]?.code}</div>
+                        <div className='pr-5 text-ellipsis w-11/12 truncate text-xs text-gray-400'>{skizaTuneInfoList[i]?.ussd}</div>
                     </div>
                 </div>
             ))}
