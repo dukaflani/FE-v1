@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import FormData from 'form-data'
+import { Fragment, useEffect, useState } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
 import InputField from './reuseable-components/InputField'
@@ -13,9 +14,10 @@ const EditSkizaTune = ({ skizaLink }) => {
     const [ussd, setUssd] = useState("")
     const [editedSkizaObject, setEditedSkizaObject] = useState('')
     const [editErrors, setEditErrors] = useState(null)
-    const [fieldErrors, setFieldErrors] = useState('')
-    const [ editSkizaTune, { isLoading: editSkizaLoading } ] = useEditSkizaTuneMutation()
+    const { data: accessToken } = useFetchAccessTokenQuery()
+    const [editingSkizaTune, setEditingSkizaTune] = useState(false)
 
+    
     useEffect(() => {
       setCountry(skizaLink?.country)
       setCarrier(skizaLink?.carrier)
@@ -34,30 +36,39 @@ const EditSkizaTune = ({ skizaLink }) => {
       }
 
 
-      const editedSkizaTune = {
-        "skizaTune_id": skizaLink?.id,
-        "country": country,
-        "carrier": carrier,
-        "code": code,
-        "sms": sms,
-        "ussd": ussd,
-      }
+      const refreshToken = `JWT ${accessToken?.access}`
 
-      const handleEditSkizaTune = async () => {
-        if (country && carrier && skizaLink?.id) {
-            try {
-              setEditedSkizaObject(await editSkizaTune(editedSkizaTune))
-                setIsOpen(false)
-            } catch (error) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", refreshToken);
+  
+      const editSkizaTuneInfo = new FormData()
+        editSkizaTuneInfo.append("country", country)
+        editSkizaTuneInfo.append("carrier", carrier)
+        editSkizaTuneInfo.append("code", code)
+        editSkizaTuneInfo.append("sms", sms)
+        editSkizaTuneInfo.append("ussd", ussd)
+  
+      const handleEditSkizaTune = () => {
+        setEditingSkizaTune(true)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/skiza-tune/${skizaLink?.id}/`,
+        {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: editSkizaTuneInfo,
+        }
+        )
+        .then((response) => response.json())
+        .then((result) => {
+            setEditedSkizaObject(result)
+            setEditingSkizaTune(false)
+            setIsOpen(false)
+        })
+        .catch((error) => {
               setEditErrors(error)
                 setTimeout(() => {
                   setEditErrors(null)
                 }, 5000);
-            }
-            
-        } else {
-          setFieldErrors('Please fill in all the fields')
-        }
+        });
     }
 
 
@@ -173,7 +184,7 @@ const EditSkizaTune = ({ skizaLink }) => {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleEditSkizaTune}
                     >
-                       {editSkizaLoading ? "Editing..." : "Edit"}
+                       {editingSkizaTune ? "Editing..." : "Edit"}
                     </button>
                   </div>
                 </Dialog.Panel>
