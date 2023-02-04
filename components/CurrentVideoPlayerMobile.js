@@ -309,12 +309,14 @@ const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
                     {!is_loggedin && <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.stage_name}</div>
                         {video?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
+                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>{videoProfile?.nationality.split(",")[1]}</div>}
                         {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>Login to view fanbase</div>}
                         {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>{fanbaseCountShort}</div>}
                     </div>}
                     {is_loggedin && <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.stage_name}</div>
                         {video?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
+                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2'>{videoProfile?.nationality.split(",")[1]}</div>}
                         {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>Login to view fanbase</div>}
                         {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>{fanbaseCountShort}</div>}
                     </div>}
@@ -611,19 +613,19 @@ const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
                                         <span className='text-base font-bold text-gray-800 tracking-tight'>Social Media</span>
                                     </div>
                                     {videoProfile?.facebook && <a href={videoProfile?.facebook} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.facebook}</p>
+                                    <p className='leading-4 tracking-tight text-blue-500'>{videoProfile?.facebook != 'null' && videoProfile?.facebook}</p>
                                     </a>}
                                     {videoProfile?.twitter && <a href={videoProfile?.twitter} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.twitter}</p>
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.twitter != 'null' && videoProfile?.twitter}</p>
                                     </a>}
                                     {videoProfile?.instagram && <a href={videoProfile?.instagram} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.instagram}</p>
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.instagram != 'null' && videoProfile?.instagram}</p>
                                     </a>}
                                     {videoProfile?.tiktok && <a href={videoProfile?.tiktok} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.tiktok}</p>
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.tiktok != 'null' && videoProfile?.tiktok}</p>
                                     </a>}
-                                   {videoProfile?.youtube_channel && <a href={videoProfile?.youtube_channel} rel="noopener" target="_blank">
-                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.youtube_channel}</p>
+                                    {videoProfile?.youtube_channel && <a href={videoProfile?.youtube_channel} rel="noopener" target="_blank">
+                                        <p className='leading-4 tracking-tight mt-2 text-blue-500'>{videoProfile?.youtube_channel != 'null' && videoProfile?.youtube_channel}</p>
                                     </a>}
                                 </li>
                                 <li>
