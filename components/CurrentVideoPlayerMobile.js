@@ -309,14 +309,14 @@ const CurrentVideoPlayer = ({ navbarVisisble, videoProfile, video }) => {
                     {!is_loggedin && <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.stage_name}</div>
                         {video?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
-                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 -mb-1'>{videoProfile?.nationality.split(",")[1]}</div>}
+                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 -mb-0.5'>{videoProfile?.nationality.split(",")[1]}</div>}
                         {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>Login to view fanbase</div>}
                         {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>{fanbaseCountShort}</div>}
                     </div>}
                     {is_loggedin && <div onClick={() => setShowProfile(true)} className='flex-1 flex items-center'>
                         <div className='font-semibold text-gray-800 text-sm pr-1 line-clamp-1'>{video?.stage_name}</div>
                         {video?.verified && <CheckBadgeIcon className='h-6 w-6 text-blue-500 -ml-1.5 pb-2'/>}
-                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 -mb-1'>{videoProfile?.nationality.split(",")[1]}</div>}
+                        {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 -mb-0.5'>{videoProfile?.nationality.split(",")[1]}</div>}
                         {!is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>Login to view fanbase</div>}
                         {is_loggedin && <div className='flex-1 text-xs text-gray-600 px-2 hidden'>{fanbaseCountShort}</div>}
                     </div>}
