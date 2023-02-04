@@ -122,7 +122,7 @@ const CurrentVideoPanel = ({ video, videoProfile }) => {
         <div className='border mt-20'>
             <div className='flex py-4 border-b px-1 bg-white'>
                 <div className='w-2/12 flex items-center justify-center'>
-                    <div className='relative h-12 w-12'>
+                    <div onClick={openProfileModal} className='relative h-12 w-12 cursor-pointer'>
                         {!is_loggedin && <Image
                             src={video?.profile_avatar ? video?.profile_avatar : noAvatar}
                             layout="fill"
@@ -138,7 +138,7 @@ const CurrentVideoPanel = ({ video, videoProfile }) => {
                     </div>
                 </div>
                 <div className='w-8/12 flex flex-col items-start justify-center'>
-                    {!is_loggedin && <div className='flex space-x-1'>
+                    {!is_loggedin && <div onClick={openProfileModal} className='flex space-x-1'>
                         <div className='text-base tracking-tight cursor-pointer font-medium text-gray-900 line-clamp-2'>{video?.stage_name ? video?.stage_name : ''}</div>
                         {video?.verified && 
                         <span>
