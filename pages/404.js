@@ -16,7 +16,7 @@ const errorPage = () => {
         <meta name="keywords" content="Music Videos, Dukaflani, Links, Events, Merchandise, Skiza Tune, Lyrics, Albums"/>
       </Head>
       <div className='h-screen flex items-start justify-center'>
-        <div className='relative w-5/12 h-4/6 pt-10'>
+        <div className='relative w-80 h-80 pt-10'>
           <Image 
             src={Poster}
             layout="fill"

@@ -1,4 +1,3 @@
-import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import Image from "next/legacy/image";
@@ -19,7 +18,7 @@ const Unauthorized = () => {
       </Head>
       <Navigation/>
       <div className='h-screen w-screen flex items-start justify-center pt-14'>
-        <div className='relative w-3/12 h-4/6'>
+        <div className='relative w-80 h-80'>
           <Image 
             src={Poster}
             layout="fill"
